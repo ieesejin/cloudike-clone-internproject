@@ -16,6 +16,10 @@
         </div>
         <input type="checkbox" name="chk_info" value="HTML" id="a">
         <label for="a">로그인 상태 유지</label>
+        <div *ngIf="error != null" class="error">{{error}}</div>
+        <div *ngIf="error_type == 'UserTemporarilyLocked'" class="error">이용문의: 070-4901-1881</div>
+
+
         <button type="submit">로그인</button>
     </div>
 </form>
