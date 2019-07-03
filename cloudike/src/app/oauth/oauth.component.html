@@ -1,0 +1,21 @@
+<p>oauth works!</p>
+<form class="center" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="box">
+        <h3>Sign in to COMPANY_NAME company</h3>
+        <div>
+            <label>로그인</label>
+        </div>
+        
+        <div class="tab">
+            <div class="tab_title">이메일</div>
+            <input type="email" class="ab" [formControl]="form.controls.id"/>
+        </div>
+        <div class="tab">
+            <div class="tab_title">비밀번호</div>
+            <input type="password" class="ab" [formControl]="form.controls.password" />
+        </div>
+        <input type="checkbox" name="chk_info" value="HTML" id="a">
+        <label for="a">로그인 상태 유지</label>
+        <button type="submit">로그인</button>
+    </div>
+</form>
