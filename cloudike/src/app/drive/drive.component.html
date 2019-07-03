@@ -1,5 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div class="main">
   <app-nav-tree></app-nav-tree>
-  <router-outlet></router-outlet>
+  <a *ngFor="let item of Root.content | keyvalue"> {{item.key}} {{item.value.bytes}}<br>
+ </a>
 </div>

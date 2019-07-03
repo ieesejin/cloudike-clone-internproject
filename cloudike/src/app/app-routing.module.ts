@@ -6,7 +6,7 @@ import { DriveComponent } from './drive/drive.component';
 
 const routes: Routes = [
   { path: 'oauth',  component: OauthComponent }, 
-  { path: 'drive',  component: DriveComponent }, 
+  { path: 'drive',  component: DriveComponent, children: [{path: '**', component: DriveComponent}]}, 
   { path: '',  component: AppComponent}
 ];
 
