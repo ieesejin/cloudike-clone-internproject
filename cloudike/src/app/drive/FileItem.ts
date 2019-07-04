@@ -1,4 +1,3 @@
-import { DriveComponent } from './drive.component';
 
 export class FileItem
 {
@@ -56,13 +55,16 @@ export class FileItem
             }); 
         }
     }
-    public static Update(value : FileItem)
+    public static Update(root : FileItem, value : FileItem) : FileItem
     {
-        let move = DriveComponent.Root;
+        if (root.isNull())
+        {
+          return FileItem.Init(value);
+        }
+        let move = root;
         if (value.path == "/")
         {
-            DriveComponent.Root = value;
-            return;
+            return value;
         }
         let parent = value.path;
         parent = parent.substring(0,parent.lastIndexOf("/"));
@@ -76,6 +78,7 @@ export class FileItem
             }
         }
         move.content[value.name] = value;
+        return value;
     }
     public static Init(value : FileItem) : FileItem
     {

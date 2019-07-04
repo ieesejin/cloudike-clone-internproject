@@ -41,14 +41,8 @@ export class DriveComponent implements OnInit {
       headers: {'Mountbit-Auth':UserInfo.token()}
     }).subscribe(data => {
         this.Now = new FileItem(data);
-        if (DriveComponent.Root.isNull())
-        {
-          DriveComponent.Root = FileItem.Init(this.Now);
-        }
-        else
-        {
-          FileItem.Update(this.Now);
-        }
+
+        DriveComponent.Root = FileItem.Update(DriveComponent.Root, this.Now);
         this.ParantFolder = [];
         let path = "/drive";
         this.ParantFolder.push({name:"내 Cloudike", path:path})
