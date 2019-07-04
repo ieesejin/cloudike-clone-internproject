@@ -12,6 +12,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
   styleUrls: ['./drive.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class DriveComponent implements OnInit {
 
   public static Root :FileItem = new FileItem(null);
@@ -42,7 +43,7 @@ export class DriveComponent implements OnInit {
     }).subscribe(data => {
         this.Now = new FileItem(data);
 
-        DriveComponent.Root = FileItem.Update(DriveComponent.Root, this.Now);
+        DriveComponent.Root = FileItem.UpdateRoot(DriveComponent.Root, this.Now);
         this.ParantFolder = [];
         let path = "/drive";
         this.ParantFolder.push({name:"내 Cloudike", path:path})

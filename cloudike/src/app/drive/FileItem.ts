@@ -55,68 +55,83 @@ export class FileItem
             }); 
         }
     }
-    public static Update(root : FileItem, value : FileItem) : FileItem
-    {
-        if (root.isNull())
-        {
-          return FileItem.Init(value);
-        }
-        let move = root;
-        if (value.path == "/")
-        {
-            return value;
-        }
-        let parent = value.path;
-        parent = parent.substring(0,parent.lastIndexOf("/"));
-
-        if (parent != "")
-        {
-            let folder = parent.substring(1).split("/");
-            for(let i = 0; i < folder.length;i++)
-            {
-                move = move.content[folder[i]];
-            }
-        }
-        move.content[value.name] = value;
-        return value;
-    }
-    public static Init(value : FileItem) : FileItem
-    {
-        if (value.path == "/")
-        {
-            return value;
-        }
-        let folder = value.path.split("/");
-        let result = null;
-        for(var i = folder.length - 2; i >= 0;i--)
-        {
-            let path = "";
-            for(var j = 0; j <= i; j++)
-            {
-                path += folder[j] + "/";
-            }
-            var a = new FileItem(null);
-            if (i == folder.length - 2)
-            {
-                a.content[value.name] = value;
-            }
-            a.path = path;
-            a.type = "folder";
-            a.isfolder = true;
-            a.name = folder[i];
-            if (result != null)
-            {
-                a.content[result.name] = result;
-            }
-            result = a;
-        }
-        return result;
-    }
+    
     public isNull() : boolean
     {
         if (this.path == null)
             return true;
         else
             return false;
+    }
+
+    public static UpdateRoot(root : FileItem, value : FileItem) : FileItem
+    {
+        if (value.path == "/")
+        {
+            return value;
+        }
+        if (root.isNull())
+        {
+            return FileItem.CreateRoot(value);
+        }
+        let move = root;
+        let paths = FileItem.SplitPath(value.path);
+        paths.pop();
+
+        for(let i = 1; i < paths.length; i++)
+        {
+            move = move.content[paths[i].name];
+        }
+        move.content[value.name] = value;
+        return root;
+    }
+
+    public static CreateRoot(value : FileItem) : FileItem
+    {
+        let paths = FileItem.SplitPath(value.path).reverse();
+        paths.pop(); // 가장 마지막은 value와 같은 아이템. 즉 이미 존재하므로 의미 없음. (pop으로 삭제)
+        
+        var result = null;
+        paths.forEach(element => {
+
+            let temp = new FileItem(null);
+            temp.path = element.path;
+            temp.type = "folder";
+            temp.isfolder = true;
+            temp.name = element.name;
+            if (result != null)
+                temp.content[result.name] = result;
+            else
+                temp.content[value.name] = value;
+            result = temp;
+
+        });
+        return result;
+    }
+
+    public static SplitPath(path)
+    {
+        let result = [];
+        if (path[0] != '/') path = '/' + path;
+        let folder = path.split('/');
+
+        let full_path = "/"; // 기본값은 / 절대 경로로 시작 
+        for (var i = 0 ; i < folder.length; i++)
+        {
+            if (i != 0 && folder[i] == "")
+            {
+                continue;
+            }
+            // 절대 경로에 있는 상위 폴더까지는 앞에 /가 하나 뿐임.
+            if (i > 1) full_path += '/'; 
+
+            full_path += folder[i];
+            result.push({
+                name: folder[i],
+                path: full_path
+            })
+
+        }
+        return result;
     }
 }
