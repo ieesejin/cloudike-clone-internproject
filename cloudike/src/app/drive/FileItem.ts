@@ -11,7 +11,7 @@ export class FileItem
     public type: string;
     public modified: string;
     public role: string;
-    
+    public isfolder: boolean;
     constructor(value)
     {
         if (value == null) return null;
@@ -30,12 +30,17 @@ export class FileItem
         if (this.type == "document_office") this.type = "Word"
         if (this.type == "folder") 
         {
+            this.isfolder = true;
             if (this.role == "collaborator")
                 this.type = "공유 폴더";
             else if (this.role == "owner")
                 this.type = "폴더";
             else
                 this.type = "알 수 없음 .. 폴더";
+        }
+        else
+        {
+            this.isfolder = false;
         }
         let temp = this.path.split("/");
         this.name = temp[temp.length - 1];
