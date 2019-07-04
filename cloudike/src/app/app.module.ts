@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavTreeComponent } from './nav-tree/nav-tree.component';
 import { DriveComponent } from './drive/drive.component';
+import { FolderItemComponent } from './nav-tree/folder-item/folder-item.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DriveComponent } from './drive/drive.component';
     BootComponent,
     NavBarComponent,
     NavTreeComponent,
-    DriveComponent
+    DriveComponent,
+    FolderItemComponent
   ],
   imports: [
     BrowserModule,

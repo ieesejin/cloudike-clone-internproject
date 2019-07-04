@@ -1,3 +1,5 @@
+import { DriveComponent } from './drive.component';
+
 export class FileItem
 {
     public content = {};
@@ -53,5 +55,65 @@ export class FileItem
                 this.content[item.name] = item;
             }); 
         }
+    }
+    public static Update(value : FileItem)
+    {
+        let move = DriveComponent.Root;
+        if (value.path == "/")
+        {
+            DriveComponent.Root = value;
+            return;
+        }
+        let parent = value.path;
+        parent = parent.substring(0,parent.lastIndexOf("/"));
+
+        if (parent != "")
+        {
+            let folder = parent.substring(1).split("/");
+            for(let i = 0; i < folder.length;i++)
+            {
+                move = move.content[folder[i]];
+            }
+        }
+        move.content[value.name] = value;
+    }
+    public static Init(value : FileItem) : FileItem
+    {
+        if (value.path == "/")
+        {
+            return value;
+        }
+        let folder = value.path.split("/");
+        let result = null;
+        for(var i = folder.length - 2; i >= 0;i--)
+        {
+            let path = "";
+            for(var j = 0; j <= i; j++)
+            {
+                path += folder[j] + "/";
+            }
+            var a = new FileItem(null);
+            if (i == folder.length - 2)
+            {
+                a.content[value.name] = value;
+            }
+            a.path = path;
+            a.type = "folder";
+            a.isfolder = true;
+            a.name = folder[i];
+            if (result != null)
+            {
+                a.content[result.name] = result;
+            }
+            result = a;
+        }
+        return result;
+    }
+    public isNull() : boolean
+    {
+        if (this.path == null)
+            return true;
+        else
+            return false;
     }
 }

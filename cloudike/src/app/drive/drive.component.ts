@@ -14,7 +14,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 })
 export class DriveComponent implements OnInit {
 
-  public static Root :FileItem;
+  public static Root :FileItem = new FileItem(null);
   public Now :FileItem = new FileItem(null);
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
@@ -40,8 +40,15 @@ export class DriveComponent implements OnInit {
     this.http.get("https://api.cloudike.kr/api/1/metadata/" + url + "?limit=500&offset=0&order_by=name",{
       headers: {'Mountbit-Auth':UserInfo.token()}
     }).subscribe(data => {
-        DriveComponent.Root = new FileItem(data);
         this.Now = new FileItem(data);
+        if (DriveComponent.Root.isNull())
+        {
+          DriveComponent.Root = FileItem.Init(this.Now);
+        }
+        else
+        {
+          FileItem.Update(this.Now);
+        }
         this.ParantFolder = [];
         let path = "/drive";
         this.ParantFolder.push({name:"내 Cloudike", path:path})
