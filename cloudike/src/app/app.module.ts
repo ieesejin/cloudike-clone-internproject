@@ -9,12 +9,20 @@ import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NavTreeComponent } from './nav-tree/nav-tree.component';
+import { DriveComponent } from './drive/drive.component';
+import { FolderItemComponent } from './nav-tree/folder-item/folder-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OauthComponent,
-    BootComponent
+    BootComponent,
+    NavBarComponent,
+    NavTreeComponent,
+    DriveComponent,
+    FolderItemComponent
   ],
   imports: [
     BrowserModule,
