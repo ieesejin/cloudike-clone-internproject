@@ -1,6 +1,33 @@
 <app-nav-bar></app-nav-bar>
 <div class="main">
+  <div class="path">
+      <div *ngFor="let item of ParantFolder; first as isfirst">
+          <div *ngIf="!isfirst" class="space">
+              >>
+          </div>
+          <a routerLink="{{item.path}}">{{item.name}}</a>
+      </div>
+  </div>
   <app-nav-tree></app-nav-tree>
-  <a *ngFor="let item of Root.content | keyvalue"> {{item.key}} {{item.value.bytes}}<br>
- </a>
+  <table>
+    <tr>
+      <th><input type="checkbox" name="chk_info" value="HTML" id="a"></th>
+      <th>파일명</th>
+      <th>공용 폴더명</th>
+      <th>형식</th>
+      <th>크기</th>
+      <th>수정일</th>
+      <th>공유</th>
+    </tr>
+    <tr *ngFor="let item of Now.content | keyvalue:keepOriginalOrder">
+        <td><input type="checkbox" name="chk_info" value="HTML" id="a"></td>
+        <td routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
+        <td>{{item.value.owner_path}}</td>
+        <td>{{item.value.type}}</td>
+        <td>{{item.value.bytes}}</td>
+        <td>{{item.value.modified}}</td>
+        <td>아이콘</td>
+      <td></td>
+    </tr>
+  </table>
 </div>
