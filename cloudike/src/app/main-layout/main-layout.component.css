@@ -1,0 +1,25 @@
+header
+{
+    width: 100%;
+    height: 100px;
+    background: #ffffff;
+    display: block;
+}
+
+nav.left-menu
+{
+    display: inline-block;
+    width: 250px;
+    height: 404px;
+    border-right: solid #cccccc 2px;
+    box-sizing: border-box;
+    float: left;
+}
+
+section.content
+{    
+    width: calc(100% - 250px);
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+}

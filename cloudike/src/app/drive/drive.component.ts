@@ -31,7 +31,7 @@ export class DriveComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.Update();
   }
   private Update()
   {      

@@ -1,4 +1,6 @@
-<p [ngStyle]="{'padding-left': (depth * 16) + 'px'}">{{item.name}}</p>
+<p class="item" [ngStyle]="{'padding-left': (depth * 16) + 'px'}">{{item.name}}
+    
+</p>
 <div *ngFor="let keya of item.content | keyvalue">
     <app-folder-item [item]="keya.value" [depth]="depth+1" *ngIf="keya.value.isfolder">
     </app-folder-item>

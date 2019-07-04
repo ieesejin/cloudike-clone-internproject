@@ -1,0 +1,10 @@
+:host ::ng-deep nav .item
+{
+    background: white;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin: 0px;
+    height: 30px;
+    box-sizing: border-box;
+}

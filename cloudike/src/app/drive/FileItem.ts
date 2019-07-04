@@ -43,8 +43,16 @@ export class FileItem
         {
             this.isfolder = false;
         }
-        let temp = this.path.split("/");
-        this.name = temp[temp.length - 1];
+        if (this.path == "/")
+        {
+            this.name = "Cloudike";
+        }
+        else
+        {
+            let temp = this.path.split("/");
+            this.name = temp[temp.length - 1];
+        }
+        
 
         if (value["content"] != null)
         {
@@ -106,6 +114,7 @@ export class FileItem
             result = temp;
 
         });
+        result.name = "Cloudike";
         return result;
     }
 
