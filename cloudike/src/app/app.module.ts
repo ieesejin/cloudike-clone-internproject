@@ -3,26 +3,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { NavTreeComponent } from './nav-tree/nav-tree.component';
+import { NavBarComponent } from './drive/nav-bar/nav-bar.component';
+import { NavTreeComponent } from './drive/nav-tree/nav-tree.component';
 import { DriveComponent } from './drive/drive.component';
-import { FolderItemComponent } from './nav-tree/folder-item/folder-item.component';
+import { FolderItemComponent } from './drive/nav-tree/folder-item/folder-item.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     OauthComponent,
     BootComponent,
     NavBarComponent,
     NavTreeComponent,
     DriveComponent,
-    FolderItemComponent
+    FolderItemComponent,
+    MainLayoutComponent,
   ],
   imports: [
     BrowserModule,

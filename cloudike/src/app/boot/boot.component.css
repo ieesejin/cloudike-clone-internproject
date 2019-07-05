@@ -1,0 +1,12 @@
+html
+{
+    height: 100%;
+}
+body
+{
+    background: #efefef url(/assets/img/body-bg-gray.png);
+    margin: 0px;
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+}

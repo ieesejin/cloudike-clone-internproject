@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FileItem } from '../drive/FileItem';
-import { DriveComponent } from '../drive/drive.component';
+import { FileItem } from '../FileItem';
+import { DriveComponent } from '../drive.component';
 
 @Component({
   selector: 'app-nav-tree',
@@ -13,6 +13,7 @@ export class NavTreeComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   get root():FileItem {
     return DriveComponent.Root;
 }

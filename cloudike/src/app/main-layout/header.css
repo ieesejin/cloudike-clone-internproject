@@ -1,0 +1,17 @@
+header .logo
+{
+    display: inline-block;
+    width: 184px;
+    height: 64px;
+    padding: 17px 20px 18px 15px;
+}
+
+header .top-component
+{
+    display: inline-block;
+}
+
+:host ::ng-deep header a
+{
+    color: red;
+}
