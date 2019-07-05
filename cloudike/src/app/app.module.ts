@@ -22,7 +22,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
     NavTreeComponent,
     DriveComponent,
     FolderItemComponent,
-    MainLayoutComponent
+    MainLayoutComponent,
   ],
   imports: [
     BrowserModule,
