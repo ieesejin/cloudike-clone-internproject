@@ -37,6 +37,7 @@ tr:not(:first-child):hover
 .path
 {
     display: block;
+    padding: 16px;
 }
 .path div
 {
@@ -45,4 +46,24 @@ tr:not(:first-child):hover
 .path .space
 {
     margin: 0 10px;
+}
+
+a.path-link:link {
+    text-decoration:none;
+    color: #428bca;
+}
+a.path-link:visited 
+{
+    text-decoration:none; 
+    color: #428bca;
+}
+a.path-link:active
+{
+    text-decoration:none;
+    color: #283e52;
+}
+a.path-link:hover 
+{
+    text-decoration:none; 
+    color: #4a9ce4;
 }

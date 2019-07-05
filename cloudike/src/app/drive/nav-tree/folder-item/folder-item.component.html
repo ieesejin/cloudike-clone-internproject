@@ -1,6 +1,10 @@
-<p class="item" [ngStyle]="{'padding-left': (depth * 16) + 'px'}">{{item.name}}
-    
-</p>
+<!-- 'now' 은 현재 선택된 폴더(파일) -->
+<div class="item" [ngClass]="{ 'on' : now == item}" routerLink="{{'/drive' + item.path}}">
+    <div [ngStyle]="{'padding-left': (depth * 16) + 'px'}" >{{item.name}}</div>
+</div>
+
+
+<!-- 하위 폴더 -->
 <div *ngFor="let keya of item.content | keyvalue">
     <app-folder-item [item]="keya.value" [depth]="depth+1" *ngIf="keya.value.isfolder">
     </app-folder-item>

@@ -4,7 +4,23 @@
     display: block;
     width: 100%;
     padding: 5px;
+    padding-left: 30px;
     margin: 0px;
     height: 30px;
     box-sizing: border-box;
+}
+
+:host ::ng-deep nav .item.on
+{
+    background: rgb(255, 213, 88);
+}
+
+:host ::ng-deep nav .item:hover
+{
+    background: rgb(255, 234, 171);
+}
+:host ::ng-deep nav .item:focus
+{
+    background: rgb(255, 229, 150);
+    outline: none;
 }

@@ -12,6 +12,12 @@ export class MainLayoutComponent implements OnInit {
   @ViewChild('top', { read: ViewContainerRef ,static:true}) top: ViewContainerRef;
   @ViewChild('left', { read: ViewContainerRef ,static:true}) left: ViewContainerRef;
   @ViewChild('main', { read: ViewContainerRef ,static:true}) main: ViewContainerRef;
+
+  get user_name()
+  {
+     return UserInfo.user_name()
+  };
+
   constructor(
     private router : Router, 
     private route: ActivatedRoute,
@@ -36,6 +42,6 @@ export class MainLayoutComponent implements OnInit {
             this.main.createComponent(componentFactory);
           }
     });
- }
+  }
 
 }

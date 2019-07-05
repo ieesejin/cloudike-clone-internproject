@@ -13,6 +13,7 @@ export class NavTreeComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   get root():FileItem {
     return DriveComponent.Root;
 }

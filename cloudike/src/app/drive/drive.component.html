@@ -1,9 +1,7 @@
 <div class="path">
     <div *ngFor="let item of ParantFolder; first as isfirst">
-        <div *ngIf="!isfirst" class="space">
-            >>
-        </div>
-        <a routerLink="{{item.path}}">{{item.name}}</a>
+        <span *ngIf="!isfirst" class="space">>></span>
+        <a class="path-link" routerLink="{{item.path}}">{{item.name}}</a>
     </div>
 </div>
 
@@ -17,7 +15,7 @@
     <th>수정일</th>
     <th>공유</th>
   </tr>
-  <tr *ngFor="let item of Now.content | keyvalue:keepOriginalOrder">
+  <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder">
       <td><input type="checkbox" name="chk_info" value="HTML" id="a"></td>
       <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
       <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>

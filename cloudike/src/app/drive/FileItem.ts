@@ -96,12 +96,12 @@ export class FileItem
 
     public static CreateRoot(value : FileItem) : FileItem
     {
-        let paths = FileItem.SplitPath(value.path).reverse();
+        let paths = FileItem.SplitPath(value.path);
         paths.pop(); // 가장 마지막은 value와 같은 아이템. 즉 이미 존재하므로 의미 없음. (pop으로 삭제)
-        
+        paths = paths.reverse();
+
         var result = null;
         paths.forEach(element => {
-
             let temp = new FileItem(null);
             temp.path = element.path;
             temp.type = "folder";
