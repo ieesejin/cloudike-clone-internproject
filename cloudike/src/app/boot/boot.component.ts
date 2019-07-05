@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { UserInfo } from '../UserInfo';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,9 +10,7 @@ import { Location } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class BootComponent implements OnInit {
-  private static object : BootComponent;
-  constructor(private cookieservice : CookieService, private router: Router, private location: Location) { 
-    BootComponent.object = this;
+  constructor(private router: Router, private location: Location) { 
     console.log(UserInfo.user_name());
     console.log(UserInfo.token());
 

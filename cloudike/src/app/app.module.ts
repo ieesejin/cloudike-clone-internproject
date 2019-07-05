@@ -7,7 +7,6 @@ import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 
-import { CookieService } from 'ngx-cookie-service';
 import { NavBarComponent } from './drive/nav-bar/nav-bar.component';
 import { NavTreeComponent } from './drive/nav-tree/nav-tree.component';
 import { DriveComponent } from './drive/drive.component';
@@ -31,7 +30,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [CookieService],
+  providers: [],
   bootstrap: [BootComponent]
 })
 export class AppModule { }
