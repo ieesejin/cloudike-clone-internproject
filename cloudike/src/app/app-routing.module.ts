@@ -6,12 +6,18 @@ import { NavBarComponent } from './drive/nav-bar/nav-bar.component';
 import { NavTreeComponent } from './drive/nav-tree/nav-tree.component';
 import { BootComponent } from './boot/boot.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   { 
     path: 'oauth',  
     component: OauthComponent 
   }, 
+  
+  { 
+    path: 'logout',  
+    component: LogoutComponent
+  },
 
   { 
     path: 'drive',  

@@ -32,4 +32,9 @@ export class UserInfo
     {
         return this.token() != '';
     }
+    public static Logout()
+    {
+        this.data = "";
+        localStorage.removeItem("CLOUDIKE");
+    }
 }

@@ -12,6 +12,7 @@ import { NavTreeComponent } from './drive/nav-tree/nav-tree.component';
 import { DriveComponent } from './drive/drive.component';
 import { FolderItemComponent } from './drive/nav-tree/folder-item/folder-item.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
     DriveComponent,
     FolderItemComponent,
     MainLayoutComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
