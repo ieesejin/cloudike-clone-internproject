@@ -6,8 +6,8 @@
         {{name}}
     </div>
     
-    <div *ngIf="item.content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick()" class="hidebutton">▶</div>
-    <div *ngIf="!item.content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick()" class="hidebutton">▼</div>
+    <div *ngIf="item.content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick(true)" class="hidebutton">▶</div>
+    <div *ngIf="!item.content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick(false)" class="hidebutton">▼</div>
 </div>
 
 
