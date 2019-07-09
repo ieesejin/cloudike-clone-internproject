@@ -1,6 +1,8 @@
 
+
 export class FileItem
 {
+    public content_hide = true;
     public content = {};
     public author_name: string;
     public icon: string;
@@ -13,9 +15,15 @@ export class FileItem
     public modified: string;
     public role: string;
     public isfolder: boolean;
+    public isRead = false;
     constructor(value)
     {
-        if (value == null) return null;
+        if (value == null) 
+        {
+            this.type = "cache";
+            this.isfolder = true;
+            return;
+        }
         this.author_name = value["author_name"];
         this.icon = value["icon"];
         this.path = value["path"];
@@ -63,66 +71,18 @@ export class FileItem
             }); 
         }
     }
-    
-    public isNull() : boolean
-    {
-        if (this.path == null)
-            return true;
-        else
-            return false;
-    }
 
-    public static UpdateRoot(root : FileItem, value : FileItem) : FileItem
-    {
-        if (value.path == "/")
-        {
-            return value;
-        }
-        if (root.isNull())
-        {
-            return FileItem.CreateRoot(value);
-        }
-        let move = root;
-        let paths = FileItem.SplitPath(value.path);
-        paths.pop();
-
-        for(let i = 1; i < paths.length; i++)
-        {
-            move = move.content[paths[i].name];
-        }
-        move.content[value.name] = value;
-        return root;
-    }
-
-    public static CreateRoot(value : FileItem) : FileItem
-    {
-        let paths = FileItem.SplitPath(value.path);
-        paths.pop(); // 가장 마지막은 value와 같은 아이템. 즉 이미 존재하므로 의미 없음. (pop으로 삭제)
-        paths = paths.reverse();
-
-        var result = null;
-        paths.forEach(element => {
-            let temp = new FileItem(null);
-            temp.path = element.path;
-            temp.type = "folder";
-            temp.isfolder = true;
-            temp.name = element.name;
-            if (result != null)
-                temp.content[result.name] = result;
-            else
-                temp.content[value.name] = value;
-            result = temp;
-
-        });
-        result.name = "Cloudike";
-        return result;
-    }
 
     public static SplitPath(path)
     {
         let result = [];
+        //      /폴더명/폴더2   이런식으로 형태 맞추기
         if (path[0] != '/') path = '/' + path;
         let folder = path.split('/');
+        folder[0] = "내 Cloudike";
+
+        //     /            "", ""
+        //     /폴더        "", "폴더"
 
         let full_path = "/"; // 기본값은 / 절대 경로로 시작 
         for (var i = 0 ; i < folder.length; i++)
@@ -134,7 +94,8 @@ export class FileItem
             // 절대 경로에 있는 상위 폴더까지는 앞에 /가 하나 뿐임.
             if (i > 1) full_path += '/'; 
 
-            full_path += folder[i];
+            if (i != 0)
+                full_path += folder[i];
             result.push({
                 name: folder[i],
                 path: full_path

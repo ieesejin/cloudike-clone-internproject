@@ -1,7 +1,7 @@
 <div class="path">
     <div *ngFor="let item of ParantFolder; first as isfirst">
         <span *ngIf="!isfirst" class="space">>></span>
-        <a class="path-link" routerLink="{{item.path}}">{{item.name}}</a>
+        <a class="path-link" routerLink="{{'/drive' + item.path}}">{{item.name}}</a>
     </div>
 </div>
 

@@ -4,6 +4,7 @@ import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { FileManagement } from './FileManagement';
 
 
 @Component({
@@ -41,36 +42,20 @@ export class DriveComponent implements OnInit {
   }
   private Update()
   {      
-    let url = this.router.url.substring("/drive".length);
-    if (url[0] == '/') url = url.substring(1);
+    let url = decodeURI(this.router.url.substring("/drive".length));
 
-    this.http.get("https://api.cloudike.kr/api/1/metadata/" + url + "?limit=500&offset=0&order_by=name",{
-      headers: {'Mountbit-Auth':UserInfo.token()}
-    }).subscribe(data => {
-        DriveComponent.Now = new FileItem(data);
-
-        DriveComponent.Root = FileItem.UpdateRoot(DriveComponent.Root, DriveComponent.Now);
-        this.ParantFolder = [];
-        let path = "/drive";
-        this.ParantFolder.push({name:"내 Cloudike", path:path})
-
-        if (url.length > 0)
-        {
-          let temp = decodeURI(url).split('/');
-          temp.forEach(element => {
-            path += "/" + element;
-            this.ParantFolder.push({name:element, path:path})
-          });
-        }
+    FileManagement.getItem(this.http, url,(item)=>{
+      DriveComponent.Now = item;
+      this.ParantFolder = FileItem.SplitPath(item.path);
     });
   }
-    private Download(item: FileItem)
-    {
-      this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
-        headers: {'Mountbit-Auth':UserInfo.token()}
-      }).subscribe(data => {
-        window.location = data["url"];
-      });
-    }
+  private Download(item: FileItem)
+  {
+    this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
+      headers: {'Mountbit-Auth':UserInfo.token()}
+    }).subscribe(data => {
+      window.location = data["url"];
+    });
+  }
 
 }

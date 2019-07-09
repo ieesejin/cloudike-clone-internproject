@@ -10,6 +10,31 @@
     box-sizing: border-box;
 }
 
+:host ::ng-deep nav .item
+{
+    background: white;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    padding-left: 30px;
+    margin: 0px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+:host ::ng-deep nav .hidebutton
+{
+    position: relative;
+    top: -20px;
+    left: -18px;
+    font-size: 10px;
+    margin: 0px;
+    padding: 4px;
+    width: 16px;
+    color: #aaaaaa;
+    cursor:  pointer;
+}
+
 :host ::ng-deep nav .item.on
 {
     background: rgb(255, 213, 88);
