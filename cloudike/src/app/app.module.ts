@@ -7,23 +7,29 @@ import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 
-import { NavBarComponent } from './drive/nav-bar/nav-bar.component';
-import { NavTreeComponent } from './drive/nav-tree/nav-tree.component';
+import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
+import { NavDriveComponent } from './drive/nav-drive/nav-drive.component';
 import { DriveComponent } from './drive/drive.component';
-import { FolderItemComponent } from './drive/nav-tree/folder-item/folder-item.component';
+import { FolderItemComponent } from './drive/nav-drive/folder-item/folder-item.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ProfileComponent } from './setting/profile/profile.component';
+import { NavSettingComponent } from './setting/nav-setting/nav-setting.component';
+import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
 
 @NgModule({
   declarations: [
     OauthComponent,
     BootComponent,
-    NavBarComponent,
-    NavTreeComponent,
+    HeaderDriveComponent,
+    NavDriveComponent,
     DriveComponent,
     FolderItemComponent,
     MainLayoutComponent,
     LogoutComponent,
+    ProfileComponent,
+    NavSettingComponent,
+    HeaderSettingComponent,
   ],
   imports: [
     BrowserModule,
