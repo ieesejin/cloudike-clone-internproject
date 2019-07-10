@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,16 +14,12 @@ export class MainLayoutComponent implements OnInit {
   @ViewChild('left', { read: ViewContainerRef ,static:true}) left: ViewContainerRef;
   @ViewChild('main', { read: ViewContainerRef ,static:true}) main: ViewContainerRef;
 
-  get user_name()
-  {
-     return UserInfo.user_name()
-  };
-
   constructor(
     private router : Router, 
     private route: ActivatedRoute,
-    private componentFactoryResolver: ComponentFactoryResolver){
-
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private http: HttpClient){
+      UserInfo.Update(http);
   }
 
   ngOnInit(){
@@ -42,6 +39,18 @@ export class MainLayoutComponent implements OnInit {
             this.main.createComponent(componentFactory);
           }
     });
+  }
+  get user_name()
+  {
+     return UserInfo.user_name
+  };
+  get storageSize()
+  {
+    return UserInfo.storageSize;
+  }
+  get maxStorageSize()
+  {
+    return UserInfo.maxStorageSize;
   }
 
 }

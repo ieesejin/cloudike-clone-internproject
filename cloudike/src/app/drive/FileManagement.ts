@@ -72,7 +72,7 @@ export class FileManagement
 
             // HTTP 요청
             this.http.get("https://api.cloudike.kr/api/1/metadata" + url + "?limit=500&offset=0&order_by=name",{
-                headers: {'Mountbit-Auth':UserInfo.token()}
+                headers: {'Mountbit-Auth':UserInfo.token}
             }).subscribe(data => {
                 // 성공한경우 해당 파일을 만들고 캐시에 저장
                 var Now = new FileItem(data);
