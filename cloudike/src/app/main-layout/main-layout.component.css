@@ -29,12 +29,10 @@ nav .tree
 
 nav .info
 {
+    position: absolute;
     bottom: 10px;
-    height: 50px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
-    background: #ffffff;
-    box-sizing: border-box;
-    width: 100%;
+    left: 10px;
+    width: calc(100% - 20px);
 }
 
 section.content
@@ -43,4 +41,12 @@ section.content
     height: 100%;
     display: inline-block;
     box-sizing: border-box;
+}
+
+nav .logo
+{
+    display: inline-block;
+    width: 184px;
+    height: 64px;
+    padding: 10px 20px 18px 0px;
 }
