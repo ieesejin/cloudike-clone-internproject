@@ -5,11 +5,11 @@ import { FileManagement } from '../FileManagement';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-nav-tree',
-  templateUrl: './nav-tree.component.html',
-  styleUrls: ['./nav-tree.component.css']
+  selector: 'app-nav-drive',
+  templateUrl: './nav-drive.component.html',
+  styleUrls: ['./nav-drive.component.css']
 })
-export class NavTreeComponent implements OnInit {
+export class NavDriveComponent implements OnInit {
 
   root : FileItem = new FileItem(null);
   constructor(private http: HttpClient) { }

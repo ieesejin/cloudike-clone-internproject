@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavTreeComponent } from './nav-tree.component';
+import { HeaderSettingComponent } from './header-setting.component';
 
-describe('NavTreeComponent', () => {
-  let component: NavTreeComponent;
-  let fixture: ComponentFixture<NavTreeComponent>;
+describe('HeaderSettingComponent', () => {
+  let component: HeaderSettingComponent;
+  let fixture: ComponentFixture<HeaderSettingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavTreeComponent ]
+      declarations: [ HeaderSettingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavTreeComponent);
+    fixture = TestBed.createComponent(HeaderSettingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
