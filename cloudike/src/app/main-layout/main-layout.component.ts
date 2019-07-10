@@ -13,16 +13,23 @@ export class MainLayoutComponent implements OnInit {
   @ViewChild('left', { read: ViewContainerRef ,static:true}) left: ViewContainerRef;
   @ViewChild('main', { read: ViewContainerRef ,static:true}) main: ViewContainerRef;
 
-  get user_name()
+  constructor(
+    private router : Router, 
+    private route: ActivatedRoute,
+    private componentFactoryResolver: ComponentFactoryResolver)
+  {
+
+  }
+
+  public get user_name()
   {
      return UserInfo.user_name()
   };
 
-  constructor(
-    private router : Router, 
-    private route: ActivatedRoute,
-    private componentFactoryResolver: ComponentFactoryResolver){
-
+  private createComponent(view:ViewContainerRef, component)
+  {
+    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    view.createComponent(componentFactory);
   }
 
   ngOnInit(){
@@ -30,16 +37,9 @@ export class MainLayoutComponent implements OnInit {
         .subscribe(data => {
           if (!!data)
           {
-            let componentFactory;
-
-            componentFactory = this.componentFactoryResolver.resolveComponentFactory(data.top);
-            this.top.createComponent(componentFactory);
-
-            componentFactory = this.componentFactoryResolver.resolveComponentFactory(data.left);
-            this.left.createComponent(componentFactory);
-            
-            componentFactory = this.componentFactoryResolver.resolveComponentFactory(data.main);
-            this.main.createComponent(componentFactory);
+            this.createComponent(this.top, data.top);
+            this.createComponent(this.left, data.left);
+            this.createComponent(this.main, data.main);
           }
     });
   }
