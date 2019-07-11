@@ -26,17 +26,48 @@ export class FileItem
             this.isfolder = true;
             return;
         }
-        this.author_name = value["author_name"];
+        
         this.icon = value["icon"];
         this.path = value["path"];
-        this.bytes = value["bytes"];
-        this.owner_path = value["owner_path"];
         this.mime_type = value["mime_type"];
-        
-        this.modified = value["modified"];
-        this.role = value["role"];
-
         this.type = this.icon;
+        
+        if (value['type'] == "file_created")
+        {
+            this.bytes = value["content"]["size"];
+        }
+        else if (value['type'] == "folder_created")
+        {
+            this.role = "owner"
+        }
+        else
+        {
+            this.bytes = value["bytes"];
+            this.owner_path = value["owner_path"];
+            
+            this.modified = value["modified"];
+            this.role = value["role"];
+
+            if (value["content"] != null)
+            {
+                // => 을 functuin(subvalue) { 으로  대체할경우 this 오류 발생
+                value["content"].forEach( (subvalue) => {
+                    let item = new FileItem(subvalue);
+                    this.content[item.name] = item;
+                }); 
+            }
+        }
+
+        if (this.path == "/")
+        {
+            this.name = "Cloudike";
+        }
+        else
+        {
+            let temp = this.path.split("/");
+            this.name = temp[temp.length - 1];
+        }
+
         if (this.type == "presentation_office") this.type = "Powerpoint"
         if (this.type == "document_office") this.type = "Word"
         if (this.type == "folder") 
@@ -54,25 +85,7 @@ export class FileItem
             this.bytesString = FileManagement.byteToString(this.bytes);
             this.isfolder = false;
         }
-        if (this.path == "/")
-        {
-            this.name = "Cloudike";
-        }
-        else
-        {
-            let temp = this.path.split("/");
-            this.name = temp[temp.length - 1];
-        }
-        
 
-        if (value["content"] != null)
-        {
-            // => 을 functuin(subvalue) { 으로  대체할경우 this 오류 발생
-            value["content"].forEach( (subvalue) => {
-                let item = new FileItem(subvalue);
-                this.content[item.name] = item;
-            }); 
-        }
     }
 
 

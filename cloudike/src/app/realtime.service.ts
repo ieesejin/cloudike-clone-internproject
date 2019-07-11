@@ -3,6 +3,9 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { WebsocketService } from "./websocket.service";
 import { UserInfo } from './UserInfo';
+import { FileManagement } from './drive/FileManagement';
+import { FileItem } from './drive/FileItem';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -17,7 +20,7 @@ export class RealtimeService {
       return RealtimeService._messages;
   }
   private static wsService: WebsocketService = null;
-  constructor() {
+  constructor(private http: HttpClient) {
     if (RealtimeService.wsService == null)
     {
       RealtimeService.wsService = new WebsocketService();
@@ -38,7 +41,7 @@ export class RealtimeService {
         {
           if (data.length == 0) return;
           data.forEach(element => {
-           RealtimeService.Response(element);
+           this.Response(element);
           });
         }
 
@@ -47,9 +50,20 @@ export class RealtimeService {
     }
   }
 
-  public static Response(data: JSON)
+  public Response(data: JSON)
   {
+    console.log(data);
     switch (data["type"]) {
+      case 'folder_created':
+      case 'file_created':
+        var folder = FileItem.SplitPath(data["path"]);
+        FileManagement.getItem(this.http,
+          folder[folder.length - 2].path,
+          (item) => {
+              item["content"][folder[folder.length - 1].name] = new FileItem(data);
+          }
+        );
+        break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];
         UserInfo.maxStorageSize = data["hard_quota_size"];
