@@ -8,17 +8,17 @@ export class FileManagement
 
     private static cache = {};
     private static http : HttpClient;
-    public static getItem(http: HttpClient, url : string, func)
+    public static getItem(http: HttpClient, path : string, func)
     {
         this.http = http;
 
-        var folder = FileItem.SplitPath(url);
+        var folder = FileItem.SplitPath(path);
 
         // URL을 표준에 맞게 다시 작성
-        url = folder[folder.length - 1].path;
+        path = folder[folder.length - 1].path;
 
         // 먼저 해당 아이템을 로드한 적이 있는지 확인
-        let item = FileManagement.cache[url];
+        let item = FileManagement.cache[path];
         if (item != undefined)
         {
             // 로드한 적이 있으면 바로 성공 이벤트 실행 후 종료 
@@ -28,14 +28,14 @@ export class FileManagement
         // 상위 폴더가 존재하지 않는 경우 바로 종료
         if (folder.length < 2)
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         // 그렇지 않을경우 상위 폴더에서 이 아이템이 로드된 적 있는지 확인
         let parent : FileItem = FileManagement.cache[folder[folder.length - 2].path];
         if (item == undefined) // 로드된적 없으면
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
 
@@ -43,12 +43,12 @@ export class FileManagement
         let this_item : FileItem = parent.content[folder[folder.length - 1].name];
         if (this_item == undefined) // 해당 아이템이 없을 경우 요청
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         if (this_item.isfolder) // 해당 아이템이 폴더일 경우 (상세 정보를 얻기 위해 URL으로 요청)
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         else
@@ -57,8 +57,9 @@ export class FileManagement
             func(this_item);
         }
     }
-    private static reload(url:string, func)
+    private static reload(path:string, func)
     {
+        var url = encodeURI(path);
         // 동시에 같은 URL로 HTTP 리퀘스트를 보낸 경우
         if (FileManagement.read_waiting_queue[url] != undefined)
         {
