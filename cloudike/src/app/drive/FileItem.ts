@@ -14,7 +14,8 @@ export class FileItem
     public owner_path: string;
     public mime_type: string;
     public type: string;
-    public modified: string;
+    public modified: number;
+    public date: string;
     public role: string;
     public isfolder: boolean;
     public isRead = false;
@@ -34,6 +35,7 @@ export class FileItem
         this.mime_type = value["mime_type"];
         
         this.modified = value["modified"];
+        this.date = FileManagement.unixToDate(this.modified)
         this.role = value["role"];
 
         this.type = this.icon;
