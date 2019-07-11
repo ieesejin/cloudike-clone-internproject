@@ -34,7 +34,7 @@ export class HeaderDriveComponent implements OnInit {
 
         formdata.append("path", url + result);
         this.http.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, {
-          headers: {'Mountbit-Auth':UserInfo.token()}
+          headers: {'Mountbit-Auth':UserInfo.token}
         }).subscribe(data => {
           console.log("성공");
         });
