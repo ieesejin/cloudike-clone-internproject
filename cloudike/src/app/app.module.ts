@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { OauthComponent } from './oauth/oauth.component';
@@ -16,6 +19,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { ProfileComponent } from './setting/profile/profile.component';
 import { NavSettingComponent } from './setting/nav-setting/nav-setting.component';
 import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
+import { NewFolderComponent } from './drive/new-folder/new-folder.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { HeaderSettingComponent } from './setting/header-setting/header-setting.
     ProfileComponent,
     NavSettingComponent,
     HeaderSettingComponent,
+    NewFolderComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,8 +42,11 @@ import { HeaderSettingComponent } from './setting/header-setting/header-setting.
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [BootComponent]
+  bootstrap: [BootComponent],
+  entryComponents: [ NewFolderComponent ]
 })
 export class AppModule { }

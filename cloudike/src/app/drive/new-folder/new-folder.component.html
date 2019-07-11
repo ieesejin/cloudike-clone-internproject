@@ -1,0 +1,10 @@
+
+<h2 mat-dialog-title>새 폴더 만들기</h2>
+<mat-dialog-content>
+    폴더 이름
+    <input [(ngModel)]="inputName"/>
+</mat-dialog-content>
+<mat-dialog-actions> 
+    <button mat-button type="button" (click)="dialogRef.close(inputName)">만들기</button>
+    <button mat-button type="button" (click)="dialogRef.close()">취소</button>
+</mat-dialog-actions>
