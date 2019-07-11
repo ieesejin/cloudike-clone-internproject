@@ -2,6 +2,8 @@ import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolve
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FileManagement } from '../drive/FileManagement';
+
 
 @Component({
   selector: 'app-main-layout',
@@ -46,11 +48,14 @@ export class MainLayoutComponent implements OnInit {
   };
   get storageSize()
   {
-    return UserInfo.storageSize;
+    return FileManagement.byteToString(UserInfo.storageSize);
   }
   get maxStorageSize()
   {
-    return UserInfo.maxStorageSize;
+    return FileManagement.byteToString(UserInfo.maxStorageSize);;
   }
-
+  get storagePercent()
+  {
+    return UserInfo.storageSize/UserInfo.maxStorageSize*100;
+  }
 }

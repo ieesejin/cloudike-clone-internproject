@@ -89,4 +89,31 @@ export class FileManagement
         }
 
     }
+    
+    public static byteToString(byte:number) : string {
+        var capacity:number = byte;
+        var count:number = 0;
+        for(count = 0; capacity >= 1024; count++){
+            capacity = capacity/1024;
+        }
+        var result:string = capacity.toFixed(1);
+
+        if(count <= 1){
+            return result + "KB"
+        }
+        else if(count == 2){
+            return result + "MB"
+        }
+        else if(count == 3){
+            return result + "GB"
+        }
+        else if(count == 4){
+            return result + "TB"
+        }
+    }
+
+    public static posixToDate(posix:number) : string {
+        
+        return
+    }
 }
