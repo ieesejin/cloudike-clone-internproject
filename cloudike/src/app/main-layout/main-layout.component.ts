@@ -56,6 +56,10 @@ export class MainLayoutComponent implements OnInit {
   {
     return FileManagement.byteToString(UserInfo.maxStorageSize);;
   }
+  get remainStorageSize()
+  {
+    return FileManagement.byteToString(UserInfo.maxStorageSize-UserInfo.storageSize);
+  }
   get storagePercent()
   {
     if(UserInfo.maxStorageSize == 0) return 0;
