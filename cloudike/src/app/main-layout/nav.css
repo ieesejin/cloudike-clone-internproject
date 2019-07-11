@@ -8,6 +8,8 @@
     margin: 0px;
     height: 30px;
     box-sizing: border-box;
+    
+   user-select: none;
 }
 
 :host ::ng-deep nav .item

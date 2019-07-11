@@ -1,3 +1,4 @@
+import { FileManagement } from './FileManagement';
 
 
 export class FileItem
@@ -8,6 +9,7 @@ export class FileItem
     public icon: string;
     public path: string;
     public bytes : number;
+    public bytesString : string;
     public name: string;
     public owner_path: string;
     public mime_type: string;
@@ -49,6 +51,7 @@ export class FileItem
         }
         else
         {
+            this.bytesString = FileManagement.byteToString(this.bytes);
             this.isfolder = false;
         }
         if (this.path == "/")

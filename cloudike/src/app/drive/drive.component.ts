@@ -52,7 +52,7 @@ export class DriveComponent implements OnInit {
   private Download(item: FileItem)
   {
     this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
-      headers: {'Mountbit-Auth':UserInfo.token()}
+      headers: {'Mountbit-Auth':UserInfo.token}
     }).subscribe(data => {
       window.location = data["url"];
     });

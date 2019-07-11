@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FileManagement } from '../drive/FileManagement';
+
 
 @Component({
   selector: 'app-main-layout',
@@ -16,15 +19,10 @@ export class MainLayoutComponent implements OnInit {
   constructor(
     private router : Router, 
     private route: ActivatedRoute,
-    private componentFactoryResolver: ComponentFactoryResolver)
-  {
-
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private http: HttpClient){
+      UserInfo.Update(http);
   }
-
-  public get user_name()
-  {
-     return UserInfo.user_name()
-  };
 
   private createComponent(view:ViewContainerRef, component)
   {
@@ -43,5 +41,21 @@ export class MainLayoutComponent implements OnInit {
           }
     });
   }
-
+  get user_name()
+  {
+     return UserInfo.user_name
+  };
+  get storageSize()
+  {
+    return FileManagement.byteToString(UserInfo.storageSize);
+  }
+  get maxStorageSize()
+  {
+    return FileManagement.byteToString(UserInfo.maxStorageSize);;
+  }
+  get storagePercent()
+  {
+    if(UserInfo.maxStorageSize == 0) return 0;
+    return UserInfo.storageSize * 100 / UserInfo.maxStorageSize;
+  }
 }

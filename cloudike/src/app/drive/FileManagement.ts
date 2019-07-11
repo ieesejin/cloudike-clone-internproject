@@ -72,7 +72,7 @@ export class FileManagement
 
             // HTTP 요청
             this.http.get("https://api.cloudike.kr/api/1/metadata" + url + "?limit=500&offset=0&order_by=name",{
-                headers: {'Mountbit-Auth':UserInfo.token()}
+                headers: {'Mountbit-Auth':UserInfo.token}
             }).subscribe(data => {
                 // 성공한경우 해당 파일을 만들고 캐시에 저장
                 var Now = new FileItem(data);
@@ -88,5 +88,32 @@ export class FileManagement
             });
         }
 
+    }
+    
+    public static byteToString(byte:number) : string {
+        var capacity:number = byte;
+        var count:number = 0;
+        for(count = 0; capacity >= 1024; count++){
+            capacity = capacity/1024;
+        }
+        var result:string = capacity.toFixed(1);
+
+        if(count <= 1){
+            return result + "KB"
+        }
+        else if(count == 2){
+            return result + "MB"
+        }
+        else if(count == 3){
+            return result + "GB"
+        }
+        else if(count == 4){
+            return result + "TB"
+        }
+    }
+
+    public static posixToDate(posix:number) : string {
+        
+        return
     }
 }
