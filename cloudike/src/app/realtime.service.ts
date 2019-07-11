@@ -49,6 +49,15 @@ export class RealtimeService {
 
   public static Response(data: JSON)
   {
-    console.log(data);
+    switch (data["type"]) {
+      case 'storage_info':
+        UserInfo.storageSize = data["home_storage_size"];
+        UserInfo.maxStorageSize = data["hard_quota_size"];
+        break;
+      default:
+        console.log("처리되지 않은 소켓 메세지");
+        console.log(data);
+        break;
+    }
   }
 }
