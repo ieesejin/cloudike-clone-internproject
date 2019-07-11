@@ -3,6 +3,7 @@ import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FileManagement } from '../drive/FileManagement';
+import { RealtimeService } from '../realtime.service';
 
 
 @Component({
@@ -20,7 +21,9 @@ export class MainLayoutComponent implements OnInit {
     private router : Router, 
     private route: ActivatedRoute,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private http: HttpClient){
+    private http: HttpClient,
+    private realservice : RealtimeService)
+  {
       UserInfo.Update(http);
   }
 
