@@ -56,6 +56,7 @@ export class MainLayoutComponent implements OnInit {
   }
   get storagePercent()
   {
-    return UserInfo.storageSize/UserInfo.maxStorageSize*100;
+    if(UserInfo.maxStorageSize == 0) return 0;
+    return UserInfo.storageSize * 100 / UserInfo.maxStorageSize;
   }
 }
