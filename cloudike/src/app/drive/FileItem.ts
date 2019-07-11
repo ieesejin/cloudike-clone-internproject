@@ -1,4 +1,5 @@
 import { FileManagement } from './FileManagement';
+import { ConvertFormat } from './ConvertFormat'
 
 
 export class FileItem
@@ -82,7 +83,7 @@ export class FileItem
         }
         else
         {
-            this.bytesString = FileManagement.byteToString(this.bytes);
+            this.bytesString = ConvertFormat.byteToString(this.bytes);
             this.isfolder = false;
         }
 
