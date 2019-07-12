@@ -1,4 +1,3 @@
-import { FileManagement } from './FileManagement';
 import { ConvertFormat } from './ConvertFormat'
 
 
@@ -15,7 +14,8 @@ export class FileItem
     public owner_path: string;
     public mime_type: string;
     public type: string;
-    public modified: string;
+    public modified: number;
+    public date: string;
     public role: string;
     public isfolder: boolean;
     public isRead = false;
@@ -47,6 +47,7 @@ export class FileItem
             this.owner_path = value["owner_path"];
             
             this.modified = value["modified"];
+            this.date = ConvertFormat.unixToDate(this.modified)
             this.role = value["role"];
 
             if (value["content"] != null)

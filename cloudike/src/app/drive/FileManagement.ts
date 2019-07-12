@@ -90,9 +90,4 @@ export class FileManagement
         }
 
     }
-
-    public static posixToDate(posix:number) : string {
-        
-        return
-    }
 }
