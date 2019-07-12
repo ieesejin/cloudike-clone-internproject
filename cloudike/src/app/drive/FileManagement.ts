@@ -57,6 +57,37 @@ export class FileManagement
             func(this_item);
         }
     }
+
+    public static removeItem(path : string)
+    {
+        var folder = null;
+        var parent_path = null;
+        var name = null;
+        folder = FileItem.SplitPath(path);
+        path = folder[folder.length - 1].path;
+        name = folder[folder.length - 1].name;
+        parent_path = folder[folder.length - 2].path;
+
+        if (!FileManagement.contains(parent_path)) return;
+
+        var item : FileItem = FileManagement.cache[parent_path]["content"][name];
+
+        if (item.isfolder)
+        {
+            delete FileManagement.cache[path];
+        }
+        delete FileManagement.cache[parent_path]["content"][name];
+
+    }
+    public static contains(path : string)
+    {
+        var folder = FileItem.SplitPath(path);
+
+        // URL을 표준에 맞게 다시 작성
+        path = folder[folder.length - 1].path;
+
+        return FileManagement.cache[path] != null;
+    }
     private static reload(path:string, func)
     {
         var url = encodeURI(path);
@@ -85,7 +116,7 @@ export class FileManagement
                 });
 
                 // 해당 URL 오브젝트 초기화
-                FileManagement.read_waiting_queue[url] = undefined;
+                delete FileManagement.read_waiting_queue[url];
             });
         }
 

@@ -52,18 +52,33 @@ export class RealtimeService {
 
   public Response(data: JSON)
   {
-    console.log(data);
+    var folder = null;
+    var parent_path = null;
+    var name = null;
+    if (data["path"] != null)
+    {
+      folder = FileItem.SplitPath(data["path"]);
+      console.log(folder);
+      name = folder[folder.length - 1].name;
+
+      if (folder.length > 1)
+        parent_path = folder[folder.length - 2].path;
+    }
     switch (data["type"]) {
       case 'folder_created':
       case 'file_created':
-        var folder = FileItem.SplitPath(data["path"]);
+        if (!FileManagement.contains(parent_path)) return;
         FileManagement.getItem(this.http,
-          folder[folder.length - 2].path,
+          parent_path,
           (item) => {
-              item["content"][folder[folder.length - 1].name] = new FileItem(data);
+              item["content"][name] = new FileItem(data);
           }
         );
         break;
+      case 'file_deleted':
+      case 'folder_deleted':
+          FileManagement.removeItem(data["path"]);
+          break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];
         UserInfo.maxStorageSize = data["hard_quota_size"];
