@@ -14,34 +14,21 @@ export class ConvertFormat
     }
     
     public static unixToDate(time:number) : string {
-        var currentTime = new Date().getTime()/1000;
-        console.log(currentTime);
-        var inputTime = time/1000;
-        console.log(inputTime);
-        var diffTime = currentTime - inputTime;
-        var postTime;
+        var date = new Date(time);
+        var diffTime = (new Date().getTime() - date.getTime()) / 1000;
+
         switch(true) {
             case diffTime < 60:
-                postTime = '방금';
-                break;
+                return "방금";
             case diffTime < 3600:
-                postTime = parseInt(String(diffTime/60)) + '분 전';
-                break;
-                
+                return parseInt(String(diffTime/60)) + '분 전';
             case diffTime < 86400:
-                postTime = parseInt(String(diffTime/3600)) + '시간 전';
-                break;
-                    
+                return parseInt(String(diffTime/3600)) + '시간 전';
             case diffTime < 604800:
-                postTime = parseInt(String(diffTime/86400)) + '일 전';
-                break;
-                    
-            case diffTime >= 604800:
-                var date = new Date(time*1000);
-                postTime = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-                break;
+                return parseInt(String(diffTime/86400)) + '일 전';
+            default:
+                return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDay();
         }
-        return postTime;
     }
 
 }
