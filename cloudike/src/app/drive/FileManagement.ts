@@ -79,6 +79,34 @@ export class FileManagement
         delete FileManagement.cache[parent_path]["content"][name];
 
     }
+    private static rename(old_path: string, path: string)
+    {
+        var old_folder = FileItem.SplitPath(old_path);
+        var folder = FileItem.SplitPath(path);
+
+
+        old_path = old_folder[old_folder.length - 1].path;
+        var old_name = old_folder[old_folder.length - 1].name;
+        var old_parent_path = old_folder[old_folder.length - 2].path;
+
+        if (!FileManagement.contains(old_parent_path)) return;
+
+        var item : FileItem = FileManagement.cache[old_parent_path]["content"][old_name];
+
+        path = folder[folder.length - 1].path;
+        var name = folder[folder.length - 1].name;
+        var parent_path = folder[folder.length - 2].path;
+        
+        item.path = path;
+        item.name = name;
+
+        if (FileManagement.contains(parent_path))
+        {
+            FileManagement.cache[parent_path]["content"][name] = item;
+        }
+
+        FileManagement.removeItem(old_path);
+    }
     public static contains(path : string)
     {
         var folder = FileItem.SplitPath(path);
