@@ -58,11 +58,46 @@ export class DriveComponent implements OnInit {
         (data: any) => {
             console.log(`upload file successful:  ${data.item} ${data.body} ${data.status} ${data.headers}`);
 
+            var fileitem : FileItemUpload = data.item;
+
+
         }
     );
     this.uploader.onAddToQueue$.subscribe(
-      (data:any)=>
+      (data:FileItemUpload)=>
       {
+        var path = this.ParantFolder[this.ParantFolder.length - 1].path;
+        if (path[path.length - 1] != '/')
+          path = path + '/';
+        path += data.file.name;
+
+        var formdata = new FormData();
+        formdata.set("size",data.file.size.toString());
+        formdata.set("path", path);
+        formdata.set("overwrite", "1");
+        formdata.set("multipart", "false");
+        var folder = 
+        this.http.post("https://api.cloudike.kr/api/1/files/create/",formdata, {
+          headers: {'Mountbit-Auth':UserInfo.token}
+        }).subscribe(create_data => {
+          var confirm_url = create_data["confirm_url"];
+          var url = create_data["url"];
+          var method = create_data["method"];
+
+          data.disableMultipart = true;
+          data.alias = confirm_url;
+          data.onSuccess$.subscribe(()=>{
+            this.http.post(data.alias, {}).subscribe(create_data => {
+              console.log("최종 완료" + data.file.name);
+            });
+
+          });
+          data.upload({method: method, url: url});
+
+
+        });
+
+
           console.log("데이터 입력");
       }
     )
