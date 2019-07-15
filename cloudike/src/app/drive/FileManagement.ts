@@ -74,12 +74,19 @@ export class FileManagement
 
         if (item.isfolder)
         {
-            delete FileManagement.cache[path];
+            /* 기존 캐시에 바뀌기 전 경로로 되어있는 폴더를 모두 삭제 */
+            Object.keys(FileManagement.cache).forEach(function(key){
+                var temp_item = FileManagement.cache[key];
+                if (key.indexOf(path) == 0)
+                {
+                    delete FileManagement.cache[key];
+                }
+            });
         }
         delete FileManagement.cache[parent_path]["content"][name];
 
     }
-    private static rename(old_path: string, path: string)
+    public static rename(old_path: string, path: string)
     {
         var old_folder = FileItem.SplitPath(old_path);
         var folder = FileItem.SplitPath(path);
@@ -104,6 +111,19 @@ export class FileManagement
         {
             FileManagement.cache[parent_path]["content"][name] = item;
         }
+            
+        /* 하위 폴더 변경 이슈
+        if (FileManagement.contains(old_path))
+        {
+            console.log("캐시 " + path + "에 아이템 추가");
+            FileManagement.cache[path] = FileManagement.cache[old_path];
+            console.log(FileManagement.cache[path]);
+            FileManagement.cache[path].name = name;
+            FileManagement.cache[path].path = path;
+
+            console.log(FileManagement.cache[path]);
+        }
+        */
 
         FileManagement.removeItem(old_path);
     }
