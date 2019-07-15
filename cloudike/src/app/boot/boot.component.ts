@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,8 +6,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-boot',
   templateUrl: './boot.component.html',
-  styleUrls: ['./boot.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./boot.component.css']
 })
 export class BootComponent implements OnInit {
   constructor(private router: Router, private location: Location) { 
