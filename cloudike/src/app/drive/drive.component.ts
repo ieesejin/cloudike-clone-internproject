@@ -5,7 +5,7 @@ import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
-
+import { HttpClientUploadService, FileItem as FileItemUpload} from '@wkoza/ngx-upload';
 
 @Component({
   selector: 'app-drive',
@@ -28,7 +28,7 @@ export class DriveComponent implements OnInit {
   public ParantFolder = [];
   public selectedValue = [];
 
-  constructor(private http:HttpClient, private router : Router) { 
+  constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -40,6 +40,35 @@ export class DriveComponent implements OnInit {
 
   ngOnInit() {
     this.Update();
+
+
+    this.uploader.onCancel$.subscribe(
+      (data: FileItemUpload) => {
+          console.log('file deleted: ' + data.file);
+
+      });
+
+    this.uploader.onProgress$.subscribe(
+        (data: any) => {
+            console.log('upload file in progree: ' + data.progress);
+
+        });
+
+    this.uploader.onSuccess$.subscribe(
+        (data: any) => {
+            console.log(`upload file successful:  ${data.item} ${data.body} ${data.status} ${data.headers}`);
+
+        }
+    );
+    this.uploader.onAddToQueue$.subscribe(
+      (data:any)=>
+      {
+          console.log("데이터 입력");
+      }
+    )
+
+
+
   }
   private Update()
   {      
