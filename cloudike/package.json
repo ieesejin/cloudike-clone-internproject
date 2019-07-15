@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/router": "~8.0.3",
-    "@wkoza/ngx-upload": "https://github.com/banksemi/ngx-upload/tarball/master",
+    "@wkoza/ngx-upload": "git://github.com/banksemi/ngx-upload.git#cloudike",
     "rxjs": "^6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
