@@ -67,6 +67,8 @@ export class RealtimeService {
     switch (data["type"]) {
       case 'folder_created':
       case 'file_created':
+      case 'folder_copied':
+      case 'file_copied':
         if (!FileManagement.contains(parent_path)) return;
         FileManagement.getItem(this.http,
           parent_path,

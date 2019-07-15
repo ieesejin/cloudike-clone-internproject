@@ -33,12 +33,12 @@ export class FileItem
         this.mime_type = value["mime_type"];
         this.type = this.icon;
         
-        if (value['type'] == "file_created" || value['type'] == "file_new_content")
+        if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied")
         {
             this.bytes = value["content"]["size"];
             this.modified = value["content"]["modified"];
         }
-        else if (value['type'] == "folder_created")
+        else if (value['type'] == "folder_created" || value['type'] == "folder_copied")
         {
             this.role = "owner";
             this.modified = value["content"]["modified"];
