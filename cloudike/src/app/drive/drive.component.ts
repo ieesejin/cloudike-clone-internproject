@@ -29,7 +29,6 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
   public checkedList = [];
-  public chkboxList = [];
 
   constructor(private http:HttpClient, private router : Router) { 
     router.events.subscribe( (event) => {
@@ -51,7 +50,6 @@ export class DriveComponent implements OnInit {
     FileManagement.getItem(this.http, url,(item)=>{
       DriveComponent.Now = item;
       this.ParantFolder = FileItem.SplitPath(item.path);
-      console.log(DriveComponent.Now);
     });
   }
   private Download(item: FileItem)
@@ -65,12 +63,27 @@ export class DriveComponent implements OnInit {
 
   private selectAll(event){
     if(event.target.checked){
-      console.log("work1");
-      
+      this.checkedList = [];
+      for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+        var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+        if(!chkbox.checked){
+          chkbox.checked = true;
+        }
+      }
+      Object.keys(this.nowfile.content).forEach(item_key => {
+        this.checkedList.push({key:item_key, value:this.nowfile.content[item_key]});
+      });
+      console.log(this.checkedList);
     }
     else{
-      console.log("work2");
-
+      this.checkedList = [];
+      for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+        var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+        if(chkbox.checked){
+          chkbox.checked = false;
+        }
+      }
+      console.log(this.checkedList);
     }
   }
 
