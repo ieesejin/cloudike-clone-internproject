@@ -88,6 +88,10 @@ export class RealtimeService {
         
         FileManagement.rename(old_path, data["path"]);
         break;
+      case 'folder_moved':
+      case 'file_moved':
+          FileManagement.rename(data["oldpath"],data["path"]);
+          break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];
         UserInfo.maxStorageSize = data["hard_quota_size"];
