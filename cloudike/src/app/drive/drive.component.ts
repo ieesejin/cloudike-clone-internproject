@@ -5,6 +5,8 @@ import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
+import { del } from 'selenium-webdriver/http';
+import { isNgTemplate } from '@angular/compiler';
 
 
 @Component({
@@ -26,7 +28,8 @@ export class DriveComponent implements OnInit {
 
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
-  public selectedValue = [];
+  public checkedList = [];
+  public chkboxList = [];
 
   constructor(private http:HttpClient, private router : Router) { 
     router.events.subscribe( (event) => {
@@ -48,6 +51,7 @@ export class DriveComponent implements OnInit {
     FileManagement.getItem(this.http, url,(item)=>{
       DriveComponent.Now = item;
       this.ParantFolder = FileItem.SplitPath(item.path);
+      console.log(DriveComponent.Now);
     });
   }
   private Download(item: FileItem)
@@ -58,18 +62,28 @@ export class DriveComponent implements OnInit {
       window.location = data["url"];
     });
   }
-  private change(e, type){
-    if(!e.checked){
-      this.selectedValue.push(type);
+
+  private selectAll(event){
+    if(event.target.checked){
+      console.log("work1");
+      
     }
     else{
-      let updateItem = this.selectedValue.find(this.findIndexToUpdate, type.FileItem)
-      let index = this.selectedValue.indexOf(updateItem);
+      console.log("work2");
+
     }
-    
-    console.log(this.selectedValue);
   }
-  findIndexToUpdate(type){
-    return type.FileItem === this;
+
+  private onCheckboxChange(item: FileItem, event) {
+    if(event.target.checked) {
+      this.checkedList.push(item);
+    } 
+    else {
+      const index = this.checkedList.indexOf(item, 0);
+      if (index > -1) {
+        this.checkedList.splice(index, 1);
+      }
+    }
+    console.log(this.checkedList);
   }
 }
