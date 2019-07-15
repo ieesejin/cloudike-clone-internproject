@@ -1,4 +1,4 @@
-import { DropTargetOptions } from '@wkoza/ngx-upload';
+import { DropTargetOptions } from '@wkoza/ngx-upload/src';
 
 export const ngxDropTargetOptions: DropTargetOptions = {
     color: 'dropZoneColor',

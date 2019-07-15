@@ -5,7 +5,7 @@ import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
-import { HttpClientUploadService, FileItem as FileItemUpload} from '@wkoza/ngx-upload';
+import { HttpClientUploadService, FileItem as FileItemUpload} from '@wkoza/ngx-upload/src';
 
 @Component({
   selector: 'app-drive',

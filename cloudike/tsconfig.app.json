@@ -5,7 +5,8 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "node_modules/@wkoza/ngx-upload/src/**/*.ts"
   ],
   "exclude": [
     "src/test.ts",
