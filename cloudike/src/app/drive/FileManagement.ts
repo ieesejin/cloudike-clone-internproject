@@ -74,10 +74,58 @@ export class FileManagement
 
         if (item.isfolder)
         {
-            delete FileManagement.cache[path];
+            /* 기존 캐시에 바뀌기 전 경로로 되어있는 폴더를 모두 삭제 */
+            Object.keys(FileManagement.cache).forEach(function(key){
+                var temp_item = FileManagement.cache[key];
+                if (key.indexOf(path) == 0)
+                {
+                    delete FileManagement.cache[key];
+                }
+            });
         }
         delete FileManagement.cache[parent_path]["content"][name];
 
+    }
+    public static rename(old_path: string, path: string)
+    {
+        var old_folder = FileItem.SplitPath(old_path);
+        var folder = FileItem.SplitPath(path);
+
+
+        old_path = old_folder[old_folder.length - 1].path;
+        var old_name = old_folder[old_folder.length - 1].name;
+        var old_parent_path = old_folder[old_folder.length - 2].path;
+
+        if (!FileManagement.contains(old_parent_path)) return;
+
+        var item : FileItem = FileManagement.cache[old_parent_path]["content"][old_name];
+
+        path = folder[folder.length - 1].path;
+        var name = folder[folder.length - 1].name;
+        var parent_path = folder[folder.length - 2].path;
+        
+        item.path = path;
+        item.name = name;
+
+        if (FileManagement.contains(parent_path))
+        {
+            FileManagement.cache[parent_path]["content"][name] = item;
+        }
+            
+        /* 하위 폴더 변경 이슈
+        if (FileManagement.contains(old_path))
+        {
+            console.log("캐시 " + path + "에 아이템 추가");
+            FileManagement.cache[path] = FileManagement.cache[old_path];
+            console.log(FileManagement.cache[path]);
+            FileManagement.cache[path].name = name;
+            FileManagement.cache[path].path = path;
+
+            console.log(FileManagement.cache[path]);
+        }
+        */
+
+        FileManagement.removeItem(old_path);
     }
     public static contains(path : string)
     {

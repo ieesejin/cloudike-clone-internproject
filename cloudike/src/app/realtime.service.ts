@@ -79,6 +79,15 @@ export class RealtimeService {
       case 'folder_deleted':
           FileManagement.removeItem(data["path"]);
           break;
+
+      case 'file_renamed':
+      case 'folder_renamed':
+        var path = FileItem.SplitPath(data["path"]);
+        var parent_path = path[path.length - 2].path;
+        var old_path = parent_path + '/' + data["oldname"];
+        
+        FileManagement.rename(old_path, data["path"]);
+        break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];
         UserInfo.maxStorageSize = data["hard_quota_size"];
