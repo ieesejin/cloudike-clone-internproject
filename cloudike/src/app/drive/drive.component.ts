@@ -26,6 +26,7 @@ export class DriveComponent implements OnInit {
 
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
+  public selectedValue = [];
 
   constructor(private http:HttpClient, private router : Router) { 
     router.events.subscribe( (event) => {
@@ -57,5 +58,18 @@ export class DriveComponent implements OnInit {
       window.location = data["url"];
     });
   }
-
+  private change(e, type){
+    if(!e.checked){
+      this.selectedValue.push(type);
+    }
+    else{
+      let updateItem = this.selectedValue.find(this.findIndexToUpdate, type.FileItem)
+      let index = this.selectedValue.indexOf(updateItem);
+    }
+    
+    console.log(this.selectedValue);
+  }
+  findIndexToUpdate(type){
+    return type.FileItem === this;
+  }
 }
