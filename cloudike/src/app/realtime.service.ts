@@ -75,6 +75,15 @@ export class RealtimeService {
           }
         );
         break;
+      case 'file_new_content':
+          if (!FileManagement.contains(parent_path)) return;
+          FileManagement.getItem(this.http,
+            parent_path,
+            (item) => {
+                item["content"][name] = new FileItem(data);
+            }
+          );
+          break;
       case 'file_deleted':
       case 'folder_deleted':
           FileManagement.removeItem(data["path"]);

@@ -33,13 +33,15 @@ export class FileItem
         this.mime_type = value["mime_type"];
         this.type = this.icon;
         
-        if (value['type'] == "file_created")
+        if (value['type'] == "file_created" || value['type'] == "file_new_content")
         {
             this.bytes = value["content"]["size"];
+            this.modified = value["content"]["modified"];
         }
         else if (value['type'] == "folder_created")
         {
-            this.role = "owner"
+            this.role = "owner";
+            this.modified = value["content"]["modified"];
         }
         else
         {
@@ -47,7 +49,6 @@ export class FileItem
             this.owner_path = value["owner_path"];
             
             this.modified = value["modified"];
-            this.date = ConvertFormat.unixToDate(this.modified)
             this.role = value["role"];
 
             if (value["content"] != null)
@@ -59,6 +60,7 @@ export class FileItem
                 }); 
             }
         }
+        this.date = ConvertFormat.unixToDate(this.modified);
 
         if (this.path == "/")
         {
@@ -85,6 +87,7 @@ export class FileItem
         else
         {
             this.bytesString = ConvertFormat.byteToString(this.bytes);
+            
             this.isfolder = false;
         }
 
