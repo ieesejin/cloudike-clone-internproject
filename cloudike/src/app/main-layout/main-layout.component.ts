@@ -2,7 +2,8 @@ import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolve
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FileManagement } from '../drive/FileManagement';
+import { RealtimeService } from '../realtime.service';
+import { ConvertFormat } from '../drive/ConvertFormat';
 
 
 @Component({
@@ -20,7 +21,9 @@ export class MainLayoutComponent implements OnInit {
     private router : Router, 
     private route: ActivatedRoute,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private http: HttpClient){
+    private http: HttpClient,
+    private realservice : RealtimeService)
+  {
       UserInfo.Update(http);
   }
 
@@ -47,15 +50,15 @@ export class MainLayoutComponent implements OnInit {
   };
   get storageSize()
   {
-    return FileManagement.byteToString(UserInfo.storageSize);
+    return ConvertFormat.byteToString(UserInfo.storageSize);
   }
   get maxStorageSize()
   {
-    return FileManagement.byteToString(UserInfo.maxStorageSize);;
+    return ConvertFormat.byteToString(UserInfo.maxStorageSize);;
   }
   get remainStorageSize()
   {
-    return FileManagement.byteToString(UserInfo.maxStorageSize-UserInfo.storageSize);
+    return ConvertFormat.byteToString(UserInfo.maxStorageSize-UserInfo.storageSize);
   }
   get storagePercent()
   {

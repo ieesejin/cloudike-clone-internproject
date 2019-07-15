@@ -68,4 +68,13 @@ export class UserInfo
     {
         return this._maxStorageSize;
     }
+
+    public static set storageSize(value :number)
+    {
+        this._storageSize = value;
+    }
+    public static set maxStorageSize(value :number)
+    {
+        this._maxStorageSize = value;
+    }
 }

@@ -16,7 +16,7 @@
     <th>공유</th>
   </tr>
   <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder">
-      <td><input type="checkbox" name="chk_info" value="HTML" id="a"></td>
+      <td><input type="checkbox" name="chk_info" value="HTML" id="a" (change)="change($event, item)"></td>
       <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
       <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
       <td>{{item.value.owner_path}}</td>

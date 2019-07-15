@@ -8,17 +8,17 @@ export class FileManagement
 
     private static cache = {};
     private static http : HttpClient;
-    public static getItem(http: HttpClient, url : string, func)
+    public static getItem(http: HttpClient, path : string, func)
     {
         this.http = http;
 
-        var folder = FileItem.SplitPath(url);
+        var folder = FileItem.SplitPath(path);
 
         // URL을 표준에 맞게 다시 작성
-        url = folder[folder.length - 1].path;
+        path = folder[folder.length - 1].path;
 
         // 먼저 해당 아이템을 로드한 적이 있는지 확인
-        let item = FileManagement.cache[url];
+        let item = FileManagement.cache[path];
         if (item != undefined)
         {
             // 로드한 적이 있으면 바로 성공 이벤트 실행 후 종료 
@@ -28,14 +28,14 @@ export class FileManagement
         // 상위 폴더가 존재하지 않는 경우 바로 종료
         if (folder.length < 2)
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         // 그렇지 않을경우 상위 폴더에서 이 아이템이 로드된 적 있는지 확인
         let parent : FileItem = FileManagement.cache[folder[folder.length - 2].path];
         if (item == undefined) // 로드된적 없으면
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
 
@@ -43,12 +43,12 @@ export class FileManagement
         let this_item : FileItem = parent.content[folder[folder.length - 1].name];
         if (this_item == undefined) // 해당 아이템이 없을 경우 요청
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         if (this_item.isfolder) // 해당 아이템이 폴더일 경우 (상세 정보를 얻기 위해 URL으로 요청)
         {
-            FileManagement.reload(url, func);
+            FileManagement.reload(path, func);
             return;
         }
         else
@@ -57,8 +57,88 @@ export class FileManagement
             func(this_item);
         }
     }
-    private static reload(url:string, func)
+
+    public static removeItem(path : string)
     {
+        var folder = null;
+        var parent_path = null;
+        var name = null;
+        folder = FileItem.SplitPath(path);
+        path = folder[folder.length - 1].path;
+        name = folder[folder.length - 1].name;
+        parent_path = folder[folder.length - 2].path;
+
+        if (!FileManagement.contains(parent_path)) return;
+
+        var item : FileItem = FileManagement.cache[parent_path]["content"][name];
+
+        if (item.isfolder)
+        {
+            /* 기존 캐시에 바뀌기 전 경로로 되어있는 폴더를 모두 삭제 */
+            Object.keys(FileManagement.cache).forEach(function(key){
+                var temp_item = FileManagement.cache[key];
+                if (key.indexOf(path) == 0)
+                {
+                    delete FileManagement.cache[key];
+                }
+            });
+        }
+        delete FileManagement.cache[parent_path]["content"][name];
+
+    }
+    public static rename(old_path: string, path: string)
+    {
+        var old_folder = FileItem.SplitPath(old_path);
+        var folder = FileItem.SplitPath(path);
+
+
+        old_path = old_folder[old_folder.length - 1].path;
+        var old_name = old_folder[old_folder.length - 1].name;
+        var old_parent_path = old_folder[old_folder.length - 2].path;
+
+        if (!FileManagement.contains(old_parent_path)) return;
+
+        var item : FileItem = FileManagement.cache[old_parent_path]["content"][old_name];
+
+        path = folder[folder.length - 1].path;
+        var name = folder[folder.length - 1].name;
+        var parent_path = folder[folder.length - 2].path;
+        
+        item.path = path;
+        item.name = name;
+
+        if (FileManagement.contains(parent_path))
+        {
+            FileManagement.cache[parent_path]["content"][name] = item;
+        }
+            
+        /* 하위 폴더 변경 이슈
+        if (FileManagement.contains(old_path))
+        {
+            console.log("캐시 " + path + "에 아이템 추가");
+            FileManagement.cache[path] = FileManagement.cache[old_path];
+            console.log(FileManagement.cache[path]);
+            FileManagement.cache[path].name = name;
+            FileManagement.cache[path].path = path;
+
+            console.log(FileManagement.cache[path]);
+        }
+        */
+
+        FileManagement.removeItem(old_path);
+    }
+    public static contains(path : string)
+    {
+        var folder = FileItem.SplitPath(path);
+
+        // URL을 표준에 맞게 다시 작성
+        path = folder[folder.length - 1].path;
+
+        return FileManagement.cache[path] != null;
+    }
+    private static reload(path:string, func)
+    {
+        var url = encodeURI(path);
         // 동시에 같은 URL로 HTTP 리퀘스트를 보낸 경우
         if (FileManagement.read_waiting_queue[url] != undefined)
         {
@@ -84,62 +164,9 @@ export class FileManagement
                 });
 
                 // 해당 URL 오브젝트 초기화
-                FileManagement.read_waiting_queue[url] = undefined;
+                delete FileManagement.read_waiting_queue[url];
             });
         }
 
-    }
-    
-    public static byteToString(byte:number) : string {
-        var capacity:number = byte;
-        var count:number = 0;
-        for(count = 0; capacity >= 1024; count++){
-            capacity = capacity/1024;
-        }
-        var result:string = capacity.toFixed(1);
-
-        if(count <= 1){
-            return result + "KB"
-        }
-        else if(count == 2){
-            return result + "MB"
-        }
-        else if(count == 3){
-            return result + "GB"
-        }
-        else if(count == 4){
-            return result + "TB"
-        }
-    }
-
-    public static unixToDate(time:number) : string {
-        var currentTime = new Date().getTime()/1000;
-        console.log(currentTime);
-        var inputTime = time/1000;
-        console.log(inputTime);
-        var diffTime = currentTime - inputTime;
-        var postTime;
-        switch(true) {
-            case diffTime < 60:
-                postTime = '방금';
-                break;
-            case diffTime < 3600:
-                postTime = parseInt(String(diffTime/60)) + '분 전';
-                break;
-                
-            case diffTime < 86400:
-                postTime = parseInt(String(diffTime/3600)) + '시간 전';
-                break;
-                    
-            case diffTime < 604800:
-                postTime = parseInt(String(diffTime/86400)) + '일 전';
-                break;
-                    
-            case diffTime >= 604800:
-                var date = new Date(time*1000);
-                postTime = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
-                break;
-        }
-        return postTime;
     }
 }
