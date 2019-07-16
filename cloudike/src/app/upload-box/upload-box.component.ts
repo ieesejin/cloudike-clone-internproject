@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class UploadBoxComponent implements OnInit {
   upload_queue_count = 0;
   minimization = false;
+  uploading_item : FileItemUpload = null;
   constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) { }
 
   public clean()
@@ -30,6 +31,64 @@ export class UploadBoxComponent implements OnInit {
       this.uploader.removeFromQueue(item);
     });
     this.upload_queue_count = 0;
+  }
+
+  public NextUpload()
+  {
+    if (this.uploading_item != null)
+    {
+      if (this.uploading_item.isSuccess)
+        this.uploading_item = null;
+      else
+        return;
+    }
+
+    this.uploader.queue.forEach(item => {
+      if (item.isReady && this.uploading_item == null)
+      {
+        this.uploading_item = item;
+
+        var path = decodeURI(this.router.url.substring("/drive".length));
+        if (path[path.length - 1] != '/')
+          path = path + '/';
+        path += item.filePath;
+
+        var formdata = new FormData();
+        formdata.set("size", item.file.size.toString());
+        formdata.set("path", path);
+        formdata.set("overwrite", "1");
+        formdata.set("multipart", "false");
+
+        this.http.post("https://api.cloudike.kr/api/1/files/create/",formdata, {
+          headers: {'Mountbit-Auth':UserInfo.token}
+        }).subscribe(create_data => {
+          var confirm_url = create_data["confirm_url"];
+          var url = create_data["url"];
+          var method = create_data["method"];
+
+          item.disableMultipart = true;
+          item.onSuccess$.subscribe(()=>{
+            this.http.post(confirm_url, {}).subscribe(create_data => {
+              console.log("최종 완료" + item.file.name);
+              if (this.upload_queue_count < this.uploader.queue.length)
+                this.upload_queue_count += 1;
+              this.NextUpload();
+            });
+    
+          });
+
+          if (item.isCancel != true)
+          {
+            item.upload({method: method, url: url});
+          }
+        });
+      }
+    });
+
+
+
+
+
   }
   ngOnInit() {
     
@@ -57,42 +116,7 @@ export class UploadBoxComponent implements OnInit {
     this.uploader.onAddToQueue$.subscribe(
       (data:FileItemUpload)=>
       {
-        var path = decodeURI(this.router.url.substring("/drive".length));
-        if (path[path.length - 1] != '/')
-          path = path + '/';
-        path += data.filePath;
-
-        var formdata = new FormData();
-        formdata.set("size",data.file.size.toString());
-        formdata.set("path", path);
-        formdata.set("overwrite", "1");
-        formdata.set("multipart", "false");
-        this.http.post("https://api.cloudike.kr/api/1/files/create/",formdata, {
-          headers: {'Mountbit-Auth':UserInfo.token}
-        }).subscribe(create_data => {
-          var confirm_url = create_data["confirm_url"];
-          var url = create_data["url"];
-          var method = create_data["method"];
-          data.disableMultipart = true;
-          data.alias = confirm_url;
-          data.onSuccess$.subscribe(()=>{
-            this.http.post(data.alias, {}).subscribe(create_data => {
-              console.log("최종 완료" + data.file.name);
-              if (this.upload_queue_count < this.uploader.queue.length)
-                this.upload_queue_count += 1;
-            });
-
-          });
-          if (data.isCancel != true)
-          {
-            data.upload({method: method, url: url});
-          }
-
-
-        });
-
-
-          console.log("데이터 입력");
+        this.NextUpload();
       }
     )
 
