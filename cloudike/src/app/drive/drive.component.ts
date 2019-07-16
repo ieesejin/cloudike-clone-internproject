@@ -69,7 +69,7 @@ export class DriveComponent implements OnInit {
         var path = this.ParantFolder[this.ParantFolder.length - 1].path;
         if (path[path.length - 1] != '/')
           path = path + '/';
-        path += data.file.name;
+        path += data.filePath;
 
         var formdata = new FormData();
         formdata.set("size",data.file.size.toString());
