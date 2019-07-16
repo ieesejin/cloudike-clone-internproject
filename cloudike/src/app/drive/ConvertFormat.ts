@@ -15,7 +15,7 @@ export class ConvertFormat
         var result : string = capacity.toFixed(count > 0 ? 1 : 0);
 
         //변환이 이루어 졌으면 이루어진 만큼 해당 단위로 표현
-        var format = ["B", "KB", "MB", "GB", "TB"];
+        var format = ["bytes", "KB", "MB", "GB", "TB"];
         return result + ' ' + format[count];
     }
     
@@ -28,10 +28,10 @@ export class ConvertFormat
         //날짜가 바뀌면 월, 일, 시간을 표기 12시간 표기법으로 13시 부터는 1시로
         if(currentDate.getDate() != date.getDate()) {
             if(date.getHours() > 12) {
-                return (date.getMonth() + 1) + "월 " + date.getDate() + "일, 오후 " + (date.getHours()-12) + ":" + date.getMinutes();
+                return (date.getMonth() + 1) + "월 " + date.getDate() + "일, 오후 " + pad((date.getHours()-12), 2) + ":" + pad(date.getMinutes(),2);
             }
             else {
-                return (date.getMonth() + 1) + "월 " + date.getDate() + "일, 오전 " + (date.getHours()) + ":" + date.getMinutes();
+                return (date.getMonth() + 1) + "월 " + date.getDate() + "일, 오전 " + pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
             }
         }
         //해가 바뀌면 년, 월, 일을 표기
@@ -41,11 +41,15 @@ export class ConvertFormat
         //업로드한 날에는 12시간제로 시간만 표기
         else {
             if(date.getHours() > 12) {
-                return "오후 " + (date.getHours()-12) + ":" + date.getMinutes();
+                return "오후 " + pad((date.getHours()-12), 2) + ":" + pad(date.getMinutes(), 2);
             }
             else {
-                return "오전 " + (date.getHours()) + ":" + date.getMinutes();
+                return "오전 " + pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
             }
+        }
+        function pad(n, width) {
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
         }
     }
 }
