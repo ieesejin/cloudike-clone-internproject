@@ -6,9 +6,6 @@ import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
 import { HttpClientUploadService, FileItem as FileItemUpload} from '@wkoza/ngx-upload/src';
-import { del } from 'selenium-webdriver/http';
-import { isNgTemplate } from '@angular/compiler';
-import { Key } from 'protractor';
 
 @Component({
   selector: 'app-drive',
