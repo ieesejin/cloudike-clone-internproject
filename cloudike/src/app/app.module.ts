@@ -10,6 +10,7 @@ import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 import {NgxUploadModule} from '@wkoza/ngx-upload/src';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
@@ -23,6 +24,7 @@ import { NavSettingComponent } from './setting/nav-setting/nav-setting.component
 import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
 import { NewFolderComponent } from './drive/new-folder/new-folder.component';
 import { ngxDropTargetOptions } from './file-upload-option';
+import { UploadBoxComponent } from './upload-box/upload-box.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { ngxDropTargetOptions } from './file-upload-option';
     NavSettingComponent,
     HeaderSettingComponent,
     NewFolderComponent,
+    UploadBoxComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { ngxDropTargetOptions } from './file-upload-option';
     ReactiveFormsModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    NgxUploadModule.forRoot(ngxDropTargetOptions)
+    NgxUploadModule.forRoot(ngxDropTargetOptions),
+    NgbModule
   ],
   providers: [],
   bootstrap: [BootComponent],
