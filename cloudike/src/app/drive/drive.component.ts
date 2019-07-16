@@ -5,6 +5,9 @@ import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
+import { del } from 'selenium-webdriver/http';
+import { isNgTemplate } from '@angular/compiler';
+import { Key } from 'protractor';
 
 
 @Component({
@@ -26,7 +29,7 @@ export class DriveComponent implements OnInit {
 
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
-  public selectedValue = [];
+  public checkedList = [];
 
   constructor(private http:HttpClient, private router : Router) { 
     router.events.subscribe( (event) => {
@@ -58,18 +61,76 @@ export class DriveComponent implements OnInit {
       window.location = data["url"];
     });
   }
-  private change(e, type){
-    if(!e.checked){
-      this.selectedValue.push(type);
+
+  //전체선택 및 전체해제
+  private selectAll(event){
+    //전체선택
+    if(event.target.checked){
+      this.checkedList = [];
+      //파일과 폴더 총 수 만큼 for문
+      for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+        //모든 체크박스를 checked로 바꿈
+        var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+        if(!chkbox.checked){
+          chkbox.checked = true;
+        }
+      }
+      //모든 item 을 key, value 형태로 넣어줌
+      Object.keys(this.nowfile.content).forEach(item_key => {
+        this.checkedList.push({key:item_key, value:this.nowfile.content[item_key]});
+      });
+      console.log(this.checkedList);
     }
+    //전체해제
     else{
-      let updateItem = this.selectedValue.find(this.findIndexToUpdate, type.FileItem)
-      let index = this.selectedValue.indexOf(updateItem);
+      this.checkedList = []; //다 비움
+      //모든 체크박스를 해제
+      for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+        var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+        if(chkbox.checked){
+          chkbox.checked = false;
+        }
+      }
+      console.log(this.checkedList);
     }
-    
-    console.log(this.selectedValue);
   }
-  findIndexToUpdate(type){
-    return type.FileItem === this;
+
+  //각각의 체크박스를 다룰 때 
+  private onCheckboxChange(item: FileItem, event) {
+    //체크했을 때
+    if(event.target.checked) {
+      //체크했을 때 모든 체크박스가 다 체크된 경우
+      if(this.checkedList.length+1 == Object.keys(this.nowfile.content).length){
+        var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
+        selectAllChkbox.checked = true;
+        this.checkedList.push(item);
+        console.log(this.checkedList);
+      }
+      else{
+        this.checkedList.push(item);
+        console.log(this.checkedList);
+      }
+    }
+    //체크를 풀었을 때
+    else {
+      var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
+      //전체선택이 아닌 경우
+      if(!selectAllChkbox.checked){
+        var index = this.checkedList.map((o) => o.attr1).indexOf(item.name);
+        if (index > -1) {
+          this.checkedList.splice(index, 1);
+        }
+        console.log(this.checkedList);
+      }
+      //전체선택 되어있을 때 풀었을 때
+      else{
+        var index = this.checkedList.map((o) => o.attr1).indexOf(item.name);
+        if (index > -1) {
+          this.checkedList.splice(index, 1);
+        }
+        selectAllChkbox.checked = false;
+        console.log(this.checkedList);
+      }
+    }
   }
 }
