@@ -47,6 +47,7 @@ export class ConvertFormat
                 return "오전 " + pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
             }
         }
+        //자릿수를 두자리로 표기하기 위한 함수
         function pad(n, width) {
             n = n + '';
             return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
