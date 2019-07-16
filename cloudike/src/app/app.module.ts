@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
+import {NgxUploadModule} from '@wkoza/ngx-upload/src';
+
 
 import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
 import { NavDriveComponent } from './drive/nav-drive/nav-drive.component';
@@ -20,6 +22,7 @@ import { ProfileComponent } from './setting/profile/profile.component';
 import { NavSettingComponent } from './setting/nav-setting/nav-setting.component';
 import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
 import { NewFolderComponent } from './drive/new-folder/new-folder.component';
+import { ngxDropTargetOptions } from './file-upload-option';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { NewFolderComponent } from './drive/new-folder/new-folder.component';
     ReactiveFormsModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    NgxUploadModule.forRoot(ngxDropTargetOptions)
   ],
   providers: [],
   bootstrap: [BootComponent],

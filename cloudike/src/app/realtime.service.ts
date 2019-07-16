@@ -58,7 +58,6 @@ export class RealtimeService {
     if (data["path"] != null)
     {
       folder = FileItem.SplitPath(data["path"]);
-      console.log(folder);
       name = folder[folder.length - 1].name;
 
       if (folder.length > 1)
