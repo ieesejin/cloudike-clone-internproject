@@ -1,0 +1,28 @@
+<div class="upload-box" *ngIf="uploader.queue.length>0">
+    <div class="title">
+        파일 업로드 
+        <span> - {{upload_queue_count}} / {{ uploader.queue.length }} 개</span>
+        <div (click)="minimization = !minimization" class="minimization icon">_</div>
+        <div (click)="clean()" class="close icon">X</div>
+    </div>
+    <div class="content" *ngIf="!minimization">
+        <div class="item" *ngFor="let itemFile of uploader.queue">
+            <ngb-progressbar type="success" *ngIf="!itemFile.isSuccess"
+                            [striped]="true" [animated]="true"
+                            [value]="itemFile.progress">
+            </ngb-progressbar>
+            
+            <div class="name" [ngClass]="{ 'success' : itemFile.isSuccess}">
+                    {{ itemFile.file.name }}
+            </div>
+
+            <div class="progress_text" [ngClass]="{ 'success' : itemFile.isSuccess}">
+                    {{ itemFile.progress }} %
+            </div>
+            <div class="size" [ngClass]="{ 'success' : itemFile.isSuccess}">
+                    {{ itemFile.file.size/1024/1024 | number:'1.0-2' }} MB
+            </div>
+        </div>
+
+    </div>
+</div>
