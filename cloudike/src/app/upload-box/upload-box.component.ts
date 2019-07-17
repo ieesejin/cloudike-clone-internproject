@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { Router } from '@angular/router';
 
+const max_simultaneously_uploading = 2;
+
 @Component({
   selector: 'app-upload-box',
   templateUrl: './upload-box.component.html',
   styleUrls: ['./upload-box.component.css']
 })
-
-const max_simultaneously_uploading = 2;
 export class UploadBoxComponent implements OnInit {
   upload_queue_count = 0;
   minimization = false;
