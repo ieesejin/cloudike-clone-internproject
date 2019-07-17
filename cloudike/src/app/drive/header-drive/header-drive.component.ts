@@ -16,6 +16,6 @@ export class HeaderDriveComponent implements OnInit {
 
   public click()
   {
-    this.dialog.open(NewFolderComponent, { width: '250px' });
+    this.dialog.open(NewFolderComponent);
   }
 }
