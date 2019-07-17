@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
   templateUrl: './upload-box.component.html',
   styleUrls: ['./upload-box.component.css']
 })
+
+const max_simultaneously_uploading = 2;
 export class UploadBoxComponent implements OnInit {
   upload_queue_count = 0;
   minimization = false;
-  uploading_item : FileItemUpload = null;
+  uploading_item : FileItemUpload[] = [];
   constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) { }
 
   public clean()
@@ -35,18 +37,19 @@ export class UploadBoxComponent implements OnInit {
 
   public NextUpload()
   {
-    if (this.uploading_item != null)
-    {
-      if (this.uploading_item.isSuccess)
-        this.uploading_item = null;
-      else
-        return;
-    }
+    var new_array = []
+    this.uploading_item.forEach(element => {
+      if (element.isSuccess != true)
+      {
+        new_array.push(element);
+      }
+    });
+    this.uploading_item = new_array;
 
     this.uploader.queue.forEach(item => {
-      if (item.isReady && this.uploading_item == null)
+      if (item.isReady && this.uploading_item.length < max_simultaneously_uploading && !this.uploading_item.includes(item))
       {
-        this.uploading_item = item;
+        this.uploading_item.push(item);
 
         var path = decodeURI(this.router.url.substring("/drive".length));
         if (path[path.length - 1] != '/')
@@ -100,7 +103,7 @@ export class UploadBoxComponent implements OnInit {
 
     this.uploader.onProgress$.subscribe(
         (data: any) => {
-            console.log('upload file in progree: ' + data.progress);
+            console.log(data.item.file.name + 'upload file in progree: ' + data.progress);
 
         });
 
