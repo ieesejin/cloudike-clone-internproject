@@ -41,7 +41,8 @@ export class DriveComponent implements OnInit {
     this.Update();
   }
   private Update()
-  {      
+  {
+    if (this.router.url.indexOf("/drive") != 0) return;
     let url = decodeURI(this.router.url.substring("/drive".length));
 
     FileManagement.getItem(this.http, url,(item)=>{

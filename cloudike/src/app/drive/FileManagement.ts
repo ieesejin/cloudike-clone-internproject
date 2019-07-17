@@ -165,6 +165,10 @@ export class FileManagement
 
                 // 해당 URL 오브젝트 초기화
                 delete FileManagement.read_waiting_queue[url];
+            },
+            error =>
+            {
+                delete FileManagement.read_waiting_queue[url];
             });
         }
 
