@@ -26,6 +26,7 @@ import { NewFolderComponent } from './drive/new-folder/new-folder.component';
 import { ngxDropTargetOptions } from './file-upload-option';
 import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { DeleteFilesComponent } from './drive/delete-files/delete-files.component';
+import { MoveFileComponent } from './drive/move-file/move-file.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { DeleteFilesComponent } from './drive/delete-files/delete-files.componen
     NewFolderComponent,
     UploadBoxComponent,
     DeleteFilesComponent,
+    MoveFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,6 @@ import { DeleteFilesComponent } from './drive/delete-files/delete-files.componen
   ],
   providers: [],
   bootstrap: [BootComponent],
-  entryComponents: [ NewFolderComponent, DeleteFilesComponent ]
+  entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent ]
 })
 export class AppModule { }

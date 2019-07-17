@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material';
 import { NewFolderComponent } from '../new-folder/new-folder.component';
 import { DeleteFilesComponent } from '../delete-files/delete-files.component';
+import { MoveFileComponent } from '../move-file/move-file.component';
 
 @Component({
   selector: 'app-header-drive',
@@ -22,6 +23,10 @@ export class HeaderDriveComponent implements OnInit {
   public delete_file()
   {
     this.dialog.open(DeleteFilesComponent);
+  }
+  public move_file()
+  {
+    this.dialog.open(MoveFileComponent);
 
   }
 }
