@@ -8,6 +8,11 @@ export class FileManagement
 
     private static cache = {};
     private static http : HttpClient;
+    public static clean()
+    {
+        this.cache = {};
+        this.read_waiting_queue = {};
+    }
     public static getItem(http: HttpClient, path : string, func)
     {
         this.http = http;
