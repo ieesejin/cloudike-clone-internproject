@@ -94,6 +94,10 @@ mat-dialog-actions .cancle
         font-size: 40px;
     }
 
+    .disable
+    {
+        color: #b4b4b4;
+    }
     i.icon.size30
     {
         font-size: 30px;
@@ -151,6 +155,10 @@ mat-dialog-actions .cancle
         i.icon.transfer:before
         {
             content: "\e623";
+        }
+        i.icon.back:before
+        {
+            content: "\e605";
         }
 
 ::-webkit-scrollbar-track
