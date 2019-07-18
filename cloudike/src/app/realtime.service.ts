@@ -15,12 +15,14 @@ import { HttpClient } from '@angular/common/http';
 export class RealtimeService {
 
   private static _messages: Subject<JSON[]>;
-  public get messages()
-  {
-      return RealtimeService._messages;
-  }
   private static wsService: WebsocketService = null;
   constructor(private http: HttpClient) {
+    this.CreateSocket();
+  }
+
+
+  public CreateSocket()
+  {
     if (RealtimeService.wsService == null)
     {
       RealtimeService.wsService = new WebsocketService();
@@ -44,12 +46,22 @@ export class RealtimeService {
            this.Response(element);
           });
         }
-
+        ,
+        (error) =>
+        {
+          console.log(error);
+        }
+        ,
+        () =>
+        {
+          RealtimeService._messages = null;
+          RealtimeService.wsService = null;
+          console.log("소켓 종료됨");
+          this.CreateSocket();
+        }
       );
-      
     }
   }
-
   public Response(data: JSON)
   {
     var folder = null;
