@@ -4,6 +4,7 @@ header .logo
     width: 184px;
     height: 64px;
     padding: 17px 20px 18px 15px;
+    box-sizing: content-box;
 }
 
 header .top-component
