@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from 'src/app/UserInfo';
+import { FileManagement } from '../FileManagement';
 
 @Component({
   selector: 'app-delete-files',
@@ -10,9 +11,15 @@ import { UserInfo } from 'src/app/UserInfo';
 })
 export class DeleteFilesComponent implements OnInit {
 
+  public selectitems = FileManagement.getSelectItemPath();
+
   constructor(private dialogRef: MatDialogRef<DeleteFilesComponent>, private http: HttpClient) { }
 
   ngOnInit() {
+
+
+
+
   }
 
 
@@ -22,12 +29,7 @@ export class DeleteFilesComponent implements OnInit {
   {
 
     var formdata = new FormData();
-    var list= document.getElementsByName("chk_info");
-    list.forEach((element : HTMLInputElement) => {
-      if(element.checked){
-        formdata.append("path", element.value);
-      }
-    });
+    this.selectitems.forEach((path) => formdata.append("path", path));
 
     this.http.post("https://api.cloudike.kr/api/1/fileops/multi/delete/",formdata, {
       headers: {'Mountbit-Auth':UserInfo.token}

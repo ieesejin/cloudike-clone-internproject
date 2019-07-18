@@ -8,11 +8,13 @@ export class FileManagement
 
     private static cache = {};
     private static http : HttpClient;
+
     public static clean()
     {
         this.cache = {};
         this.read_waiting_queue = {};
     }
+
     public static getItem(http: HttpClient, path : string, func)
     {
         this.http = http;
@@ -89,8 +91,8 @@ export class FileManagement
             });
         }
         delete FileManagement.cache[parent_path]["content"][name];
-
     }
+
     public static rename(old_path: string, path: string)
     {
         var old_folder = FileItem.SplitPath(old_path);
@@ -132,6 +134,7 @@ export class FileManagement
 
         FileManagement.removeItem(old_path);
     }
+
     public static contains(path : string)
     {
         var folder = FileItem.SplitPath(path);
@@ -141,6 +144,20 @@ export class FileManagement
 
         return FileManagement.cache[path] != null;
     }
+
+
+    public static getSelectItemPath() : string[]
+    {
+        var result = [];
+        var list= document.getElementsByName("chk_info");
+        list.forEach((element : HTMLInputElement) => {
+            if(element.checked){
+                result.push(element.value);
+            }
+        });
+        return result;
+    }
+
     private static reload(path:string, func)
     {
         var url = encodeURI(path);

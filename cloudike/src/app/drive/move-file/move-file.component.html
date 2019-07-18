@@ -1,6 +1,6 @@
 <div style="width: 600px">
-    <h2 mat-dialog-title>이동 및 복사</h2>
-    
+    <h2 mat-dialog-title>이동 및 복사 ({{selectitems.length}}개의 아이템 선택됨)</h2>
+
     <p *ngIf="path == null">대상 위치를 선택하세요.</p>
     <p *ngIf="path != null">다음 위치로 작업: {{ path }} </p>
     <mat-dialog-content>
