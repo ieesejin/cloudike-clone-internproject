@@ -13,3 +13,63 @@ body
     width: 100%;
     height: 100%;
 }
+
+button
+{    
+    padding: 6px 30px;
+    background-color: #ffd659;
+    border: 1px solid #fab545;
+    border-radius: 3px;
+    font-size: 14px;
+}
+button:hover {
+    color: #555;
+    background-color: #ffc926;
+    border-color: #f89d09;
+}
+
+button:focus{
+    background-color: #ffc926;
+    border-color: #ba7505;
+    outline: none;
+
+}
+button:hover, button:focus, button.focus {
+    color: #333;
+    text-decoration: none;
+}
+
+input
+{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    padding: 6px 12px;
+}
+mat-dialog-content p
+{
+    width: 100%;
+    margin-bottom: 10px;
+}
+mat-dialog-content input
+{
+    width: 100%;
+    margin-bottom: 20px;
+}
+mat-dialog-actions
+{
+    width: 100%;
+}
+mat-dialog-actions button
+{
+    box-sizing: border-box;
+}
+mat-dialog-actions .ok
+{ 
+    flex: 1;
+}
+
+mat-dialog-actions .cancle
+{ 
+    flex: 1;
+}

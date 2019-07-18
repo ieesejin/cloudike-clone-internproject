@@ -1,0 +1,15 @@
+<div style="width: 600px">
+    <h2 mat-dialog-title>이동 및 복사 ({{selectitems.length}}개의 아이템 선택됨)</h2>
+
+    <p *ngIf="path == null">대상 위치를 선택하세요.</p>
+    <p *ngIf="path != null">다음 위치로 작업: {{ path }} </p>
+    <mat-dialog-content>
+        <app-folder-item [url]="'/'" [name]="'내 Cloudike'" [depth]="1" [click_event]="change_path">
+        </app-folder-item>
+    </mat-dialog-content>
+    <mat-dialog-actions> 
+            <button mat-button type="button" class="ok" (click)="move()" *ngIf="path != null">이동</button>
+            <button mat-button type="button" class="ok" (click)="copy()" *ngIf="path != null">복사</button>
+        <button mat-button type="button" class="cancle" (click)="dialogRef.close()">아니오</button>
+    </mat-dialog-actions>
+</div>
