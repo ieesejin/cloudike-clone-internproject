@@ -28,7 +28,6 @@ nav .tree
     max-height: calc(100% - 260px);
     
     overflow: auto;
-
 }
 
 nav .info

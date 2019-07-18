@@ -67,3 +67,9 @@ a.path-link:hover
     text-decoration:none; 
     color: #4a9ce4;
 }
+
+.tableContainer {
+    overflow-y: auto;
+    max-height: calc(100% - 60px);
+    margin: 0px 10px 5px 10px;
+}
