@@ -76,6 +76,81 @@ mat-dialog-actions .cancle
     flex: 1;
 }
 
+/****************************************************************
+    아이콘 관련 CSS
+*****************************************************************/
+    @font-face{ 
+        font-family: 'mountbit-icons';
+        src:url(/assets/font/mountbit-icons.woff);
+    }
+    i.icon
+    {
+        font-family: 'mountbit-icons';
+        display: inline-block;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 40px;
+    }
+
+    i.icon.size30
+    {
+        font-size: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+    i.icon.size40
+    {
+        font-size: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+    
+    i.icon.size50
+    {
+        font-size: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+    /* 아이콘 컨텐츠 설정*/
+        i.icon.upload:before
+        {
+            content: "\e602";
+        }
+        
+        i.icon.folder:before
+        {
+            content: "\e60d";
+        }
+        
+        i.icon.download:before
+        {
+            content: "\e606";
+        }
+        
+        i.icon.link:before
+        {
+            content: "\e607";
+        }
+        
+        i.icon.folder-move:before
+        {
+            content: "\e60e";
+        }
+        
+        i.icon.pen:before
+        {
+            content: "\e60b";
+        }
+        
+        i.icon.delete:before
+        {
+            content: "\e617";
+        }
+        i.icon.transfer:before
+        {
+            content: "\e623";
+        }
+
 ::-webkit-scrollbar-track
 {
 	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

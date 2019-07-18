@@ -1,13 +1,15 @@
 
 <header class="bar">
-    <a href="/"><img src="/assets/img/poweredby.png" class="logo"></a>
-    <div #top class="top-component"></div>
-    
-    {{user_name}}
+    <a href="/" class="logo"><img src="/assets/img/poweredby.png"></a>
+    <div #top></div>
+    <div class="option">
+        {{user_name}}
 
-    알림
-    <a [routerLink]="['/logout']">로그아웃</a>
-    <a [routerLink]="['/profile']">설정</a>
+        알림
+        <a [routerLink]="['/logout']">로그아웃</a>
+        <a [routerLink]="['/profile']">설정</a>
+        
+    </div>
 </header>
 <div class="main">
     <nav>

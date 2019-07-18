@@ -1,18 +1,42 @@
-header .logo
+
+header a.logo
+{
+    display: inline-block;
+    width: 250px;
+    height: 100px;
+    float: left;
+}
+header a.logo img
 {
     display: inline-block;
     width: 184px;
     height: 64px;
-    padding: 17px 20px 18px 15px;
+    padding: 20px 20px 18px 25px;
     box-sizing: content-box;
 }
 
-header .top-component
+header div
 {
     display: inline-block;
 }
-
-:host ::ng-deep header a
+header div.option
 {
-    color: red;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display: inline-block;
+}
+:host ::ng-deep header * div
+{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 100%;
+    min-width: 80px;
+    text-align: center;
+}
+:host ::ng-deep header * p
+{
+    margin: 0px;
+    padding: 0px;
 }
