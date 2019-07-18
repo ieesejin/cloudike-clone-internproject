@@ -15,8 +15,9 @@ export class FolderItemComponent implements OnInit {
   @Input() url: string;
   @Input() name: string;
   @Input() depth: number;
-
+  @Input() click_event;
   item : FileItem = new FileItem(null);
+  content_hide = true;
 
   get now():boolean {
     return DriveComponent.Now.path == this.url;
@@ -54,7 +55,10 @@ export class FolderItemComponent implements OnInit {
   {
     FileManagement.getItem(this.http, this.url, (item)=>{
       this.item = item;
-      item.content_hide = !value;
+      if (value == true)
+        this.content_hide = false;
+      else
+        this.content_hide = !this.content_hide;
     });
   }
 }

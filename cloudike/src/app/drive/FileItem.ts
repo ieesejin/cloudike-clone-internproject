@@ -3,7 +3,6 @@ import { ConvertFormat } from './ConvertFormat'
 
 export class FileItem
 {
-    public content_hide = true;
     public content = {};
     public author_name: string;
     public icon: string;
