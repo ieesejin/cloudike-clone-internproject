@@ -15,28 +15,30 @@ body
     width: 100%;
     height: 100%;
 }
-
 button
+{
+    font-size: 14px;
+}
+mat-dialog-actions button
 {    
     padding: 6px 30px;
     background-color: #ffd659;
     border: 1px solid #fab545;
     border-radius: 3px;
-    font-size: 14px;
 }
-button:hover {
+mat-dialog-actions button:hover {
     color: #555;
     background-color: #ffc926;
     border-color: #f89d09;
 }
 
-button:focus{
+mat-dialog-actions button:focus{
     background-color: #ffc926;
     border-color: #ba7505;
     outline: none;
 
 }
-button:hover, button:focus, button.focus {
+mat-dialog-actions button:hover, button:focus, button.focus {
     color: #333;
     text-decoration: none;
 }

@@ -15,18 +15,18 @@ header a.logo img
     box-sizing: content-box;
 }
 
-header div
+header div.top-component
 {
     display: inline-block;
 }
 header div.option
 {
     position: absolute;
-    right: 0px;
-    top: 0px;
+    right: 25px;
+    top: 20px;
     display: inline-block;
 }
-:host ::ng-deep header * div
+:host ::ng-deep header div.top-component * div
 {
     display: inline-block;
     box-sizing: border-box;
@@ -35,7 +35,7 @@ header div.option
     min-width: 80px;
     text-align: center;
 }
-:host ::ng-deep header * p
+:host ::ng-deep header div.top-component * p
 {
     margin: 0px;
     padding: 0px;
