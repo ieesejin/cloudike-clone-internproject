@@ -1,17 +1,19 @@
-header .logo
+:host ::ng-deep header div.top-component * div
 {
     display: inline-block;
-    width: 184px;
-    height: 64px;
-    padding: 17px 20px 18px 15px;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 100%;
+    min-width: 80px;
+    text-align: center;
+    cursor:  pointer;
 }
-
-header .top-component
+:host ::ng-deep header div.top-component * div.disable
 {
-    display: inline-block;
+    cursor: default;
 }
-
-:host ::ng-deep header a
+:host ::ng-deep header div.top-component * p
 {
-    color: red;
+    margin: 0px;
+    padding: 0px;
 }

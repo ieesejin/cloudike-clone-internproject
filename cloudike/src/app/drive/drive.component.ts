@@ -49,6 +49,12 @@ export class DriveComponent implements OnInit {
       DriveComponent.Now = item;
       this.ParantFolder = FileItem.SplitPath(item.path);
     });
+    
+    this.checkedList = [];
+    var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
+    if(selectAllChkbox.checked){
+      selectAllChkbox.checked = false;
+    }
   }
   private Download(item: FileItem)
   {

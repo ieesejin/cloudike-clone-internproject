@@ -5,6 +5,34 @@ header
     background: #ffffff;
     display: block;
 }
+header a.logo
+{
+    display: inline-block;
+    width: 250px;
+    height: 100px;
+    float: left;
+}
+header a.logo img
+{
+    display: inline-block;
+    width: 184px;
+    height: 64px;
+    padding: 20px 20px 18px 25px;
+    box-sizing: content-box;
+}
+
+header div.top-component
+{
+    display: inline-block;
+}
+header div.option
+{
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    display: inline-block;
+}
+
 .main
 {
     height: calc(100% - 100px);  
