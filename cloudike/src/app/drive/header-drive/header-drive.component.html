@@ -20,7 +20,7 @@
     <p>공유</p>
 </div>
 
-<div (click)="move_file()">
+<div (click)="selectItem.length > 0 && move_file()" [ngClass]="{'disable': selectItem.length == 0}">
     <i class="icon size50 folder-move"></i>
     <p>이동 / 복사</p>
 </div>
@@ -30,7 +30,7 @@
     <p>이름 변경</p>
 </div>
 
-<div (click)="delete_file()">
+<div (click)="selectItem.length > 0 && delete_file()" [ngClass]="{'disable': selectItem.length == 0}">
     <i class="icon size50 delete"></i>
     <p>삭제</p>
 </div>

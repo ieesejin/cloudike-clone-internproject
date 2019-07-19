@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig} from '@angular/material';
 import { NewFolderComponent } from '../new-folder/new-folder.component';
 import { DeleteFilesComponent } from '../delete-files/delete-files.component';
 import { MoveFileComponent } from '../move-file/move-file.component';
+import { FileManagement } from '../FileManagement';
 
 @Component({
   selector: 'app-header-drive',
@@ -11,6 +12,10 @@ import { MoveFileComponent } from '../move-file/move-file.component';
 })
 export class HeaderDriveComponent implements OnInit {
 
+  public get selectItem()
+  {
+    return FileManagement.getSelectItemPath();
+  }
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
