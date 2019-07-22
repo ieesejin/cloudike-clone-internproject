@@ -160,6 +160,10 @@ mat-dialog-actions .cancle
         {
             content: "\e605";
         }
+        i.icon.info:before
+        {
+            content: "\e621";
+        }
 
 ::-webkit-scrollbar-track
 {

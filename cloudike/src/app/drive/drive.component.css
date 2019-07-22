@@ -97,6 +97,11 @@ a.path-link:hover
     white-space: nowrap;
 }
 
+.ngx-contextmenu button i {
+    font-size: 2em;
+    vertical-align: middle;
+}
+
 .btn {
     position: relative;
 }
@@ -147,4 +152,16 @@ a.path-link:hover
 
 .ngx-contextmenu button:hover {
     text-decoration: none
+}
+
+.icon {
+    font-family: mountbit-icons;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
 }
