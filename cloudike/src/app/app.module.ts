@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,7 +56,10 @@ import { MoveFileComponent } from './drive/move-file/move-file.component';
     MatDialogModule,
     BrowserAnimationsModule,
     NgxUploadModule.forRoot(ngxDropTargetOptions),
-    NgbModule
+    NgbModule,
+    ContextMenuModule.forRoot({
+      useBootstrap4: true
+    })
   ],
   providers: [],
   bootstrap: [BootComponent],

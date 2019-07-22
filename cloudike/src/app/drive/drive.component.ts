@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
+import { ContextMenuComponent } from 'ngx-contextmenu';
 
 @Component({
   selector: 'app-drive',
@@ -135,5 +136,11 @@ export class DriveComponent implements OnInit {
         console.log(this.checkedList);
       }
     }
+  }
+
+  @ViewChild(ContextMenuComponent, {static : true}) public basicMenu: ContextMenuComponent;
+
+  showMessage(message: any) {
+    console.log(message);
   }
 }

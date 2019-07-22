@@ -73,3 +73,78 @@ a.path-link:hover
     max-height: calc(100% - 60px);
     margin: 0px 10px 5px 10px;
 }
+
+
+.ngx-contextmenu .dropdown-menu {
+    border: solid 1px #EEE;
+    padding: 0;
+}
+
+.ngx-contextmenu li {
+    display: block;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.ngx-contextmenu button {
+    display: block;
+    clear: both;
+    padding: 6px 10px;
+    font-weight: 400;
+    text-align: left;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+.btn {
+    position: relative;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+    border-color: transparent;
+}
+
+.btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ngx-contextmenu li:first-child {
+    border-top:none;
+}
+
+.ngx-contextmenu a:hover {
+    background-color:rgb(255, 213, 88);
+}
+
+.ngx-contextmenu button:hover {
+    text-decoration: none
+}
