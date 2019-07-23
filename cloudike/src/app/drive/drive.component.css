@@ -17,6 +17,10 @@ th
     border-bottom-width: 1px;
     font-weight: 400;
 }
+tbody tr
+{
+    transform: none !important;
+}
 td
 {
     height: 40px;
@@ -72,4 +76,12 @@ a.path-link:hover
     overflow-y: auto;
     max-height: calc(100% - 60px);
     margin: 0px 10px 5px 10px;
+}
+
+
+.dragitem
+{
+    padding: 10px 15px;
+    background: #ffffff;
+    border: 1px solid red;
 }

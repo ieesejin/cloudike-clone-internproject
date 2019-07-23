@@ -15,7 +15,10 @@
       <th>수정일</th>
       <th>공유</th>
     </tr>
-    <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index">
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" cdkDrag cdkDragData="{{item.value.path}}">
+        <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
+
         <td><input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)"></td>
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
         <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
@@ -26,5 +29,6 @@
         <td>아이콘</td>
       <td></td>
     </tr>
+    </tbody>
   </table>
 </div>

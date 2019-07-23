@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { OauthComponent } from './oauth/oauth.component';
@@ -55,7 +57,8 @@ import { MoveFileComponent } from './drive/move-file/move-file.component';
     MatDialogModule,
     BrowserAnimationsModule,
     NgxUploadModule.forRoot(ngxDropTargetOptions),
-    NgbModule
+    NgbModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [BootComponent],
