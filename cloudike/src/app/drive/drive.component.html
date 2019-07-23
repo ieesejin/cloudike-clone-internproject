@@ -15,34 +15,23 @@
       <th>수정일</th>
       <th>공유</th>
     </tr>
-    <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item">
-        <td><input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)"></td>
-        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item?.value.name}}</td>
-        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item?.value.name}}</td>
-        <td>{{item?.value.owner_path}}</td>
-        <td>{{item?.value.type}}</td>
-        <td>{{item?.value.bytesString}}</td>
-        <td>{{item?.value.date}}</td>
-        <td>아이콘</td>
-      <td></td>
+    <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="menuSelect(item.value)" [contextMenuSubject]="item">
+      <td><input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)"></td>
+      <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item?.value.name}}</td>
+      <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item?.value.name}}</td>
+      <td>{{item?.value.owner_path}}</td>
+      <td>{{item?.value.type}}</td>
+      <td>{{item?.value.bytesString}}</td>
+      <td>{{item?.value.date}}</td>
+      <td>아이콘</td>
     </tr>
   </table>
 </div>
 
-<!-- <context-menu [useBootstrap4]="true">
-  <ng-template contextMenuItem (execute)="showMessage('Hi')">
-    Say hi!
-  </ng-template>
-  <ng-template contextMenuItem divider="true"></ng-template>
-  <ng-template contextMenuItem (execute)="showMessage('Bye')">
-    Bye
-  </ng-template>
-</context-menu> -->
-
 <div class="dropdown ngx-contextmenu">
   <ul class="dropdown-menu">
     <li>
-      <context-menu [useBootstrap4]="true">
+      <context-menu #basicMenu [useBootstrap4]="true">
         <ng-template contextMenuItem>
           <button class="btn btn-link btn-block">
             <i class="icon download"></i>
@@ -65,6 +54,64 @@
           <button class="btn btn-link btn-block">
             <i class="icon pen"></i>
             이름 변경
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon delete"></i>
+            삭제
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon info"></i>
+            상세 정보
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem divider="true"></ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon transfer"></i>
+            소유권 이전
+          </button>
+        </ng-template>
+      </context-menu>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown ngx-contextmenu">
+  <ul class="dropdown-menu">
+    <li>
+      <context-menu #otherMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon download"></i>
+            다운로드
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon ms365"></i>
+            브라우저에서 편집
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon folder-move"></i>
+            이동/복사
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon pen"></i>
+            이름 변경
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon clocks"></i>
+            버전 보기
           </button>
         </ng-template>
         <ng-template contextMenuItem>

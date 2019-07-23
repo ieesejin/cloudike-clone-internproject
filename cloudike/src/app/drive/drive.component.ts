@@ -138,9 +138,15 @@ export class DriveComponent implements OnInit {
     }
   }
 
-  @ViewChild(ContextMenuComponent, {static : true}) public basicMenu: ContextMenuComponent;
+  @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
+  @ViewChild('otherMenu', {static : true}) public otherMenu: ContextMenuComponent;
 
-  showMessage(message: any) {
-    console.log(message);
+  public menuSelect(item){
+    if(item.type == 'Word'){
+      return this.otherMenu;
+    }
+    else {
+      return this.basicMenu;
+    }
   }
 }
