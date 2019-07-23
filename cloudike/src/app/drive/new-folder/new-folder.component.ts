@@ -26,6 +26,7 @@ export class NewFolderComponent implements OnInit {
     if (url[url.length-1] != '/') url =  url + '/';
 
     formdata.append("path", url + name);
+    //console.log(formdata.get("path"));
     this.http.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, {
       headers: {'Mountbit-Auth':UserInfo.token}
     }).subscribe(data => {
