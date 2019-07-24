@@ -57,13 +57,30 @@ export class DriveComponent implements OnInit {
       selectAllChkbox.checked = false;
     }
   }
-  private Download(item: FileItem)
+  public Download(item: FileItem)
   {
-    this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe(data => {
-      window.location = data["url"];
-    });
+    if (item.isfolder)
+    {
+      var formdata = new FormData();
+      formdata.set("path", item.path);
+      formdata.set("is_win", "true");
+      // 폴더 다운로드
+      this.http.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, {
+        headers: {'Mountbit-Auth':UserInfo.token}
+      }).subscribe(data => {
+          window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
+      });
+
+    }
+    else
+    {
+      // 파일 다운로드
+      this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
+        headers: {'Mountbit-Auth':UserInfo.token}
+      }).subscribe(data => {
+        window.location = data["url"];
+      });
+    }
   }
 
   //전체선택 및 전체해제
