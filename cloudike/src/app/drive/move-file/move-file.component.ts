@@ -24,6 +24,7 @@ export class MoveFileComponent implements OnInit {
     console.log(this);
     this.path = url;
   }
+  
   private api(url)
   {
     this.selectitems.forEach(element => {

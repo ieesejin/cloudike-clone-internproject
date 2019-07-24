@@ -148,5 +148,10 @@ export class DriveComponent implements OnInit {
     else {
       return this.basicMenu;
     }
+
+  }
+
+  public btnDisable(item) {
+    console.log(item);
   }
 }
