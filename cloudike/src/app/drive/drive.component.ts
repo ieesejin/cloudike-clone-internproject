@@ -144,6 +144,25 @@ export class DriveComponent implements OnInit {
     return list.element.nativeElement.children[index].children[0].children[0].getAttribute("value");
   }
 
+
+  drag(event: CdkDragDrop<string[]>) {
+    var draggable = event.container.element.nativeElement.children[event.currentIndex].children[0].children[1] != null;
+
+    if (draggable == true && this.getItemValue(event.container,event.currentIndex) == event.item.data) draggable = false;
+    var item = document.getElementsByClassName("dragitem")[0].classList;
+
+    if (draggable) 
+    {
+      if (!item.contains("on"))
+        item.add("on");
+    }
+    else
+    {
+      if (item.contains("on"))
+        item.remove("on");
+    }
+  }
+  
   drop(event: CdkDragDrop<string[]>) {
     var old_path = this.getItemValue(event.container,event.previousIndex);
     var new_path = this.getItemValue(event.container,event.currentIndex);

@@ -85,3 +85,7 @@ a.path-link:hover
     background: #ffffff;
     border: 1px solid red;
 }
+.dragitem.on
+{
+    border: 1px solid yellow;
+}
