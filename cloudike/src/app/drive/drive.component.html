@@ -45,7 +45,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btn btn-link btn-block" (click)="move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
@@ -57,7 +57,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btn btn-link btn-block" (click)="delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>
@@ -97,7 +97,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block">
+          <button class="btn btn-link btn-block" (click)="move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
@@ -115,7 +115,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btn btn-link btn-block" (click)="delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>

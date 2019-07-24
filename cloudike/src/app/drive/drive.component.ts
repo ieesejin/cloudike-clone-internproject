@@ -6,6 +6,11 @@ import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
 import { ContextMenuComponent } from 'ngx-contextmenu';
+import { MatDialog } from '@angular/material';
+import { NewFolderComponent } from './new-folder/new-folder.component';
+import { DeleteFilesComponent } from './delete-files/delete-files.component';
+import { MoveFileComponent } from './move-file/move-file.component';
+
 
 @Component({
   selector: 'app-drive',
@@ -28,7 +33,7 @@ export class DriveComponent implements OnInit {
   public ParantFolder = [];
   public checkedList = [];
 
-  constructor(private http:HttpClient, private router : Router) { 
+  constructor(private http:HttpClient, private router : Router, public dialog: MatDialog) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -168,7 +173,16 @@ export class DriveComponent implements OnInit {
 
   }
 
-  public btnDisable(item) {
-    console.log(item);
+  public new_folder()
+  {
+    this.dialog.open(NewFolderComponent);
+  }
+  public delete_file()
+  {
+    this.dialog.open(DeleteFilesComponent);
+  }
+  public move_file()
+  {
+    this.dialog.open(MoveFileComponent);
   }
 }
