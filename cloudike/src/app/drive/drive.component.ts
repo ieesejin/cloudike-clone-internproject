@@ -163,7 +163,7 @@ export class DriveComponent implements OnInit {
 
   private getItemValue(list: CdkDropList, index: number)
   {
-    return list.element.nativeElement.children[index].children[0].children[0].getAttribute("value");
+    return list.element.nativeElement.children[index].children[0].children[0].children[0].getAttribute("value");
   }
 
 
