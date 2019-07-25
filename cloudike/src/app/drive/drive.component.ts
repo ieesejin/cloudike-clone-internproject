@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
@@ -6,7 +6,12 @@ import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
 import { CdkDragDrop, moveItemInArray, CdkDropList } from '@angular/cdk/drag-drop';
-import { ConsoleLogger } from '@wkoza/ngx-upload/src/utils/logger.model';
+import { ContextMenuComponent } from 'ngx-contextmenu';
+import { MatDialog } from '@angular/material';
+import { NewFolderComponent } from './new-folder/new-folder.component';
+import { DeleteFilesComponent } from './delete-files/delete-files.component';
+import { MoveFileComponent } from './move-file/move-file.component';
+
 
 @Component({
   selector: 'app-drive',
@@ -29,7 +34,7 @@ export class DriveComponent implements OnInit {
   public ParantFolder = [];
   public checkedList = [];
 
-  constructor(private http:HttpClient, private router : Router) { 
+  constructor(private http:HttpClient, private router : Router, public dialog: MatDialog) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -58,13 +63,30 @@ export class DriveComponent implements OnInit {
       selectAllChkbox.checked = false;
     }
   }
-  private Download(item: FileItem)
+  public Download(item: FileItem)
   {
-    this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe(data => {
-      window.location = data["url"];
-    });
+    if (item.isfolder)
+    {
+      var formdata = new FormData();
+      formdata.set("path", item.path);
+      formdata.set("is_win", "true");
+      // 폴더 다운로드
+      this.http.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, {
+        headers: {'Mountbit-Auth':UserInfo.token}
+      }).subscribe(data => {
+          window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
+      });
+
+    }
+    else
+    {
+      // 파일 다운로드
+      this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
+        headers: {'Mountbit-Auth':UserInfo.token}
+      }).subscribe(data => {
+        window.location = data["url"];
+      });
+    }
   }
 
   //전체선택 및 전체해제
@@ -177,4 +199,58 @@ export class DriveComponent implements OnInit {
   }
 
   
+
+  @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
+  @ViewChild('otherMenu', {static : true}) public otherMenu: ContextMenuComponent;
+
+  public menuSelect(item){
+    if(item.type == 'Word'){
+      return this.otherMenu;
+    }
+    else {
+      return this.basicMenu;
+    }
+
+  }
+
+  public get selectItem()
+  {
+    return FileManagement.getSelectItemPath();
+  }
+
+  public new_folder()
+  {
+    this.dialog.open(NewFolderComponent);
+  }
+  public delete_file()
+  {
+    this.dialog.open(DeleteFilesComponent);
+  }
+  public move_file()
+  {
+    this.dialog.open(MoveFileComponent);
+  }
+
+  public getRightClickItem(item)
+  {
+      var list = document.getElementsByName("chk_info");
+      list.forEach((element : HTMLInputElement) => {
+        if(element.value == item.path) {
+          if(element.checked){
+            return
+          }
+          else{
+            for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+              var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+              if(chkbox.checked){
+                chkbox.checked = false;
+              }
+            }
+            element.checked = true;
+            return
+          }
+        }
+      });
+  }
+
 }

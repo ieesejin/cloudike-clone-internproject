@@ -16,7 +16,7 @@
       <th>공유</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" cdkDrag cdkDragData="{{item.value.path}}">
+      <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" cdkDrag cdkDragData="{{item.value.path}}" [contextMenu]="menuSelect(item.value)" [contextMenuSubject]="item.value">
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
@@ -33,4 +33,114 @@
     </tr>
     </tbody>
   </table>
+</div>
+
+<div class="dropdown ngx-contextmenu">
+  <ul class="dropdown-menu">
+    <li>
+      <context-menu #basicMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem let-item>
+          <button class="btn btn-link btn-block" (click)="Download(item)">
+            <i class="icon download"></i>
+            다운로드
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon link"></i>
+            공유
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block" (click)="move_file()">
+            <i class="icon folder-move"></i>
+            이동/복사
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon pen"></i>
+            이름 변경
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block" (click)="delete_file()">
+            <i class="icon delete"></i>
+            삭제
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem let-item>
+          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+            <i class="icon info"></i>
+            상세 정보
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem divider="true"></ng-template>
+        <ng-template contextMenuItem let-item>
+          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+            <i class="icon transfer"></i>
+            소유권 이전
+          </button>
+        </ng-template>
+      </context-menu>
+    </li>
+  </ul>
+</div>
+
+<div class="dropdown ngx-contextmenu">
+  <ul class="dropdown-menu">
+    <li>
+      <context-menu #otherMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem let-item>
+          <button class="btn btn-link btn-block" (click)="Download(item)">
+            <i class="icon download"></i>
+            다운로드
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon ms365"></i>
+            브라우저에서 편집
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem let-item>
+          <button class="btn btn-link btn-block" (click)="move_file()">
+            <i class="icon folder-move"></i>
+            이동/복사
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon pen"></i>
+            이름 변경
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block">
+            <i class="icon clocks"></i>
+            버전 보기
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem>
+          <button class="btn btn-link btn-block" (click)="delete_file()">
+            <i class="icon delete"></i>
+            삭제
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem let-item>
+          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+            <i class="icon info"></i>
+            상세 정보
+          </button>
+        </ng-template>
+        <ng-template contextMenuItem divider="true"></ng-template>
+        <ng-template contextMenuItem let-item>
+          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+            <i class="icon transfer"></i>
+            소유권 이전
+          </button>
+        </ng-template>
+      </context-menu>
+    </li>
+  </ul>
 </div>
