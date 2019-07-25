@@ -13,7 +13,7 @@
           <label for="selectAllChkbox"></label>
         </div>
       </th>
-      <th>파일명</th>
+      <th id="path">파일명</th>
       <th>공용 폴더명</th>
       <th>형식</th>
       <th>크기</th>
@@ -30,7 +30,7 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
+        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon folder-filled"></i>{{item.value.name}}</td>
         <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
