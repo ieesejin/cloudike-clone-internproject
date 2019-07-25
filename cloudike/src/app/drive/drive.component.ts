@@ -173,6 +173,11 @@ export class DriveComponent implements OnInit {
 
   }
 
+  public get selectItem()
+  {
+    return FileManagement.getSelectItemPath();
+  }
+
   public new_folder()
   {
     this.dialog.open(NewFolderComponent);
@@ -185,4 +190,27 @@ export class DriveComponent implements OnInit {
   {
     this.dialog.open(MoveFileComponent);
   }
+
+  public getRightClickItem(item)
+  {
+      var list = document.getElementsByName("chk_info");
+      list.forEach((element : HTMLInputElement) => {
+        if(element.value == item.path) {
+          if(element.checked){
+            return
+          }
+          else{
+            for(var i=0; i<Object.keys(this.nowfile.content).length; i++){
+              var chkbox = <HTMLInputElement> document.getElementById("chkbox" + i);
+              if(chkbox.checked){
+                chkbox.checked = false;
+              }
+            }
+            element.checked = true;
+            return
+          }
+        }
+      });
+  }
+
 }

@@ -171,6 +171,10 @@ mat-dialog-actions .cancle
         i.icon.clocks:before {
             content: "\e622";
         }
+        i.icon.folder-filled:before {
+            content: "\e611";
+            color: #CDCDCD;
+        }
 
 ::-webkit-scrollbar-track
 {
