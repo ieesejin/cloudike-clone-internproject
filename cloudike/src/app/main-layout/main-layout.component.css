@@ -4,6 +4,7 @@ header
     height: 100px;
     background: #ffffff;
     display: block;
+     
 }
 header a.logo
 {
@@ -24,6 +25,9 @@ header a.logo img
 header div.top-component
 {
     display: inline-block;
+    height: 100px;
+    overflow-x: auto;
+    white-space: nowrap;  /* 우측 스크롤을 하기 위해 하위 컨텐츠 내용 조정 */
 }
 header div.option
 {
@@ -80,4 +84,64 @@ nav .logo
     width: 184px;
     height: 64px;
     padding: 10px 20px 18px 0px;
+}
+
+footer
+{
+    display: none;
+}
+@media ( max-width: 1050px ) {
+    header a.logo
+    {
+        display: none;
+    }
+    header div.top-component
+    {
+        width: calc(100% - 150px);
+    }
+    nav
+    {
+        width: 0;
+        height: auto;
+        position: absolute;
+        padding: 0px;
+        border-right: 0px;
+    }
+    section.content
+    {    
+        width: 100%;
+        height: auto;
+    }
+    .main
+    {
+        overflow-y: auto;
+    }
+    nav .info
+    {
+        display: none;
+    }
+
+    
+    footer
+    {
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        background: #f9f9f9;
+        border-top: #ddd 1px solid;
+        padding: 5px 10px;
+        display: flex;
+    }
+
+    footer progress
+    {
+        margin-top:3px;
+    flex: 1;
+    }
+    footer div
+    {
+        padding-left: 10px;
+    box-sizing: border-box;
+    }
+    
 }

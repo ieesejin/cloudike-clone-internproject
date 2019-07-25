@@ -20,21 +20,26 @@
       <th>수정일</th>
       <th>공유</th>
     </tr>
-    <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="menuSelect(item.value)" [contextMenuSubject]="item.value">
-      <td>
-        <div class="checkbox-container">
-          <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
-          <label for="{{'chkbox'+ i}}"></label>
-        </div>
-      </td>
-      <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon folder-filled"></i>{{item?.value.name}}</td>
-      <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item?.value.name}}</td>
-      <td>{{item?.value.owner_path}}</td>
-      <td>{{item?.value.type}}</td>
-      <td>{{item?.value.bytesString}}</td>
-      <td>{{item?.value.date}}</td>
-      <td>아이콘</td>
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
+      <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" cdkDrag cdkDragData="{{item.value.path}}" [contextMenu]="menuSelect(item.value)" [contextMenuSubject]="item.value">
+        <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
+        <td>
+          <div class="checkbox-container">
+            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
+            <label for="{{'chkbox'+ i}}"></label>
+          </div>
+          <i *ngIf="item.value.isfolder"></i>
+        </td>
+        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
+        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
+        <td>{{item.value.owner_path}}</td>
+        <td>{{item.value.type}}</td>
+        <td>{{item.value.bytesString}}</td>
+        <td>{{item.value.date}}</td>
+        <td>아이콘</td>
+      <td></td>
     </tr>
+    </tbody>
   </table>
 </div>
 

@@ -17,6 +17,10 @@ th
     border-bottom-width: 1px;
     font-weight: 400;
 }
+tbody tr
+{
+    transform: none !important;
+}
 #check
 {
     width: 1px;
@@ -78,6 +82,17 @@ a.path-link:hover
     margin: 0px 10px 5px 10px;
 }
 
+
+.dragitem
+{
+    padding: 10px 15px;
+    background: #ffffff;
+    border: 1px solid red;
+}
+.dragitem.on
+{
+    border: 1px solid yellow;
+}
 
 .ngx-contextmenu .dropdown-menu {
     border: solid 1px #EEE;

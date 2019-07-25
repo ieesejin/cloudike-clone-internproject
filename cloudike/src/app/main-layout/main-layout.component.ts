@@ -27,6 +27,10 @@ export class MainLayoutComponent implements OnInit {
       UserInfo.Update(http);
   }
 
+  public get windows_width()
+  {
+    return window.innerWidth;
+  }
   private createComponent(view:ViewContainerRef, component)
   {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);

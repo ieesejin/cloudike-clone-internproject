@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
 import { ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FileManagement } from './FileManagement';
+import { CdkDragDrop, moveItemInArray, CdkDropList } from '@angular/cdk/drag-drop';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { MatDialog } from '@angular/material';
 import { NewFolderComponent } from './new-folder/new-folder.component';
@@ -159,6 +160,45 @@ export class DriveComponent implements OnInit {
       }
     }
   }
+
+  private getItemValue(list: CdkDropList, index: number)
+  {
+    return list.element.nativeElement.children[index].children[0].children[0].children[0].getAttribute("value");
+  }
+
+
+  drag(event: CdkDragDrop<string[]>) {
+    var draggable = event.container.element.nativeElement.children[event.currentIndex].children[0].children[1] != null;
+
+    if (draggable == true && this.getItemValue(event.container,event.currentIndex) == event.item.data) draggable = false;
+    var item = document.getElementsByClassName("dragitem")[0].classList;
+
+    if (draggable) 
+    {
+      if (!item.contains("on"))
+        item.add("on");
+    }
+    else
+    {
+      if (item.contains("on"))
+        item.remove("on");
+    }
+  }
+  
+  drop(event: CdkDragDrop<string[]>) {
+    var old_path = this.getItemValue(event.container,event.previousIndex);
+    var new_path = this.getItemValue(event.container,event.currentIndex);
+    var formdata = new FormData();
+    formdata.set("from_path",old_path);
+    formdata.set("to_path",new_path);
+    this.http.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, {
+      headers: {'Mountbit-Auth':UserInfo.token}
+    }).subscribe(data => {
+      // 성공
+    });
+  }
+
+  
 
   @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
   @ViewChild('otherMenu', {static : true}) public otherMenu: ContextMenuComponent;
