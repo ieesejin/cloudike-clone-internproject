@@ -7,7 +7,12 @@
 <div class="tableContainer">
   <table>
     <tr>
-      <th><input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event)"></th>
+      <th id="check">
+        <div class="checkbox-container">
+          <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event)">
+          <label for="selectAllChkbox"></label>
+        </div>
+      </th>
       <th>파일명</th>
       <th>공용 폴더명</th>
       <th>형식</th>
@@ -19,7 +24,10 @@
       <tr *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" cdkDrag cdkDragData="{{item.value.path}}" [contextMenu]="menuSelect(item.value)" [contextMenuSubject]="item.value">
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
-          <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
+          <div class="checkbox-container">
+            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
+            <label for="{{'chkbox'+ i}}"></label>
+          </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
@@ -40,9 +48,9 @@
     <li>
       <context-menu #basicMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="Download(item)">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
-            다운로드
+            다운로드 {{getRightClickItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>
@@ -52,7 +60,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="move_file()">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
@@ -64,7 +72,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="delete_file()">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>
@@ -92,9 +100,9 @@
     <li>
       <context-menu #otherMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="Download(item)">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
-            다운로드
+            다운로드 {{getRightClickItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>
@@ -104,7 +112,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="move_file()">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
@@ -122,7 +130,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="delete_file()">
+          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>
