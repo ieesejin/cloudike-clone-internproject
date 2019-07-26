@@ -15,7 +15,10 @@ export class UploadBoxComponent implements OnInit {
   upload_queue_count = 0;
   minimization = false;
   uploading_item : FileItemUpload[] = [];
-  constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) { }
+  constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) {
+      uploader.disableMultipart = true;
+
+   }
 
   public clean()
   {
@@ -69,7 +72,6 @@ export class UploadBoxComponent implements OnInit {
           var url = create_data["url"];
           var method = create_data["method"];
 
-          item.disableMultipart = true;
           item.onSuccess$.subscribe(()=>{
             this.http.post(confirm_url, {}).subscribe(create_data => {
               console.log("최종 완료" + item.file.name);
