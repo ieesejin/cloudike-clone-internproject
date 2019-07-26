@@ -125,7 +125,7 @@ a.path-link:hover
     vertical-align: middle;
 }
 
-.btn {
+.btnMenu {
     position: relative;
 }
 
@@ -144,7 +144,7 @@ a.path-link:hover
     box-shadow: none;
 }
 
-.btn {
+.btnMenu {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
