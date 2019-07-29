@@ -195,6 +195,14 @@ mat-dialog-actions .cancle
             content: "\e614";
             color: #CDCDCD;
         }
+        i.icon.zip, i.icon.zip:before {
+            content: "\f1c6";
+            color: #CDCDCD;
+            font-family: FontAwesome;
+            font-size: 22px;
+            height: 10px;
+            line-height: 25px;
+        }
 
 ::-webkit-scrollbar-track
 {
