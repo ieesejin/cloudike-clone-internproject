@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { HTTPService } from './httpservice.service';
 
 export class UserInfo 
 {
@@ -45,18 +46,14 @@ export class UserInfo
         this.data = "";
         localStorage.removeItem("CLOUDIKE");
     }
-    public static Update(http: HttpClient)
+    public static Update(hs: HTTPService)
     {
-        http.get("https://api.cloudike.kr/api/1/accounts/get/",{
-            headers: {'Mountbit-Auth':UserInfo.token}
-            }).subscribe(data => {
+        hs.get("https://api.cloudike.kr/api/1/accounts/get/", "사용자 정보 갱신").subscribe(data => {
             this._storageSize = data["storage_size"];
             this._maxStorageSize = data["quota_size"];
         });
 
-        http.get("https://api.cloudike.kr/api/1/accounts/company/" + this.company_id + "/",{
-            headers: {'Mountbit-Auth':UserInfo.token}
-            }).subscribe(data => {
+        hs.get("https://api.cloudike.kr/api/1/accounts/company/" + this.company_id + "/", "회사 정보 갱신").subscribe(data => {
                 //this._maxStorageSize = data["storage_size"];
         });
     }

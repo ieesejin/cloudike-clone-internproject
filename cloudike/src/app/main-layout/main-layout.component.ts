@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { RealtimeService } from '../realtime.service';
 import { ConvertFormat } from '../drive/ConvertFormat';
+import { HTTPService } from '../httpservice.service';
 
 
 @Component({
@@ -21,10 +21,10 @@ export class MainLayoutComponent implements OnInit {
     private router : Router, 
     private route: ActivatedRoute,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private http: HttpClient,
+    private hs: HTTPService,
     private realservice : RealtimeService)
   {
-      UserInfo.Update(http);
+      UserInfo.Update(hs);
   }
 
   public get windows_width()

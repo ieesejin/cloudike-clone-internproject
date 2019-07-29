@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FileItem } from 'src/app/drive/FileItem';
 import { DriveComponent } from '../../drive.component';
-import { HttpClient } from '@angular/common/http';
 import { FileManagement } from '../../FileManagement';
 import { Router, NavigationEnd } from '@angular/router';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-folder-item',
@@ -23,7 +23,7 @@ export class FolderItemComponent implements OnInit {
     return DriveComponent.Now.path == this.url;
   }
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private hs: HTTPService, private router: Router) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -53,7 +53,7 @@ export class FolderItemComponent implements OnInit {
   // value은 하위 목록을 열것인지, 열지 않을 것인지
   public itemclick(value)
   {
-    FileManagement.getItem(this.http, this.url, (item)=>{
+    FileManagement.getItem(this.hs, this.url, (item)=>{
       this.item = item;
       if (value == true)
         this.content_hide = false;

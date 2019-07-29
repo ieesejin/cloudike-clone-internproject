@@ -5,7 +5,7 @@ import { WebsocketService } from "./websocket.service";
 import { UserInfo } from './UserInfo';
 import { FileManagement } from './drive/FileManagement';
 import { FileItem } from './drive/FileItem';
-import { HttpClient } from '@angular/common/http';
+import { HTTPService } from './httpservice.service';
 
 
 
@@ -16,7 +16,7 @@ export class RealtimeService {
 
   private static _messages: Subject<JSON[]>;
   private static wsService: WebsocketService = null;
-  constructor(private http: HttpClient) {
+  constructor(private hs: HTTPService) {
     this.CreateSocket();
   }
 
@@ -81,7 +81,7 @@ export class RealtimeService {
       case 'folder_copied':
       case 'file_copied':
         if (!FileManagement.contains(parent_path)) return;
-        FileManagement.getItem(this.http,
+        FileManagement.getItem(this.hs,
           parent_path,
           (item) => {
               item["content"][name] = new FileItem(data);
@@ -90,7 +90,7 @@ export class RealtimeService {
         break;
       case 'file_new_content':
           if (!FileManagement.contains(parent_path)) return;
-          FileManagement.getItem(this.http,
+          FileManagement.getItem(this.hs,
             parent_path,
             (item) => {
                 item["content"][name] = new FileItem(data);
