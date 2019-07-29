@@ -45,15 +45,16 @@ export class HTTPService {
 
         }
       }
-    })
-  ;
-
-      console.log("HTTPService");
+    });
+    console.log("HTTPService");
   }
 
   private remove_in_queue(num)
   {
-    delete(this._queue[num]);
+    if (this._queue[num] != undefined)
+    {
+      delete(this._queue[num]);
+    }
     if (this.queue.length == 0)
     {
       this.max_queue = 0;
@@ -61,15 +62,10 @@ export class HTTPService {
     }
   }
 
-
-
-  public get(url:string,  message="", try_count : number = 3, num?) : Subject<any>
+  private HttpRequest(method, url:string, body, message, try_count : number, num?) : Subject<any>
   {
     var new_event = new Subject();
-    if (message == "")
-      message = "알 수 없는 작업";
-
-    if (num == null)
+    if (num == null && message != null)
     {
       num =  this._unique_num++;
       this.max_queue++;
@@ -78,9 +74,13 @@ export class HTTPService {
       this.progress = 0;
     }
     try_count--;
-    this.http.get(url,{
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe
+    var ht;
+    if (method == "get")
+      ht = this.http.get(url, { headers: {'Mountbit-Auth':UserInfo.token } });
+    else (method == "post")
+      ht = this.http.post(url,body, { headers: {'Mountbit-Auth':UserInfo.token } });
+
+    ht.subscribe
     (
         data=> {
           this.remove_in_queue(num);
@@ -89,7 +89,7 @@ export class HTTPService {
         error=>
         {
             if (try_count > 0)
-              this.get(url, message, try_count, num);
+              this.HttpRequest(method, url, body, message, try_count, num);
             else
             {
               this.remove_in_queue(num);
@@ -98,40 +98,15 @@ export class HTTPService {
         }
     );
     return new_event;
+
+  }
+  public get(url:string,  message?, try_count : number = 3) : Subject<any>
+  {
+    return this.HttpRequest("get",url,{},message,try_count);
   }
 
-  public post(url:string, body, message="", try_count : number = 3, num?) : Subject<any>
+  public post(url:string, body, message?, try_count : number = 3) : Subject<any>
   {
-    var new_event = new Subject();
-    if (message == "")
-      message = "알 수 없는 작업";
-
-    if (num == null)
-    {
-      num =  this._unique_num++;
-      this.max_queue++;
-      this._queue[num] = message;
-    }
-    try_count--;
-    this.http.post(url,body,{
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe
-    (
-        data=> {
-          this.remove_in_queue(num);
-          new_event.next(data);
-        },
-        error=>
-        {
-            if (try_count > 0)
-              this.post(url,body, message, try_count, num);
-            else
-            {
-              this.remove_in_queue(num);
-              new_event.error(error);
-            }
-        }
-    );
-    return new_event;
+    return this.HttpRequest("post",url,body,message,try_count);
   }
 }
