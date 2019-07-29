@@ -76,8 +76,17 @@ export class FileItem
             this.name = temp[temp.length - 1];
         }
 
-        if (this.type == "presentation_office") this.type = "Powerpoint"
-        if (this.type == "document_office") this.type = "Word"
+        if (this.type == "presentation_office") this.type = "Powerpoint";
+        if (this.type == "document_office") this.type = "Word";
+        if (this.type == "video") this.type = "비디오";
+        if (this.type == "unknown")
+        {
+            if (this.mime_type == "application/octet-stream") this.type = "문서"; // 해당 확장자 .md .yml .gitignore
+        }
+        if (this.type == "")
+        {
+            if (this.mime_type == "application/json") this.type = "문서"; // 해당 확장자 .json
+        }
         if (this.type == "folder") 
         {
             this.isfolder = true;

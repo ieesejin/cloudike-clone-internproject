@@ -31,7 +31,9 @@
           <i *ngIf="item.value.isfolder"></i>
         </td>
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared == false, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
-        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)"><img class="smallThumbnails" src="{{getThumbnails(item.value)}}"/>{{item.value.name}}</td>
+        <td *ngIf="!item.value.isfolder && item.value.type == 'Word'" (click)="this.Download(item.value)"><img class="smallThumbnails" src="{{getThumbnails(item.value)}}"/>{{item.value.name}}</td>
+        <td *ngIf="!item.value.isfolder && item.value.type == '문서'" (click)="this.Download(item.value)"><i class="icon icon-file"></i>{{item.value.name}}</td>
+        <td *ngIf="!item.value.isfolder && item.value.type == '비디오'" (click)="this.Download(item.value)"><div class="icon_container"><i class="icon fa-film"></i></div>{{item.value.name}}</td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
         <td>{{item.value.bytesString}}</td>

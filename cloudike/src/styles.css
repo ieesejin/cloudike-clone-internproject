@@ -85,6 +85,10 @@ mat-dialog-actions .cancle
         font-family: 'mountbit-icons';
         src:url(/assets/font/mountbit-icons.woff);
     }
+    @font-face{ 
+        font-family: 'FontAwesome';
+        src:url(/assets/font/fontawesome-webfont.woff2);
+    }
     i.icon
     {
         font-family: 'mountbit-icons';
@@ -179,9 +183,17 @@ mat-dialog-actions .cancle
             content: "\e610";
             color: #CDCDCD;
         }
-        i.icon.fa-film:before {
+        i.icon.fa-film, i.icon.fa-film:before {
             content: "\f008";
             color: #1FBFEF;
+            font-family: FontAwesome;
+            font-size: 22px;
+            height: 10px;
+            line-height: 25px;
+        }
+        i.icon.icon-file:before {
+            content: "\e614";
+            color: #CDCDCD;
         }
 
 ::-webkit-scrollbar-track
