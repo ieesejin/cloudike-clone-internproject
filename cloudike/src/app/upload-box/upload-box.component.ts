@@ -3,6 +3,7 @@ import { HttpClientUploadService, FileItem as FileItemUpload, FileItem} from '@w
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { Router } from '@angular/router';
+import { HTTPService } from '../httpservice.service';
 
 const max_simultaneously_uploading = 2;
 
@@ -15,7 +16,7 @@ export class UploadBoxComponent implements OnInit {
   upload_queue_count = 0;
   minimization = false;
   uploading_item : FileItemUpload[] = [];
-  constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService) {
+  constructor(private http:HttpClient, private router : Router, public uploader: HttpClientUploadService, private hs : HTTPService) {
       uploader.disableMultipart = true;
 
    }
@@ -65,15 +66,13 @@ export class UploadBoxComponent implements OnInit {
         formdata.set("overwrite", "1");
         formdata.set("multipart", "false");
 
-        this.http.post("https://api.cloudike.kr/api/1/files/create/",formdata, {
-          headers: {'Mountbit-Auth':UserInfo.token}
-        }).subscribe(create_data => {
+        this.hs.post("https://api.cloudike.kr/api/1/files/create/",formdata,"업로드 권한 요청" + item.file.name, 10).subscribe(create_data => {
           var confirm_url = create_data["confirm_url"];
           var url = create_data["url"];
           var method = create_data["method"];
 
           item.onSuccess$.subscribe(()=>{
-            this.http.post(confirm_url, {}).subscribe(create_data => {
+            this.hs.post(confirm_url, {},"업로드 결과 확인중" + item.file.name, 10).subscribe(create_data => {
               console.log("최종 완료" + item.file.name);
               if (this.upload_queue_count < this.uploader.queue.length)
                 this.upload_queue_count += 1;

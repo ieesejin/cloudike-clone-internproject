@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { NewFolderComponent } from './new-folder/new-folder.component';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { MoveFileComponent } from './move-file/move-file.component';
+import { HTTPService } from '../httpservice.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
 
-  constructor(private http:HttpClient, private router : Router, public dialog: MatDialog) { 
+  constructor(private http:HttpClient, private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -142,9 +143,8 @@ export class DriveComponent implements OnInit {
     var formdata = new FormData();
     formdata.set("from_path",old_path);
     formdata.set("to_path",new_path);
-    this.http.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, {
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe(data => {
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata).subscribe(data => {
+      console.log("성공");
       // 성공
     });
   }
