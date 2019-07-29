@@ -203,6 +203,14 @@ mat-dialog-actions .cancle
             height: 10px;
             line-height: 25px;
         }
+        i.icon.word, i.icon.word:before {
+            content: "\f1c2";
+            color: #CDCDCD;
+            font-family: FontAwesome;
+            font-size: 22px;
+            height: 10px;
+            line-height: 25px;
+        }
 
 ::-webkit-scrollbar-track
 {
