@@ -178,15 +178,8 @@ a.path-link:hover
 }
 
 .icon {
-    font-family: mountbit-icons;
-    speak: none;
-    font-style: normal;
-    font-weight: 400;
-    font-variant: normal;
-    text-transform: none;
     line-height: 1;
     vertical-align: middle;
-    -webkit-font-smoothing: antialiased;
 }
 
 .checkbox-container {
@@ -251,13 +244,4 @@ a.path-link:hover
     display: inline-block;
     border-radius: 3px;
     text-align: center;
-}
-
-.icon_container{
-    width: 40px;
-    height: 40px;
-    vertical-align: middle;
-    display: inline-block;
-    text-align: center;
-    margin: 0;
 }

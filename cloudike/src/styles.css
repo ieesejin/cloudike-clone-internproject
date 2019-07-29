@@ -104,12 +104,14 @@ mat-dialog-actions .cancle
     }
     i.icon.size30
     {
+        width: 30px;
         font-size: 30px;
         height: 30px;
         line-height: 30px;
     }
     i.icon.size40
     {
+        width: 40px;
         font-size: 40px;
         height: 40px;
         line-height: 40px;
@@ -117,6 +119,7 @@ mat-dialog-actions .cancle
     
     i.icon.size50
     {
+        width: 50px;
         font-size: 50px;
         height: 50px;
         line-height: 50px;
@@ -183,33 +186,38 @@ mat-dialog-actions .cancle
             content: "\e610";
             color: #CDCDCD;
         }
-        i.icon.fa-film, i.icon.fa-film:before {
-            content: "\f008";
-            color: #1FBFEF;
-            font-family: FontAwesome;
-            font-size: 22px;
-            height: 10px;
-            line-height: 25px;
-        }
         i.icon.icon-file:before {
             content: "\e614";
             color: #CDCDCD;
         }
-        i.icon.zip, i.icon.zip:before {
+
+
+
+        i.icon.zip:before {
             content: "\f1c6";
             color: #CDCDCD;
             font-family: FontAwesome;
-            font-size: 22px;
-            height: 10px;
-            line-height: 25px;
         }
-        i.icon.word, i.icon.word:before {
+        i.icon.word:before {
             content: "\f1c2";
             color: #CDCDCD;
             font-family: FontAwesome;
-            font-size: 22px;
-            height: 10px;
+        }
+        i.icon.fa-film:before {
+            content: "\f008";
+            color: #1FBFEF;
+            font-family: FontAwesome;
+        }
+
+        i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40
+        {
             line-height: 25px;
+        }
+        i.icon.zip.size40:before,  i.icon.word.size40:before,  i.icon.fa-film.size40:before
+        {
+            display: inline-block;
+            font-size: 26px;
+            margin-left: 8px;
         }
 
 ::-webkit-scrollbar-track

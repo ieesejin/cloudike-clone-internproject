@@ -34,11 +34,11 @@
         
         <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">
           <img *ngIf="item.value.type == 'Word' && item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
-          <div *ngIf="item.value.type == 'Word' && item.value.extraData['small'] == null" class="icon_container"><i class="icon word"></i></div>
-          <i *ngIf="item.value.type == '문서'" class="icon icon-file"></i>
-          <div *ngIf="item.value.type == '비디오'" class="icon_container"><i class="icon fa-film"></i></div>
-          <div *ngIf="item.value.type == '압축 파일'" class="icon_container"><i class="icon zip"></i></div>
-          {{item.value.name}}
+          <i *ngIf="item.value.type == 'Word' && item.value.extraData['small'] == null" class="icon word size40"></i>
+          <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
+          <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
+          <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
+          <span>{{item.value.name}}</span>
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
