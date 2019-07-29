@@ -1,13 +1,13 @@
 import { FileItem } from './FileItem';
 
-import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
+import { HTTPService } from '../httpservice.service';
 export class FileManagement
 {
     private static read_waiting_queue = {};
 
     private static cache = {};
-    private static http : HttpClient;
+    private static hs : HTTPService;
 
     public static clean()
     {
@@ -15,9 +15,9 @@ export class FileManagement
         this.read_waiting_queue = {};
     }
 
-    public static getItem(http: HttpClient, path : string, func)
+    public static getItem(hs: HTTPService, path : string, func)
     {
-        this.http = http;
+        this.hs = hs;
 
         var folder = FileItem.SplitPath(path);
 
@@ -173,9 +173,7 @@ export class FileManagement
             FileManagement.read_waiting_queue[url] = [func];
 
             // HTTP 요청
-            this.http.get("https://api.cloudike.kr/api/1/metadata" + url + "?limit=500&offset=0&order_by=name",{
-                headers: {'Mountbit-Auth':UserInfo.token}
-            }).subscribe(data => {
+            this.hs.get("https://api.cloudike.kr/api/1/metadata" + url + "?limit=500&offset=0&order_by=name", url + " 읽어오기").subscribe(data => {
                 // 성공한경우 해당 파일을 만들고 캐시에 저장
                 var Now = new FileItem(data);
                 FileManagement.cache[Now.path] = Now;

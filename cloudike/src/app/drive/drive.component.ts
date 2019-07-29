@@ -34,7 +34,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParantFolder = [];
 
-  constructor(private http:HttpClient, private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
+  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -52,7 +52,7 @@ export class DriveComponent implements OnInit {
     if (this.router.url.indexOf("/drive") != 0) return;
     let url = decodeURI(this.router.url.substring("/drive".length));
 
-    FileManagement.getItem(this.http, url,(item)=>{
+    FileManagement.getItem(this.hs, url,(item)=>{
       DriveComponent.Now = item;
       this.ParantFolder = FileItem.SplitPath(item.path);
     });
@@ -70,9 +70,7 @@ export class DriveComponent implements OnInit {
       formdata.set("path", item.path);
       formdata.set("is_win", "true");
       // 폴더 다운로드
-      this.http.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, {
-        headers: {'Mountbit-Auth':UserInfo.token}
-      }).subscribe(data => {
+      this.hs.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, item.name + " 압축 다운로드").subscribe(data => {
           window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
       });
 
@@ -80,9 +78,7 @@ export class DriveComponent implements OnInit {
     else
     {
       // 파일 다운로드
-      this.http.get("https://api.cloudike.kr/api/1/files/get" + item.path,{
-        headers: {'Mountbit-Auth':UserInfo.token}
-      }).subscribe(data => {
+      this.hs.get("https://api.cloudike.kr/api/1/files/get" + item.path, item.name + " 다운로드").subscribe(data => {
         window.location = data["url"];
       });
     }
@@ -143,7 +139,7 @@ export class DriveComponent implements OnInit {
     var formdata = new FormData();
     formdata.set("from_path",old_path);
     formdata.set("to_path",new_path);
-    this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata).subscribe(data => {
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, "파일 이동").subscribe(data => {
       console.log("성공");
       // 성공
     });

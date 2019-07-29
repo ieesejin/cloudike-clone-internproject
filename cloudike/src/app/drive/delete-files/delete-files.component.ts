@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
 import { UserInfo } from 'src/app/UserInfo';
 import { FileManagement } from '../FileManagement';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-delete-files',
@@ -13,7 +13,7 @@ export class DeleteFilesComponent implements OnInit {
 
   public selectitems = FileManagement.getSelectItemPath();
 
-  constructor(private dialogRef: MatDialogRef<DeleteFilesComponent>, private http: HttpClient) { }
+  constructor(private dialogRef: MatDialogRef<DeleteFilesComponent>, private hs: HTTPService) { }
 
   ngOnInit() {
 
@@ -31,9 +31,7 @@ export class DeleteFilesComponent implements OnInit {
     var formdata = new FormData();
     this.selectitems.forEach((path) => formdata.append("path", path));
 
-    this.http.post("https://api.cloudike.kr/api/1/fileops/multi/delete/",formdata, {
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe(data => {
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/",formdata,this.selectitems.length + "개의 파일 삭제").subscribe(data => {
       // 성공
     });
 

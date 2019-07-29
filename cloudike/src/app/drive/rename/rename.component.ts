@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material'
 import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/UserInfo';
-import { HttpClient } from '@angular/common/http';
 import { FileManagement } from '../FileManagement';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-rename',
@@ -14,7 +14,7 @@ export class RenameComponent implements OnInit {
 
   inputName: string = "";
   public selectitems = FileManagement.getSelectItemPath();
-  constructor(private dialogRef: MatDialogRef<RenameComponent>, private router: Router, private http: HttpClient) { }
+  constructor(private dialogRef: MatDialogRef<RenameComponent>, private router: Router, private hs: HTTPService) { }
 
   ngOnInit() {
   }
@@ -28,9 +28,7 @@ export class RenameComponent implements OnInit {
 
       console.log(element);
       console.log(name);
-      this.http.post("https://api.cloudike.kr/api/1/fileops/rename/", formdata, {
-        headers: {'Mountbit-Auth':UserInfo.token}
-      }).subscribe(data => {
+      this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/", formdata, element + " 이름 변경").subscribe(data => {
         // 성공
       });
   });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material'
 import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/UserInfo';
-import { HttpClient } from '@angular/common/http';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-new-folder',
@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class NewFolderComponent implements OnInit {
 
   inputName: string = "";
-  constructor(private dialogRef: MatDialogRef<NewFolderComponent>, private router: Router, private http: HttpClient) { }
+  constructor(private dialogRef: MatDialogRef<NewFolderComponent>, private router: Router, private hs: HTTPService) { }
 
   ngOnInit() {
   }
@@ -27,9 +27,7 @@ export class NewFolderComponent implements OnInit {
 
     formdata.append("path", url + name);
     //console.log(formdata.get("path"));
-    this.http.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, {
-      headers: {'Mountbit-Auth':UserInfo.token}
-    }).subscribe(data => {
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
       // 성공
     });
     this.dialogRef.close();
