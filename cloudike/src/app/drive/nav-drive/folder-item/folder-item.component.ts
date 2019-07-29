@@ -45,14 +45,19 @@ export class FolderItemComponent implements OnInit {
     folder.forEach(element => {
       if (this.url == element.path)
       {
-        this.itemclick(true);
+        this.itemclick(null, true);
       }
     });
   }
 
   // value은 하위 목록을 열것인지, 열지 않을 것인지
-  public itemclick(value)
+  public itemclick(event, value)
   {
+    if (event != null)
+    {
+      event.stopPropagation();
+      console.log("A");
+    }
     FileManagement.getItem(this.hs, this.url, (item)=>{
       this.item = item;
       if (value == true)

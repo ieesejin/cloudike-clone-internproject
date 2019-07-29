@@ -8,20 +8,7 @@
     margin: 0px;
     height: 30px;
     box-sizing: border-box;
-    
-   user-select: none;
-}
-
-:host ::ng-deep nav .item
-{
-    background: white;
-    display: block;
-    width: 100%;
-    padding: 5px;
-    padding-left: 30px;
-    margin: 0px;
-    height: 30px;
-    box-sizing: border-box;
+    user-select: none;
 }
 
 :host ::ng-deep nav .hidebutton
@@ -33,6 +20,7 @@
     margin: 0px;
     padding: 4px;
     width: 16px;
+    z-index: 100;
     color: #aaaaaa;
     cursor:  pointer;
 }

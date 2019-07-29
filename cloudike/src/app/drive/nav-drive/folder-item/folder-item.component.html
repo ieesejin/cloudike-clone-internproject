@@ -1,14 +1,11 @@
 <!-- 'now' 은 현재 선택된 폴더(파일) -->
-<div class="item" [ngClass]="{ 'on' : now}">
-    <div [ngStyle]="{'margin-left': (depth * 16 - 16) + 'px'}" (click)="click_event(url)" style="height: 100%" *ngIf="click_event != null">
-        {{name}}
-    </div>
-    <div [ngStyle]="{'margin-left': (depth * 16 - 16) + 'px'}" routerLink="{{'/drive' + url}}" style="height: 100%" *ngIf="click_event == null">
+<div class="item" [ngClass]="{ 'on' : now}" (click)="(click_event != null && click_event(url)) || (click_event == null && router.navigate(['/drive' + url]))">
+    <div [ngStyle]="{'margin-left': (depth * 16 - 16) + 'px'}">
         {{name}}
     </div>
     
-    <div *ngIf="content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick()" class="hidebutton">▶</div>
-    <div *ngIf="!content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick()" class="hidebutton">▼</div>
+    <div *ngIf="content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▶</div>
+    <div *ngIf="!content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▼</div>
 </div>
 
 
