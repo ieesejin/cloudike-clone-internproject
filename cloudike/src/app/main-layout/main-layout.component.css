@@ -114,14 +114,13 @@ footer
     }
     .main
     {
+        height: calc(100% - 130px);
         overflow-y: auto;
     }
     nav .info
     {
         display: none;
     }
-
-    
     footer
     {
         width: 100%;
@@ -136,12 +135,12 @@ footer
     footer progress
     {
         margin-top:3px;
-    flex: 1;
+        flex: 1;
     }
     footer div
     {
         padding-left: 10px;
-    box-sizing: border-box;
+        box-sizing: border-box;
     }
     
 }
