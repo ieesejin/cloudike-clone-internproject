@@ -13,7 +13,7 @@
           <label for="selectAllChkbox"></label>
         </div>
       </th>
-      <th>파일명</th>
+      <th id="path">파일명</th>
       <th>공용 폴더명</th>
       <th>형식</th>
       <th>크기</th>
@@ -30,8 +30,15 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" >{{item.value.name}}</td>
-        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
+        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared == false, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
+        
+        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">
+          <img *ngIf="item.value.type == 'Word'" class="smallThumbnails" src="{{getThumbnails(item.value)}}"/>
+          <i *ngIf="item.value.type == '문서'" class="icon icon-file"></i>
+          <div *ngIf="item.value.type == '비디오'" class="icon_container"><i class="icon fa-film"></i></div>
+          <div *ngIf="item.value.type == '압축 파일'" class="icon_container"><i class="icon zip"></i></div>
+          {{item.value.name}}
+        </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
         <td>{{item.value.bytesString}}</td>
@@ -48,44 +55,44 @@
     <li>
       <context-menu #basicMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
             다운로드 {{getRightClickItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon link"></i>
             공유
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon pen"></i>
             이름 변경
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>
         </ng-template>
         <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
             <i class="icon info"></i>
             상세 정보
           </button>
         </ng-template>
         <ng-template contextMenuItem divider="true"></ng-template>
         <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
             <i class="icon transfer"></i>
             소유권 이전
           </button>
@@ -100,50 +107,50 @@
     <li>
       <context-menu #otherMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
             다운로드 {{getRightClickItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon ms365"></i>
             브라우저에서 편집
           </button>
         </ng-template>
         <ng-template contextMenuItem let-item>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
             <i class="icon folder-move"></i>
             이동/복사
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon pen"></i>
             이름 변경
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon clocks"></i>
             버전 보기
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btn btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && delete_file()">
             <i class="icon delete"></i>
             삭제
           </button>
         </ng-template>
         <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
             <i class="icon info"></i>
             상세 정보
           </button>
         </ng-template>
         <ng-template contextMenuItem divider="true"></ng-template>
         <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btn btn-link btn-block">
+          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
             <i class="icon transfer"></i>
             소유권 이전
           </button>

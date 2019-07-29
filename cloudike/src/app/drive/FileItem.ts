@@ -6,6 +6,7 @@ export class FileItem
     public content = {};
     public author_name: string;
     public icon: string;
+    public extraData: string;
     public path: string;
     public bytes : number;
     public bytesString : string;
@@ -17,6 +18,7 @@ export class FileItem
     public date: string;
     public role: string;
     public isfolder: boolean;
+    public isShared: boolean;
     public isRead = false;
     constructor(value)
     {
@@ -31,6 +33,9 @@ export class FileItem
         this.path = value["path"];
         this.mime_type = value["mime_type"];
         this.type = this.icon;
+        this.extraData = value['extradata'];
+        this.isShared = value["shared"];
+        
         
         if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied")
         {
@@ -71,17 +76,25 @@ export class FileItem
             this.name = temp[temp.length - 1];
         }
 
-        if (this.type == "presentation_office") this.type = "Powerpoint"
-        if (this.type == "document_office") this.type = "Word"
+        if (this.type == "presentation_office") this.type = "Powerpoint";
+        if (this.type == "document_office") this.type = "Word";
+        if (this.type == "video") this.type = "비디오";
+        if (this.type == "archive") this.type = "압축 파일";
+        if (this.type == "unknown")
+        {
+            if (this.mime_type == "application/octet-stream") this.type = "문서"; // 해당 확장자 .md .yml .gitignore
+        }
+        if (this.type == "")
+        {
+            if (this.mime_type == "application/json") this.type = "문서"; // 해당 확장자 .json
+        }
         if (this.type == "folder") 
         {
             this.isfolder = true;
-            if (this.role == "collaborator")
+            if (this.role == "collaborator" && this.isShared == true)
                 this.type = "공유 폴더";
-            else if (this.role == "owner")
-                this.type = "폴더";
             else
-                this.type = "알 수 없음 .. 폴더";
+                this.type = "폴더";
         }
         else
         {

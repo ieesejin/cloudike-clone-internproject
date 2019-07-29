@@ -35,6 +35,10 @@ td
     border-bottom-width: 1px;
     font-weight: 400;
 }
+#path
+{
+    padding-left: 10px;
+}
 tr:not(:first-child):hover
 {
     background: rgb(255,251,238);
@@ -121,7 +125,7 @@ a.path-link:hover
     vertical-align: middle;
 }
 
-.btn {
+.btnMenu {
     position: relative;
 }
 
@@ -140,7 +144,7 @@ a.path-link:hover
     box-shadow: none;
 }
 
-.btn {
+.btnMenu {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -187,7 +191,6 @@ a.path-link:hover
 
 .checkbox-container {
     position: relative;
-    width: 100%;
 }
     
 .checkbox-container input[type="checkbox"] {
@@ -204,7 +207,7 @@ a.path-link:hover
 .checkbox-container input[type="checkbox"] + label {
     display: inline-block;
     position: relative;
-    width: 50%;
+    padding-left: 5px;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -218,7 +221,6 @@ a.path-link:hover
     width: 16px;
     height: 16px;
     line-height: 16px;
-    margin: -2px 8px 0 0;
     text-align: center;
     vertical-align: middle;
     background: #fafafa;
@@ -239,4 +241,23 @@ a.path-link:hover
     background: #f1f4ff;
     border-color: #adb8c0;
     box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+}
+
+.smallThumbnails{
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.icon_container{
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
 }
