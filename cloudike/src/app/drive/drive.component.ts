@@ -253,4 +253,15 @@ export class DriveComponent implements OnInit {
       });
   }
 
+  public getThumbnails(item : FileItem){
+    var smallThumbnails : string;
+
+    if(item.extraData['thumbnails'] != null){
+      if(item.extraData['thumbnails']['status'] == 'ready'){
+        smallThumbnails = item.extraData['thumbnails']['small']['link'];
+      }
+    }
+    return smallThumbnails;
+  }
+
 }

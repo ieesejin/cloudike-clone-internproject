@@ -175,6 +175,14 @@ mat-dialog-actions .cancle
             content: "\e611";
             color: #CDCDCD;
         }
+        i.icon.folder-shared:before {
+            content: "\e610";
+            color: #CDCDCD;
+        }
+        i.icon.fa-film:before {
+            content: "\f008";
+            color: #1FBFEF;
+        }
 
 ::-webkit-scrollbar-track
 {

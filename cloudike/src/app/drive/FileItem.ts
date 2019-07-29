@@ -6,6 +6,7 @@ export class FileItem
     public content = {};
     public author_name: string;
     public icon: string;
+    public extraData: string;
     public path: string;
     public bytes : number;
     public bytesString : string;
@@ -17,6 +18,7 @@ export class FileItem
     public date: string;
     public role: string;
     public isfolder: boolean;
+    public isShared: boolean;
     public isRead = false;
     constructor(value)
     {
@@ -31,6 +33,9 @@ export class FileItem
         this.path = value["path"];
         this.mime_type = value["mime_type"];
         this.type = this.icon;
+        this.extraData = value['extradata'];
+        this.isShared = value["shared"];
+        
         
         if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied")
         {
@@ -76,12 +81,10 @@ export class FileItem
         if (this.type == "folder") 
         {
             this.isfolder = true;
-            if (this.role == "collaborator")
+            if (this.role == "collaborator" && this.isShared == true)
                 this.type = "공유 폴더";
-            else if (this.role == "owner")
-                this.type = "폴더";
             else
-                this.type = "알 수 없음 .. 폴더";
+                this.type = "폴더";
         }
         else
         {

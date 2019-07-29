@@ -30,8 +30,8 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon folder-filled"></i>{{item.value.name}}</td>
-        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">{{item.value.name}}</td>
+        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared == false, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
+        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)"><img class="smallThumbnails" src="{{getThumbnails(item.value)}}"/>{{item.value.name}}</td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
         <td>{{item.value.bytesString}}</td>
