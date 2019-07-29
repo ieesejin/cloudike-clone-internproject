@@ -160,6 +160,21 @@ mat-dialog-actions .cancle
         {
             content: "\e605";
         }
+        i.icon.info:before
+        {
+            content: "\e621";
+        }
+        i.icon.ms365:before {
+            content: "\e625";
+            font-size: .9em;
+        }
+        i.icon.clocks:before {
+            content: "\e622";
+        }
+        i.icon.folder-filled:before {
+            content: "\e611";
+            color: #CDCDCD;
+        }
 
 ::-webkit-scrollbar-track
 {

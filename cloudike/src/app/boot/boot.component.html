@@ -1,4 +1,6 @@
 <div class="ngx-file-upload" ngxDragAndDrop>
     <router-outlet></router-outlet>
 </div>
+<ngb-progressbar class="s" type="info" [value]="hs.progress" *ngIf="hs.progress != 0"></ngb-progressbar>
+
 <app-upload-box></app-upload-box>

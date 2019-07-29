@@ -17,6 +17,7 @@ export class HeaderDriveComponent implements OnInit {
   {
     return FileManagement.getSelectItemPath();
   }
+  
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -33,7 +34,6 @@ export class HeaderDriveComponent implements OnInit {
   public move_file()
   {
     this.dialog.open(MoveFileComponent);
-
   }
   public rename_file()
   {

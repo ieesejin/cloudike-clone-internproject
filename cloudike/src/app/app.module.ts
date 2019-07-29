@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContextMenuModule } from 'ngx-contextmenu';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -57,7 +60,11 @@ import { RenameComponent } from './drive/rename/rename.component';
     MatDialogModule,
     BrowserAnimationsModule,
     NgxUploadModule.forRoot(ngxDropTargetOptions),
-    NgbModule
+    NgbModule,
+    DragDropModule,
+    ContextMenuModule.forRoot({
+      useBootstrap4: true
+    })
   ],
   providers: [],
   bootstrap: [BootComponent],
