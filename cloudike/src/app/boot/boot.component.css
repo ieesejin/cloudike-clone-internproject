@@ -16,3 +16,17 @@
 
 .dropZoneColorDrop {
 }
+
+ngb-progressbar
+{
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 2px;
+    position: fixed;
+}
+
+:host ::ng-deep ngb-progressbar.s .bg-info
+{
+    background-color: rgb(34,153,221) !important;
+}

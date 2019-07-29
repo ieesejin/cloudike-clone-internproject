@@ -3,13 +3,14 @@ import { UserInfo } from '../UserInfo';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { HTTPService } from '../httpservice.service';
 @Component({
   selector: 'app-boot',
   templateUrl: './boot.component.html',
   styleUrls: ['./boot.component.css']
 })
 export class BootComponent implements OnInit {
-  constructor(private router: Router, private location: Location) { 
+  constructor(private router: Router, private location: Location, private hs: HTTPService) { 
     // this.router.url is not working (because of no loading, BootComponent is working in bootstrap)
     // So use location class.
     let path = this.location.path();
