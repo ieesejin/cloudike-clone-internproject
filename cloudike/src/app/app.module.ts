@@ -31,6 +31,7 @@ import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { DeleteFilesComponent } from './drive/delete-files/delete-files.component';
 import { MoveFileComponent } from './drive/move-file/move-file.component';
 import { RenameComponent } from './drive/rename/rename.component';
+import { ShareComponent } from './drive/share/share.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { RenameComponent } from './drive/rename/rename.component';
     DeleteFilesComponent,
     MoveFileComponent,
     RenameComponent,
+    ShareComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,7 @@ import { RenameComponent } from './drive/rename/rename.component';
   ],
   providers: [],
   bootstrap: [BootComponent],
-  entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent, RenameComponent ]
+  entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent
+    , RenameComponent, ShareComponent ]
 })
 export class AppModule { }

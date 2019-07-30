@@ -5,6 +5,7 @@ import { DeleteFilesComponent } from '../delete-files/delete-files.component';
 import { MoveFileComponent } from '../move-file/move-file.component';
 import { FileManagement } from '../FileManagement';
 import { RenameComponent } from '../rename/rename.component';
+import { ShareComponent } from '../share/share.component';
 
 @Component({
   selector: 'app-header-drive',
@@ -38,5 +39,9 @@ export class HeaderDriveComponent implements OnInit {
   public rename_file()
   {
     this.dialog.open(RenameComponent);
+  }
+  public share_file()
+  {
+    this.dialog.open(ShareComponent);
   }
 }

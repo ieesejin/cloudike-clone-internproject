@@ -1,0 +1,18 @@
+<html>
+
+<div style="width: 600px">
+    <h2 mat-dialog-title>공개 링크 생성</h2>
+    <mat-dialog-content>
+        <p>생성된 주소: </p>
+        <input [(ngModel)]="this.link" id="input"/>
+    </mat-dialog-content>
+    <mat-dialog-actions> 
+        <button mat-button type="button" class="ok" (click)="create()">생성</button>
+        <button mat-button type="button" class="copy" (click)="copy(this.link)">복사</button>
+        <button mat-button type="button" class="delete" (click)="delete()">삭제</button>
+        <button mat-button type="button" class="cancel" (click)="dialogRef.close()">완료</button>
+    </mat-dialog-actions>
+</div>
+
+
+</html>

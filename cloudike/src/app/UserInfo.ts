@@ -4,6 +4,7 @@ import { HTTPService } from './httpservice.service';
 export class UserInfo 
 {
     private static data = "";
+    private static company_data = "";
     private static _storageSize : number = 0;
     private static _maxStorageSize : number = 0;
     private static init() : boolean
@@ -54,8 +55,14 @@ export class UserInfo
         });
 
         hs.get("https://api.cloudike.kr/api/1/accounts/company/" + this.company_id + "/", "회사 정보 갱신").subscribe(data => {
+            this.company_data = data;
+            console.log(data);
                 //this._maxStorageSize = data["storage_size"];
         });
+    }
+    public static get domain()
+    {
+        return this.company_data["domain"];
     }
     public static get storageSize()
     {

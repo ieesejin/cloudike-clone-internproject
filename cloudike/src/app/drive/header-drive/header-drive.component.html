@@ -15,7 +15,7 @@
     <p>다운로드</p>
 </div>
 
-<div class="disable">
+<div (click)="selectItem.length == 1 && share_file()" [ngClass]="{'disable': selectItem.length != 1}">
     <i class="icon size50 link"></i>
     <p>공유</p>
 </div>
