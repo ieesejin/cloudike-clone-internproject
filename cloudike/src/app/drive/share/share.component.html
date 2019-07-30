@@ -4,7 +4,7 @@
     <h2 mat-dialog-title>공개 링크 생성</h2>
     <mat-dialog-content>
         <p>생성된 주소: </p>
-        <input [(ngModel)]="this.link" id="input"/>
+        <input [(ngModel)]="this.link" id="input" readonly/>
     </mat-dialog-content>
     <mat-dialog-actions> 
         <button mat-button type="button" class="ok" (click)="create()">생성</button>
