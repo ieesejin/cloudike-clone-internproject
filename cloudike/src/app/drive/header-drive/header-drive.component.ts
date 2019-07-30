@@ -5,6 +5,8 @@ import { DeleteFilesComponent } from '../delete-files/delete-files.component';
 import { MoveFileComponent } from '../move-file/move-file.component';
 import { FileManagement } from '../FileManagement';
 import { RenameComponent } from '../rename/rename.component';
+import { FileItem } from '../FileItem';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-header-drive',
@@ -13,12 +15,13 @@ import { RenameComponent } from '../rename/rename.component';
 })
 export class HeaderDriveComponent implements OnInit {
 
+
   public get selectItem()
   {
     return FileManagement.getSelectItemPath();
   }
   
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private hs : HTTPService) { }
 
   ngOnInit() {
   }
@@ -38,5 +41,14 @@ export class HeaderDriveComponent implements OnInit {
   public rename_file()
   {
     this.dialog.open(RenameComponent);
+  }
+
+  public Download()
+  {
+    this.selectItem.forEach( (path)=>
+      FileManagement.getItem(this.hs,path,(item)=>{
+        item.Download(this.hs);
+      })
+    )
   }
 }

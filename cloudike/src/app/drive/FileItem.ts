@@ -1,4 +1,5 @@
 import { ConvertFormat } from './ConvertFormat'
+import { HTTPService } from '../httpservice.service';
 
 
 export class FileItem
@@ -104,6 +105,28 @@ export class FileItem
         }
 
     }
+
+   public Download(hs: HTTPService)
+  {
+    if (this.isfolder)
+    {
+      var formdata = new FormData();
+      formdata.set("path", this.path);
+      formdata.set("is_win", "true");
+      // 폴더 다운로드
+        hs.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, this.name + " 압축 다운로드").subscribe(data => {
+          window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
+      });
+
+    }
+    else
+    {
+      // 파일 다운로드
+      hs.get("https://api.cloudike.kr/api/1/files/get" + this.path, this.name + " 다운로드").subscribe(data => {
+        window.location = data["url"];
+      });
+    }
+  }
 
 
     public static SplitPath(path)

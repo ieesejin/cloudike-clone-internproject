@@ -10,7 +10,7 @@
     <p>새 폴더</p>
 </div>
 
-<div class="disable">
+<div (click)="selectItem.length > 0 && Download()" [ngClass]="{'disable': selectItem.length == 0}">
     <i class="icon size50 download"></i>
     <p>다운로드</p>
 </div>
