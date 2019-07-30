@@ -14,14 +14,32 @@ export class RenameComponent implements OnInit {
 
   public selectitems = FileManagement.getSelectItemPath();
   path : string = this.selectitems.toString();
-  b_name: string = this.path.replace("/","")
-      .replace(this.path.substr(this.path.lastIndexOf('.')),"");
-  
+  public b_name : string;
   
   //b_name is before name (unchanged name, except filename extension)
   //b_name은 사용자가 이름을 변경하기 전의 이름, 확장자를 제외한다.
 
-  constructor(private dialogRef: MatDialogRef<RenameComponent>, private router: Router, private hs: HTTPService) { }
+  constructor(private dialogRef: MatDialogRef<RenameComponent>,private router: Router,
+    private hs: HTTPService)
+    {
+      var index = this.path.indexOf('.');
+      var f_name : string[] = this.path.split("/");
+      var m_name : string = f_name[f_name.length-1];
+
+      
+      if(this.path.indexOf('.') == -1) //폴더일 경우
+      {
+        this.b_name = m_name;
+      }
+      else //파일일 경우
+      {
+        this.b_name = m_name.substr(0, m_name.lastIndexOf('.'));
+      }
+
+
+      console.log(this.b_name);
+
+     }
 
   ngOnInit() {
   }
@@ -43,11 +61,10 @@ export class RenameComponent implements OnInit {
       }
   
       else { //파일의 이름 변경
-        var ext = element.toString().substr(element.lastIndexOf('.') + 1);
-        //path에 있는 내용 중 .이후의 글자는 확장자
+        var ext = element.toString().substr(element.lastIndexOf('.'));
+        //path에 있는 내용 중 .을 포함한 글자들은 확장자
         console.log("ext is "+ext);
-        ext = '.'+ext; //확장자에 '.'기호를 달아준다.
-
+        
         formdata.set("path", element);
         formdata.set("newname", name+ext);
         //api에 넘길 때, 자동으로 확장자를 붙여준다.

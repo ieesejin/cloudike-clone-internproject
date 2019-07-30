@@ -25,7 +25,7 @@
     <p>이동 / 복사</p>
 </div>
 
-<div (click)="selectItem.length >= 1 && rename_file()" [ngClass]="{'disable': selectItem.length != 1}">
+<div (click)="selectItem.length == 1 && rename_file()" [ngClass]="{'disable': selectItem.length != 1}">
     <i class="icon size50 pen"></i>
     <p>이름 변경</p>
 </div>
