@@ -62,9 +62,10 @@ export class HTTPService {
     }
   }
 
-  private HttpRequest(method, url:string, body, message, try_count : number, num?) : Subject<any>
+  private HttpRequest(method, url:string, body, message, try_count : number, num?, event?) : Subject<any>
   {
-    var new_event = new Subject();
+    if (event == null)
+       event = new Subject();
     if (num == null && message != null)
     {
       num =  this._unique_num++;
@@ -84,20 +85,20 @@ export class HTTPService {
     (
         data=> {
           this.remove_in_queue(num);
-          new_event.next(data);
+          event.next(data);
         },
         error=>
         {
             if (try_count > 0)
-              this.HttpRequest(method, url, body, message, try_count, num);
+              this.HttpRequest(method, url, body, message, try_count, num, event);
             else
             {
               this.remove_in_queue(num);
-              new_event.error(error);
+              event.error(error);
             }
         }
     );
-    return new_event;
+    return event;
 
   }
   public get(url:string,  message?, try_count : number = 3) : Subject<any>
