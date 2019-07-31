@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContextMenuModule } from 'ngx-contextmenu';
 
@@ -31,7 +31,9 @@ import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { DeleteFilesComponent } from './drive/delete-files/delete-files.component';
 import { MoveFileComponent } from './drive/move-file/move-file.component';
 import { RenameComponent } from './drive/rename/rename.component';
-
+import { ShareComponent } from './drive/share/share.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import {MatNativeDateModule} from '@angular/material';
 @NgModule({
   declarations: [
     OauthComponent,
@@ -50,6 +52,7 @@ import { RenameComponent } from './drive/rename/rename.component';
     DeleteFilesComponent,
     MoveFileComponent,
     RenameComponent,
+    ShareComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,10 +67,13 @@ import { RenameComponent } from './drive/rename/rename.component';
     DragDropModule,
     ContextMenuModule.forRoot({
       useBootstrap4: true
-    })
+    }),
+    MatDatepickerModule,
+    MatFormFieldModule , MatNativeDateModule
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [BootComponent],
-  entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent, RenameComponent ]
+  entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent
+    , RenameComponent, ShareComponent ]
 })
 export class AppModule { }

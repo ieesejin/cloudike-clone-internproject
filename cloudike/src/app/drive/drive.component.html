@@ -9,7 +9,7 @@
     <tr>
       <th id="check">
         <div class="checkbox-container">
-          <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event)">
+          <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event.target.checked)">
           <label for="selectAllChkbox"></label>
         </div>
       </th>
@@ -25,26 +25,29 @@
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
-            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ i}}" (change)="onCheckboxChange(item, $event)">
-            <label for="{{'chkbox'+ i}}"></label>
+            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ item.value.name}}" (change)="onCheckboxChange(item, $event)">
+            <label for="{{'chkbox'+ item.value.name}}"></label>
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
         
         <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">
-          <img *ngIf="item.value.type == 'Word' && item.value.extraData['thumbnails']['status'] == 'ready'" class="smallThumbnails" src="{{item.value.extraData['thumbnails']['small']['link']}}"/>
-          <div *ngIf="item.value.type == 'Word' && item.value.extraData['thumbnails']['status'] == 'waiting'" class="icon_container"><i class="icon word"></i></div>
-          <i *ngIf="item.value.type == '문서'" class="icon icon-file"></i>
-          <div *ngIf="item.value.type == '비디오'" class="icon_container"><i class="icon fa-film"></i></div>
-          <div *ngIf="item.value.type == '압축 파일'" class="icon_container"><i class="icon zip"></i></div>
-          {{item.value.name}}
+          <img *ngIf="item.value.type == 'Word' && item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
+          <i *ngIf="item.value.type == 'Word' && item.value.extraData['small'] == null" class="icon word size40"></i>
+          <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
+          <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
+          <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
+          <span>{{item.value.name}}</span>
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
         <td>{{item.value.bytesString}}</td>
         <td>{{item.value.date}}</td>
-        <td>아이콘</td>
+        <td>
+            <i *ngIf="item.value.public_hash != null" style="color: blue" class="icon share" (click)="share_file(item.value)"></i>
+            <i *ngIf="item.value.public_hash == null" class="icon share" (click)="share_file(item.value)"></i>
+        </td>
       <td></td>
     </tr>
     </tbody>
@@ -58,7 +61,7 @@
         <ng-template contextMenuItem let-item>
           <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
-            다운로드 {{getRightClickItem(item)}}
+            다운로드 {{CheckingItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>
@@ -110,7 +113,7 @@
         <ng-template contextMenuItem let-item>
           <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
             <i class="icon download"></i>
-            다운로드 {{getRightClickItem(item)}}
+            다운로드 {{CheckingItem(item)}}
           </button>
         </ng-template>
         <ng-template contextMenuItem>

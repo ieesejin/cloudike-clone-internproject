@@ -15,7 +15,7 @@ export class FileManagement
         this.read_waiting_queue = {};
     }
 
-    public static getItem(hs: HTTPService, path : string, func)
+    public static getItem(hs: HTTPService, path : string, func, onlyinfo = false)
     {
         this.hs = hs;
 
@@ -40,7 +40,8 @@ export class FileManagement
         }
         // 그렇지 않을경우 상위 폴더에서 이 아이템이 로드된 적 있는지 확인
         let parent : FileItem = FileManagement.cache[folder[folder.length - 2].path];
-        if (item == undefined) // 로드된적 없으면
+        
+        if (parent == undefined) // 로드된적 없으면
         {
             FileManagement.reload(path, func);
             return;
@@ -53,18 +54,39 @@ export class FileManagement
             FileManagement.reload(path, func);
             return;
         }
-        if (this_item.isfolder) // 해당 아이템이 폴더일 경우 (상세 정보를 얻기 위해 URL으로 요청)
+
+        if (onlyinfo == false && this_item.isfolder) // 해당 아이템이 폴더일 경우 (상세 정보를 얻기 위해 URL으로 요청)
         {
             FileManagement.reload(path, func);
             return;
         }
         else
         {
-            // 해당 아이템이 파일 형식일 경우 바로 성공 이벤트 실행
+            // 해당 아이템이 파일 형식일 경우, 또는 info만 요청하는 경우는 바로 성공 이벤트 실행
             func(this_item);
         }
     }
 
+    public static link_set(path : string, hash : string)
+    {
+        var folder = null;
+        var parent_path = null;
+        var name = null;
+        folder = FileItem.SplitPath(path);
+        path = folder[folder.length - 1].path;
+        name = folder[folder.length - 1].name;
+        parent_path = folder[folder.length - 2].path;
+        if (!FileManagement.contains(parent_path)) return;
+        var item : FileItem = FileManagement.cache[parent_path]["content"][name];
+        item.public_hash = hash;
+        // 폴더일 경우
+        if (item.isfolder)
+        {
+            // 실제 경로도 확인
+            if (FileManagement.cache[path] != undefined)
+                FileManagement.cache[path].public_hash = hash;
+        }
+    }
     public static removeItem(path : string)
     {
         var folder = null;

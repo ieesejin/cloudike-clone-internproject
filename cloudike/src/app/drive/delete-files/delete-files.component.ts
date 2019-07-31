@@ -17,9 +17,6 @@ export class DeleteFilesComponent implements OnInit {
 
   ngOnInit() {
 
-
-
-
   }
 
 
@@ -27,15 +24,12 @@ export class DeleteFilesComponent implements OnInit {
 
   public delete()
   {
-
     var formdata = new FormData();
     this.selectitems.forEach((path) => formdata.append("path", path));
 
     this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/",formdata,this.selectitems.length + "개의 파일 삭제").subscribe(data => {
       // 성공
     });
-
-
     
     this.dialogRef.close();
   }
