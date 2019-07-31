@@ -64,7 +64,8 @@ export class ShareComponent implements OnInit {
   {
     this.ischanged = false;
     
-    this.link = 'https://'+ UserInfo.domain + '.cloudike.kr/public/' + data['public_hash'];
+    if (data['public_hash'] != undefined)
+      this.link = 'https://'+ UserInfo.domain + '.cloudike.kr/public/' + data['public_hash'];
     
     this.download_count = data["download_count"];
     this.download_max = data["download_max"];

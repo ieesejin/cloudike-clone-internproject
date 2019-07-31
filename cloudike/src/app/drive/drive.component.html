@@ -45,8 +45,7 @@
         <td>{{item.value.bytesString}}</td>
         <td>{{item.value.date}}</td>
         <td>
-            <i *ngIf="item.value.public_hash != null" style="color: blue" class="icon share" (click)="share_file(item.value)"></i>
-            <i *ngIf="item.value.public_hash == null" class="icon share" (click)="share_file(item.value)"></i>
+            <i class="icon share share_animation" [ngClass]="{'disable': item.value.public_hash == null}" (click)="share_file(item.value)"></i>
         </td>
       <td></td>
     </tr>
