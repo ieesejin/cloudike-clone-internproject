@@ -28,5 +28,28 @@ ngb-progressbar
 
 :host ::ng-deep ngb-progressbar.s .bg-info
 {
+    position: relative;
     background-color: rgb(34,153,221) !important;
+}
+
+:host ::ng-deep ngb-progressbar.s2 .progress
+{
+    background: transparent;
+}
+:host ::ng-deep ngb-progressbar.s2 .bg-info
+{
+    position: absolute;
+}
+:host ::ng-deep ngb-progressbar.s2 .bg-info:after
+{
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: 70px;
+    box-shadow: #569fdf 2px 0 2px 2px;
+    z-index: 1000;
+    border-radius: 100%;
+    height: 2px;
+    top: 0px;
+    right: 0px;
 }

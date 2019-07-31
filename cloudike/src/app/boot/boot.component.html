@@ -1,6 +1,10 @@
 <div class="ngx-file-upload" ngxDragAndDrop>
     <router-outlet></router-outlet>
 </div>
-<ngb-progressbar class="s" type="info" [value]="hs.progress" *ngIf="hs.progress != 0"></ngb-progressbar>
+
+<!-- 메인 프로그래스바 -->
+<ngb-progressbar class="s" type="info" [value]="hs.progress" *ngIf="hs.progress != 0" ></ngb-progressbar>
+<!-- 프로그래스바 강조 -->
+<ngb-progressbar class="s2" type="info" [value]="hs.progress" *ngIf="hs.progress != 0"></ngb-progressbar>
 
 <app-upload-box></app-upload-box>
