@@ -210,6 +210,10 @@ mat-dialog-actions .cancle
             color: #CDCDCD;
         }
 
+        i.icon.share:before
+        {
+            content: "\e60c";
+        }
 
 
         i.icon.zip:before {

@@ -65,6 +65,26 @@ export class FileManagement
         }
     }
 
+    public static link_set(path : string, hash : string)
+    {
+        var folder = null;
+        var parent_path = null;
+        var name = null;
+        folder = FileItem.SplitPath(path);
+        path = folder[folder.length - 1].path;
+        name = folder[folder.length - 1].name;
+        parent_path = folder[folder.length - 2].path;
+        if (!FileManagement.contains(parent_path)) return;
+        var item : FileItem = FileManagement.cache[parent_path]["content"][name];
+        item.public_hash = hash;
+        // 폴더일 경우
+        if (item.isfolder)
+        {
+            // 실제 경로도 확인
+            if (FileManagement.cache[path] != undefined)
+                FileManagement.cache[path].public_hash = hash;
+        }
+    }
     public static removeItem(path : string)
     {
         var folder = null;

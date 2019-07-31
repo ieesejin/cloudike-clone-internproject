@@ -112,8 +112,14 @@ export class RealtimeService {
         break;
       case 'folder_moved':
       case 'file_moved':
-          FileManagement.rename(data["oldpath"],data["path"]);
-          break;
+        FileManagement.rename(data["oldpath"],data["path"]);
+        break;
+      case 'link_created':
+        FileManagement.link_set(data["path"], data["public_hash"]);
+        break;
+      case 'link_deleted':
+        FileManagement.link_set(data["path"], null);
+        break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];
         UserInfo.maxStorageSize = data["hard_quota_size"];

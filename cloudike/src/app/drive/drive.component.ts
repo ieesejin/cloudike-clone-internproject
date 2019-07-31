@@ -12,6 +12,7 @@ import { NewFolderComponent } from './new-folder/new-folder.component';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { MoveFileComponent } from './move-file/move-file.component';
 import { HTTPService } from '../httpservice.service';
+import { ShareComponent } from './share/share.component';
 
 
 @Component({
@@ -180,7 +181,15 @@ export class DriveComponent implements OnInit {
   {
     this.dialog.open(MoveFileComponent);
   }
-
+  public share_file(item)
+  {
+    if (item != null)
+    {   
+      this.selectAll(false);
+      this.CheckingItem(item);
+    }
+    this.dialog.open(ShareComponent);
+  }
 
   public CheckingItem(item)
   {

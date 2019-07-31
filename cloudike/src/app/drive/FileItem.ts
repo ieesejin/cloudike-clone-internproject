@@ -20,6 +20,7 @@ export class FileItem
     public isfolder: boolean;
     public isShared: boolean;
     public isRead = false;
+    public public_hash = null; // 공유링크 해시
     constructor(value)
     {
         if (value == null) 
@@ -46,6 +47,10 @@ export class FileItem
         }
         else
         {
+            if (value["public_hash"] != null && value["public_hash"] != "")
+            {
+                this.public_hash = value["public_hash"];
+            }
             if (value['extradata'] != null)
             {
                 var temp = value['extradata']['thumbnails'];
