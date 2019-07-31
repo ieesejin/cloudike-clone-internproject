@@ -6,7 +6,7 @@ export class FileItem
     public content = {};
     public author_name: string;
     public icon: string;
-    public extraData: string;
+    public extraData = {};
     public path: string;
     public bytes : number;
     public bytesString : string;
@@ -33,10 +33,7 @@ export class FileItem
         this.path = value["path"];
         this.mime_type = value["mime_type"];
         this.type = this.icon;
-        this.extraData = value['extradata'];
         this.isShared = value["shared"];
-        
-        
         if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied")
         {
             this.bytes = value["content"]["size"];
@@ -49,6 +46,20 @@ export class FileItem
         }
         else
         {
+            if (value['extradata'] != null)
+            {
+                var temp = value['extradata']['thumbnails'];
+                if (temp != null && temp['status'] == 'ready')
+                {
+                    this.extraData['small'] = temp['small']['link'];
+                    this.extraData['middle'] = temp['middle']['link'];
+                }
+                var temp = value['extradata']['pdf'];
+                if (temp != null && temp['status'] == 'ready')
+                {
+                    this.extraData['pdf'] = temp;
+                }
+            }
             this.bytes = value["bytes"];
             this.owner_path = value["owner_path"];
             
