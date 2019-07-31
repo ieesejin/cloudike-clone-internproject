@@ -3,8 +3,33 @@
 <div style="width: 600px">
     <h2 mat-dialog-title>공개 링크 생성</h2>
     <mat-dialog-content>
-        <p>생성된 주소: </p>
-        <input [(ngModel)]="this.link" id="input" readonly/>
+        <div class="group">
+            <h6>"{{name}}"의 공개 링크</h6>
+            <input [(ngModel)]="this.link" id="input" readonly/>
+        </div>
+        <div class="group">
+            <h6>공유 옵션</h6>
+            <table>
+                <tr>
+                    <td>공유 만료일</td>
+                    <td><input /></td>
+                </tr>
+                <tr>
+                    <td>비밀번호</td>
+                    <td><input /></td>
+                </tr>
+                <tr>
+                    <td>최대 다운로드 수</td>
+                    <td><input /></td>
+                </tr>
+                <tr>
+                    <td>
+                        이 폴더에 업로드만 가능
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </mat-dialog-content>
     <mat-dialog-actions> 
         <button mat-button type="button" class="ok" (click)="create()">생성</button>

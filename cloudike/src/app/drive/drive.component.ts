@@ -17,8 +17,7 @@ import { HTTPService } from '../httpservice.service';
 @Component({
   selector: 'app-drive',
   templateUrl: './drive.component.html',
-  styleUrls: ['./drive.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./drive.component.css']
 })
 
 export class DriveComponent implements OnInit {

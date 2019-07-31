@@ -50,20 +50,35 @@ input
     outline: none;
     padding: 6px 12px;
 }
+mat-dialog-content div.group
+{
+    margin-bottom : 20px;
+}
+mat-dialog-content div.group:last-child {
+    margin-bottom : 0px;
+}
 mat-dialog-content p
 {
     width: 100%;
-    margin-bottom: 10px;
 }
 mat-dialog-content input
 {
     width: 100%;
-    margin-bottom: 20px;
 }
 mat-dialog-content input:read-only
 {
     background: #eeeeee;
 }
+mat-dialog-content table
+{
+    width: 100%;
+}
+
+mat-dialog-content td
+{
+    padding: 6px 10px;
+}
+
 mat-dialog-actions
 {
     width: 100%;

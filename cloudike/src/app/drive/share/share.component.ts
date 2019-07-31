@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material'
 import { UserInfo } from 'src/app/UserInfo';
 import { HTTPService } from 'src/app/httpservice.service';
 import { FileManagement } from '../FileManagement';
+import { FileItem } from '../FileItem';
 
 @Component({
   selector: 'app-share',
@@ -12,6 +13,7 @@ import { FileManagement } from '../FileManagement';
 export class ShareComponent implements OnInit {
 
   public selectitem = FileManagement.getSelectItemPath()[0];
+  public name;
   public link : string;
 
   constructor(private dialogRef: MatDialogRef<ShareComponent>, private hs: HTTPService) {
@@ -19,6 +21,8 @@ export class ShareComponent implements OnInit {
   }
 
   ngOnInit() {
+    var path = FileItem.SplitPath(this.selectitem);
+    this.name = path[path.length - 1].name;
     this.link = "링크를 불러오는 중입니다";
     this.create();
   }
