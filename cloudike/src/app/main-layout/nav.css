@@ -13,7 +13,7 @@
 
 :host ::ng-deep nav .item_name
 {
-    width:160px;
+    width:100%;
     overflow: hidden; 
     text-overflow: ellipsis;
     white-space: nowrap; 

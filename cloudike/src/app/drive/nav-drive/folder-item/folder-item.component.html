@@ -1,6 +1,6 @@
 <!-- 'now' 은 현재 선택된 폴더(파일) -->
 <div class="item" [ngClass]="{ 'on' : now}" (click)="(click_event != null && click_event(url)) || (click_event == null && router.navigate(['/drive' + url]))">
-    <div class="item_name" [ngStyle]="{'margin-left': (depth * 16 - 16) + 'px'}">
+    <div class="item_name" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}">
         {{name}}
     </div>
     
