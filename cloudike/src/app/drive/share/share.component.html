@@ -4,27 +4,58 @@
     <h2 mat-dialog-title>공개 링크 생성</h2>
     <mat-dialog-content>
         <div class="group">
-            <h6>"{{name}}"의 공개 링크</h6>
-            <input [(ngModel)]="this.link" id="input" readonly/>
+            <h6>"{{item.name}}"의 공개 링크</h6>
+            <input [(ngModel)]="this.link" id="input" type="text" readonly/>
+            <button mat-button type="button" class="ok" (click)="create()">생성</button>
+            <button mat-button type="button" class="copy" (click)="copy(this.link)">복사</button>
+            <button mat-button type="button" class="delete" (click)="delete()">삭제</button>
+            <p style="margin-top: 10px">
+                현재 다운로드 수 : {{download_count}}
+            </p>
         </div>
         <div class="group">
             <h6>공유 옵션</h6>
             <table>
                 <tr>
-                    <td>공유 만료일</td>
-                    <td><input /></td>
-                </tr>
-                <tr>
-                    <td>비밀번호</td>
-                    <td><input /></td>
-                </tr>
-                <tr>
-                    <td>최대 다운로드 수</td>
-                    <td><input /></td>
+                    <td>
+                        <input type="checkbox" id="setting_date" [(ngModel)]="setting_boolean['date']" (change)="ischanged=true"/>
+                        <label for="setting_date">
+                            만료일
+                        </label>
+                    </td>
+                    <td>
+
+                            <input type="text" matInput [formControl]="this.date" [matDatepicker]="picker" placeholder="날짜를 입력해주세요" 
+                            (click)="setting_boolean['date'] == true && picker.open()" 
+                            [readonly]="!setting_boolean['date']" 
+                            (dateChange)="ischanged=true">
+                            <mat-datepicker #picker></mat-datepicker>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        이 폴더에 업로드만 가능
+                        <input type="checkbox" id="setting_password" [(ngModel)]="setting_boolean['password']" (change)="ischanged=true"/>
+                        <label for="setting_password">
+                            비밀번호
+                        </label>
+                    </td>
+                    <td><input type="text" [(ngModel)]="this.password" id="input_password" [readonly]="!setting_boolean['password']" (change)="ischanged=true" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="setting_download_max" [(ngModel)]="setting_boolean['download_max']" (change)="ischanged=true" />
+                        <label for="setting_download_max">
+                            최대 다운로드 수
+                        </label>
+                    </td>
+                    <td><input type="text" [(ngModel)]="this.download_max" id="input_download_max" [readonly]="!setting_boolean['download_max']" (change)="ischanged=true" /></td>
+                </tr>
+                <tr *ngIf="item.isfolder">
+                    <td>
+                        <input type="checkbox" id="setting_only_upload" [(ngModel)]="setting_boolean['only_upload']" (change)="ischanged=true" />
+                        <label for="setting_only_upload">
+                            이 폴더에 업로드만 가능
+                        </label>
                     </td>
                 </tr>
             </table>
@@ -32,10 +63,8 @@
 
     </mat-dialog-content>
     <mat-dialog-actions> 
-        <button mat-button type="button" class="ok" (click)="create()">생성</button>
-        <button mat-button type="button" class="copy" (click)="copy(this.link)">복사</button>
-        <button mat-button type="button" class="delete" (click)="delete()">삭제</button>
-        <button mat-button type="button" class="cancel" (click)="dialogRef.close()">완료</button>
+        <button mat-button type="button" class="right" (click)="dialogRef.close()">닫기</button>
+        <button mat-button type="button" class="right" (click)="apply()" *ngIf="ischanged">적용</button>
     </mat-dialog-actions>
 </div>
 

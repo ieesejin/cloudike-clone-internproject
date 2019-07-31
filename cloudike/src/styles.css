@@ -61,9 +61,17 @@ mat-dialog-content p
 {
     width: 100%;
 }
-mat-dialog-content input
+mat-dialog-content input[type=text]
 {
     width: 100%;
+}
+mat-dialog-content input[type=checkbox]
+{
+    margin: 5px;
+}
+mat-dialog-content label
+{
+    margin: 0px;
 }
 mat-dialog-content input:read-only
 {
@@ -82,10 +90,16 @@ mat-dialog-content td
 mat-dialog-actions
 {
     width: 100%;
+    display: inherit !important;
 }
 mat-dialog-actions button
 {
     box-sizing: border-box;
+}
+mat-dialog-actions .right
+{ 
+    margin-left: 20px;
+    float: right;
 }
 mat-dialog-actions .ok
 { 
