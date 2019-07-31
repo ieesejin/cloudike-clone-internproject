@@ -208,12 +208,17 @@ mat-dialog-actions .cancle
             color: #1FBFEF;
             font-family: FontAwesome;
         }
+        i.icon.fa-edit:before {
+            content: "\f044";
+            color: #CDCDCD;
+            font-family: FontAwesome;
+        }
 
-        i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40
+        i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40, i.icon.fa-edit.size40
         {
             line-height: 25px;
         }
-        i.icon.zip.size40:before,  i.icon.word.size40:before,  i.icon.fa-film.size40:before
+        i.icon.zip.size40:before,  i.icon.word.size40:before,  i.icon.fa-film.size40:before, i.icon.fa-edit.size40:before
         {
             display: inline-block;
             font-size: 26px;

@@ -1,17 +1,16 @@
 
 <header class="bar">
     <a [routerLink]="['/']" class="logo"><img src="/assets/img/poweredby.png"></a>
-    <div class="top-component">
-        
+    <div class="top-component">        
         <div #top></div>
     </div>
     <div class="option">
         <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{user_name}} 님</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem [routerLink]="['/profile']">프로필 및 설정</button>
-            <button ngbDropdownItem [routerLink]="['/logout']">로그아웃</button>
-        </div>
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{user_name}} 님</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem [routerLink]="['/profile']">프로필 및 설정</button>
+                <button ngbDropdownItem [routerLink]="['/logout']">로그아웃</button>
+            </div>
         </div>
     </div>
 </header>

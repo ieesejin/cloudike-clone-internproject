@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContextMenuModule } from 'ngx-contextmenu';
-
+import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
@@ -31,6 +31,7 @@ import { UploadBoxComponent } from './upload-box/upload-box.component';
 import { DeleteFilesComponent } from './drive/delete-files/delete-files.component';
 import { MoveFileComponent } from './drive/move-file/move-file.component';
 import { RenameComponent } from './drive/rename/rename.component';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { RenameComponent } from './drive/rename/rename.component';
     DragDropModule,
     ContextMenuModule.forRoot({
       useBootstrap4: true
-    })
+    }),
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [BootComponent],

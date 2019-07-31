@@ -11,6 +11,14 @@
     user-select: none;
 }
 
+:host ::ng-deep nav .item_name
+{
+    width:160px;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+
 :host ::ng-deep nav .hidebutton
 {
     position: relative;

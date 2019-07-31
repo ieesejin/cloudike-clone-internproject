@@ -1,8 +1,11 @@
 
-
-<div class="disable">
+<div mat-button [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>파일</button>
+        <button mat-menu-item>폴더</button>
+    </mat-menu>
     <i class="icon size50 upload"></i>
-    <p>업로드</p>
+    <p>업로드</p>    
 </div>
 
 <div (click)="new_folder()">

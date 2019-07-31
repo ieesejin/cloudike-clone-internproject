@@ -31,7 +31,7 @@ export class RenameComponent implements OnInit {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/", formdata, element + " 이름 변경").subscribe(data => {
         // 성공
       });
-  });
+    });
     this.dialogRef.close();
   }
 }
