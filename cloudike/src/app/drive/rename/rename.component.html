@@ -2,9 +2,9 @@
     <h2 mat-dialog-title>이름 변경</h2>
     <mat-dialog-content>
         <p>변경할 이름</p>
-        <input [(ngModel)]="b_name"/>
+        <input type="text" [(ngModel)]="b_name"/>
     </mat-dialog-content>
-    <mat-dialog-actions> 
+    <mat-dialog-actions class="flex"> 
         <button mat-button type="button" class="ok" (click)="rename(b_name)">이름 변경</button>
         <button mat-button type="button" class="cancle" (click)="dialogRef.close()">취소</button>
     </mat-dialog-actions>

@@ -7,9 +7,9 @@
         <app-folder-item [url]="'/'" [name]="'내 Cloudike'" [depth]="1" [click_event]="change_path">
         </app-folder-item>
     </mat-dialog-content>
-    <mat-dialog-actions> 
-            <button mat-button type="button" class="ok" (click)="move()" *ngIf="path != null">이동</button>
-            <button mat-button type="button" class="ok" (click)="copy()" *ngIf="path != null">복사</button>
+    <mat-dialog-actions  class="flex"> 
+        <button mat-button type="button" class="ok" (click)="move()" *ngIf="path != null">이동</button>
+        <button mat-button type="button" class="ok" (click)="copy()" *ngIf="path != null">복사</button>
         <button mat-button type="button" class="cancle" (click)="dialogRef.close()">아니오</button>
     </mat-dialog-actions>
 </div>

@@ -92,6 +92,11 @@ mat-dialog-actions
     width: 100%;
     display: inherit !important;
 }
+mat-dialog-actions.flex
+{
+    width: 100%;
+    display: flex !important;
+}
 mat-dialog-actions button
 {
     box-sizing: border-box;
