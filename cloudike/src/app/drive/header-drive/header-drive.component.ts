@@ -6,6 +6,8 @@ import { MoveFileComponent } from '../move-file/move-file.component';
 import { FileManagement } from '../FileManagement';
 import { RenameComponent } from '../rename/rename.component';
 import { ShareComponent } from '../share/share.component';
+import { FileItem } from '../FileItem';
+import { HTTPService } from 'src/app/httpservice.service';
 
 @Component({
   selector: 'app-header-drive',
@@ -14,12 +16,13 @@ import { ShareComponent } from '../share/share.component';
 })
 export class HeaderDriveComponent implements OnInit {
 
+
   public get selectItem()
   {
     return FileManagement.getSelectItemPath();
   }
   
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private hs : HTTPService) { }
 
   ngOnInit() {
   }
@@ -43,5 +46,14 @@ export class HeaderDriveComponent implements OnInit {
   public share_file()
   {
     this.dialog.open(ShareComponent);
+  }
+
+  public Download()
+  {
+    this.selectItem.forEach( (path)=>
+      FileManagement.getItem(this.hs,path,(item)=>{
+        item.Download(this.hs);
+      })
+    )
   }
 }

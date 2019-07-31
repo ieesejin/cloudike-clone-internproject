@@ -1,8 +1,11 @@
 
-
-<div class="disable">
+<div mat-button [matMenuTriggerFor]="menu">
     <i class="icon size50 upload"></i>
-    <p>업로드</p>
+    <p>업로드 <span style="font-size: 3px">▼</span></p> 
+    <mat-menu #menu="matMenu">
+        <button class="mat-menu-item" mat-menu-item>파일</button>
+        <button class="mat-menu-item" mat-menu-item>폴더</button>
+    </mat-menu>   
 </div>
 
 <div (click)="new_folder()">
@@ -10,7 +13,7 @@
     <p>새 폴더</p>
 </div>
 
-<div class="disable">
+<div (click)="selectItem.length > 0 && Download()" [ngClass]="{'disable': selectItem.length == 0}">
     <i class="icon size50 download"></i>
     <p>다운로드</p>
 </div>

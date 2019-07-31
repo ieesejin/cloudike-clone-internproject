@@ -1,4 +1,5 @@
 import { ConvertFormat } from './ConvertFormat'
+import { HTTPService } from '../httpservice.service';
 
 
 export class FileItem
@@ -96,6 +97,7 @@ export class FileItem
         if (this.type == "document_office") this.type = "Word";
         if (this.type == "video") this.type = "비디오";
         if (this.type == "archive") this.type = "압축 파일";
+        if (this.type == "document_text") this.type = "텍스트";
         if (this.type == "unknown")
         {
             if (this.mime_type == "application/octet-stream") this.type = "문서"; // 해당 확장자 .md .yml .gitignore
@@ -119,6 +121,27 @@ export class FileItem
             this.isfolder = false;
         }
 
+    }
+
+    public Download(hs: HTTPService)
+    {
+        if (this.isfolder)
+        {
+            var formdata = new FormData();
+            formdata.set("path", this.path);
+            formdata.set("is_win", "true");
+            // 폴더 다운로드
+            hs.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, this.name + " 압축 다운로드").subscribe(data => {
+            window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
+            });
+        }
+        else
+        {
+            // 파일 다운로드
+            hs.get("https://api.cloudike.kr/api/1/files/get" + this.path, this.name + " 다운로드").subscribe(data => {
+                window.location = data["url"];
+            });
+        }
     }
 
 

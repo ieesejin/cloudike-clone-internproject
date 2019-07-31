@@ -59,7 +59,8 @@ nav .tree
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
     max-height: calc(100% - 260px);
     
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 nav .info
@@ -83,7 +84,19 @@ nav .logo
     display: inline-block;
     width: 184px;
     height: 64px;
-    padding: 10px 20px 18px 0px;
+    padding: 10px 20px 20px 10px;
+    box-sizing: content-box;
+}
+
+nav .homepageInfo, .storageInfo, .capacityBar
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+progress
+{
+    width: calc(100% - 20px);
 }
 
 footer

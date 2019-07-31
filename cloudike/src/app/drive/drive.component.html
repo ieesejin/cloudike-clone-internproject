@@ -38,6 +38,8 @@
           <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
           <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
           <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
+          <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
+
           <span>{{item.value.name}}</span>
         </td>
         <td>{{item.value.owner_path}}</td>
@@ -64,7 +66,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block">
+          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
             <i class="icon link"></i>
             공유
           </button>
@@ -76,7 +78,7 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block">
+          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
             <i class="icon pen"></i>
             이름 변경
           </button>
@@ -115,12 +117,18 @@
             다운로드 {{CheckingItem(item)}}
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
           <button class="btnMenu btn-link btn-block">
             <i class="icon ms365"></i>
             브라우저에서 편집
           </button>
         </ng-template>
+        <ng-template contextMenuItem>
+            <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
+              <i class="icon link"></i>
+              공유
+            </button>
+          </ng-template>
         <ng-template contextMenuItem let-item>
           <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && move_file()">
             <i class="icon folder-move"></i>
@@ -128,12 +136,12 @@
           </button>
         </ng-template>
         <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block">
+          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
             <i class="icon pen"></i>
             이름 변경
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
           <button class="btnMenu btn-link btn-block">
             <i class="icon clocks"></i>
             버전 보기
