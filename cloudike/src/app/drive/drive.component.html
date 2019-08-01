@@ -32,7 +32,7 @@
         </td>
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
         
-        <td *ngIf="!item.value.isfolder" (click)="this.Download(item.value)">
+        <td *ngIf="!item.value.isfolder" (click)="item.value.Download(hs)">
           <img *ngIf="item.value.type == 'Word' && item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
           <i *ngIf="item.value.type == 'Word' && item.value.extraData['small'] == null" class="icon word size40"></i>
           <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
@@ -60,7 +60,7 @@
     <li>
       <context-menu #basicMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && item.Download(hs)">
             <i class="icon download"></i>
             다운로드 {{CheckingItem(item)}}
           </button>
@@ -112,7 +112,7 @@
     <li>
       <context-menu #otherMenu [useBootstrap4]="true">
         <ng-template contextMenuItem let-item>
-          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && Download(item)">
+          <button class="btnMenu btn-link btn-block" (click)="selectItem.length > 0 && item.Download(hs)">
             <i class="icon download"></i>
             다운로드 {{CheckingItem(item)}}
           </button>
