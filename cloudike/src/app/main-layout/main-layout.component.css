@@ -36,6 +36,10 @@ header div.option
     top: 20px;
     display: inline-block;
 }
+.btn
+{
+    transition: all ease 0.3s;
+}
 
 .main
 {
