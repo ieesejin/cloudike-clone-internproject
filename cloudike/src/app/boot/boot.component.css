@@ -1,3 +1,13 @@
+.dropZoneColor {
+}
+.dropZoneColorDrop {
+}
+.dropZoneColorDrag {
+}
+
+
+
+/* 업로드 관련 */
 .ngx-file-upload
 {
     width: 100%;
@@ -6,17 +16,34 @@
     left: 0px;
     position: fixed;
 }
-.dropZoneColor {
+
+/* 드래그시 나타나는 화면 */
+.back
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
 }
-  
-.dropZoneColorDrag {
-    border: 3px dotted rgba(0,0,0,0.28);
-    color: black;
+.upload_message
+{
+    width: 100%;
+    height: 100%;
+    color:white;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    font-size: 2em;
+    text-align: center;
+    line-height: 300px;
 }
 
-.dropZoneColorDrop {
-}
 
+
+
+
+/* 프로그래스바 관련 */
 ngb-progressbar
 {
     top: 0px;
