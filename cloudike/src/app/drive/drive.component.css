@@ -254,8 +254,7 @@ a.path-link:hover
     transition: all ease 0.6s;
 }
 .share_animation:hover
-{
-    
+{    
     transform: rotate( 180deg );
 }
 

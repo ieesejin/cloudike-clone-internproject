@@ -10,3 +10,15 @@ button.mat-menu-item
 {
     outline:none;
 }
+.hover_animation
+{
+    transition: all ease 0.225s;
+}
+.hover_animation:hover
+{
+    background-color:rgb(255, 234, 171);
+}
+.hover_animation.disable:hover
+{
+    background-color:transparent;
+}
