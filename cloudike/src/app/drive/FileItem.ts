@@ -93,6 +93,7 @@ export class FileItem
             this.name = temp[temp.length - 1];
         }
 
+        if (this.type == "ebook_adobe") this.type = "PDF";
         if (this.type == "presentation_office") this.type = "Powerpoint";
         if (this.type == "document_office") this.type = "Word";
         if (this.type == "video") this.type = "비디오";

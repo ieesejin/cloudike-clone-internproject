@@ -228,12 +228,13 @@ mat-dialog-actions .cancle
             content: "\e614";
             color: #CDCDCD;
         }
-
-        i.icon.share:before
-        {
+        i.icon.share:before {
             content: "\e60c";
         }
-
+        i.icon.pdf:before {
+            content: "\e613";
+            color: #CDCDCD;
+        }
 
         i.icon.zip:before {
             content: "\f1c6";
