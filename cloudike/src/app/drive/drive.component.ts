@@ -63,27 +63,6 @@ export class DriveComponent implements OnInit {
       selectAllChkbox.checked = false;
     }
   }
-  public Download(item: FileItem)
-  {
-    if (item.isfolder)
-    {
-      var formdata = new FormData();
-      formdata.set("path", item.path);
-      formdata.set("is_win", "true");
-      // 폴더 다운로드
-      this.hs.post("https://api.cloudike.kr/api/1/files/create_link_of_archive/",formdata, item.name + " 압축 다운로드").subscribe(data => {
-          window.location.replace("https://api.cloudike.kr/api/1/files/download_as_archive_stream/" + data["hash"] + "/");
-      });
-
-    }
-    else
-    {
-      // 파일 다운로드
-      this.hs.get("https://api.cloudike.kr/api/1/files/get" + item.path, item.name + " 다운로드").subscribe(data => {
-        window.location = data["url"];
-      });
-    }
-  }
 
   //전체선택 및 전체해제
   private selectAll(value){

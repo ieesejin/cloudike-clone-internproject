@@ -93,6 +93,7 @@ export class FileItem
             this.name = temp[temp.length - 1];
         }
 
+        if (this.type == "ebook_adobe") this.type = "PDF";
         if (this.type == "presentation_office") this.type = "Powerpoint";
         if (this.type == "document_office") this.type = "Word";
         if (this.type == "video") this.type = "비디오";
@@ -148,6 +149,10 @@ export class FileItem
     public static SplitPath(path)
     {
         let result = [];
+
+        // 물음표 뒷부분 삭제
+        path = path.split('?')[0];
+        
         //      /폴더명/폴더2   이런식으로 형태 맞추기
         if (path[0] != '/') path = '/' + path;
         let folder = path.split('/');
