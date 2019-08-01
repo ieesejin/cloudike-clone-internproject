@@ -134,11 +134,21 @@ mat-dialog-actions .cancle
         font-style: normal;
         font-weight: 400;
         font-size: 40px;
+
+        line-height: 1;
+        vertical-align: middle;
     }
 
     .disable
     {
         color: #b4b4b4;
+    }
+    i.icon.size20
+    {
+        width: 20px;
+        font-size: 20px;
+        height: 20px;
+        line-height: 20px;
     }
     i.icon.size30
     {
@@ -268,29 +278,42 @@ mat-dialog-actions .cancle
             margin-left: 8px;
         }
 
-::-webkit-scrollbar-track
-{
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar
-{
-    width: 10px;
-	background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: rgb(170, 170, 170);
-}
-
-:hover::-webkit-scrollbar-thumb
-{
-    border-radius: 10px;
-	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: rgb(153, 153, 153);
-}
+/***********************************
+    스크롤바 CSS
+************************************/ 
+    ::-webkit-scrollbar-track
+    {
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+    ::-webkit-scrollbar
+    {
+        width: 10px;
+        background-color: #F5F5F5;
+    }
+    ::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: rgb(170, 170, 170);
+    }
+    :hover::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: rgb(153, 153, 153);
+    }
+    
+/***********************************
+    컨텍스트 메뉴 CSS
+************************************/ 
+    .ngx-contextmenu a
+    {
+        font-size: 14px;
+        line-height: 30px;
+        padding: 0.20rem 1.25rem;
+    }
+    .ngx-contextmenu a:hover {
+        background-color:rgb(255, 213, 88);
+    }

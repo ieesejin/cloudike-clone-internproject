@@ -1,240 +1,192 @@
-table
-{
-    background-color: rgb(255, 255, 255);
-    border-radius: 3px;
-    box-shadow: 1px 1px 2px 0 rgba(0,0,0,.25);
-    border-collapse: collapse;
-    width: 100%;
-}
-th
-{
-    height: 45px;
-    padding: 0 5px;
-    margin: 0;
-    color: #428bca;
-    border-bottom-color: rgb(204, 204, 204);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    font-weight: 400;
-}
-tbody tr
-{
-    transform: none !important;
-}
-#check
-{
-    width: 1px;
-}
-td
-{
-    height: 40px;
-    padding: 0 5px;
-    margin: 0;
-    border-bottom-color: rgb(237, 237, 237);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    font-weight: 400;
-}
-#path
-{
-    padding-left: 10px;
-}
-tr:not(:first-child):hover
-{
-    background: rgb(255,251,238);
-}
+/***********************************
+    현재 Path 출력 CSS
+************************************/ 
+    .path
+    {
+        display: block;
+        padding: 16px;
+    }
+    .path div
+    {
+        display: inline-block;
+    }
+    .path .space
+    {
+        margin: 0 10px;
+    }
 
+    a.path-link:link {
+        text-decoration:none;
+        color: #428bca;
+    }
+    a.path-link:visited 
+    {
+        text-decoration:none; 
+        color: #428bca;
+    }
+    a.path-link:active
+    {
+        text-decoration:none;
+        color: #283e52;
+    }
+    a.path-link:hover 
+    {
+        text-decoration:none; 
+        color: #4a9ce4;
+    }
 
-
-.path
-{
-    display: block;
-    padding: 16px;
-}
-.path div
-{
-    display: inline-block;
-}
-.path .space
-{
-    margin: 0 10px;
-}
-
-a.path-link:link {
-    text-decoration:none;
-    color: #428bca;
-}
-a.path-link:visited 
-{
-    text-decoration:none; 
-    color: #428bca;
-}
-a.path-link:active
-{
-    text-decoration:none;
-    color: #283e52;
-}
-a.path-link:hover 
-{
-    text-decoration:none; 
-    color: #4a9ce4;
-}
-
+/***********************************
+    스크롤을 위한 컨테이너 CSS
+************************************/ 
 .tableContainer {
     overflow-y: auto;
     max-height: calc(100% - 60px);
     margin: 0px 10px 5px 10px;
 }
 
+/***********************************
+    리스트 형태로 보기 CSS
+************************************/ 
+    table
+    {
+        background-color: rgb(255, 255, 255);
+        border-radius: 3px;
+        box-shadow: 1px 1px 2px 0 rgba(0,0,0,.25);
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th
+    {
+        height: 45px;
+        padding: 0 5px;
+        margin: 0;
+        color: #428bca;
+        border-bottom-color: rgb(204, 204, 204);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        font-weight: 400;
+    }
+    tbody tr
+    {
+        transform: none !important;
+    }
+    #check
+    {
+        width: 1px;
+    }
+    td
+    {
+        height: 40px;
+        padding: 0 5px;
+        margin: 0;
+        border-bottom-color: rgb(237, 237, 237);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        font-weight: 400;
+    }
+    #path
+    {
+        padding-left: 10px;
+    }
+    tr:not(:first-child):hover
+    {
+        background: rgb(255,251,238);
+    }
 
-.dragitem
-{
-    padding: 10px 15px;
-    background: #ffffff;
-    border: 1px solid red;
-}
-.dragitem.on
-{
-    border: 1px solid yellow;
-}
+/***********************************
+    공유 아이콘 에니메이션 CSS
+************************************/ 
+    .share_animation
+    {
+        color: #5c5c5c;
+        transition: all ease 0.6s;
+    }
+    .share_animation:hover
+    {
+        
+        transform: rotate( 180deg );
+    }
 
-.ngx-contextmenu .dropdown-menu {
-    border: solid 1px #EEE;
-    padding: 0;
-}
+    .share_animation.disable
+    {
+        color: transparent;
+    }
 
-.ngx-contextmenu li {
-    display: block;
-    text-transform: uppercase;
-    text-align: center;
-}
+    .share_animation.disable:hover
+    {
+        color: #5c5c5c;
+    }
 
-.ngx-contextmenu button {
-    display: block;
-    clear: both;
-    padding: 6px 10px;
-    font-weight: 400;
-    text-align: left;
-    line-height: 1.42857143;
-    color: #333;
-    white-space: nowrap;
-}
+/***********************************
+    아이템 드래그 상자 CSS
+************************************/ 
+    .dragitem
+    {
+        padding: 10px 15px;
+        background: #ffffff;
+        border: 1px solid red;
+    }
+    .dragitem.on
+    {
+        border: 1px solid yellow;
+    }
 
-.ngx-contextmenu button i {
-    font-size: 2em;
-    vertical-align: middle;
-}
-
-.btnMenu {
-    position: relative;
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
-}
-
-.btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
-    border-color: transparent;
-}
-
-.btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
-    background-color: transparent;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.btnMenu {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 3px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.ngx-contextmenu li:first-child {
-    border-top:none;
-}
-
-.ngx-contextmenu a:hover {
-    background-color:rgb(255, 213, 88);
-}
-
-.ngx-contextmenu button:hover {
-    text-decoration: none
-}
-
-.icon {
-    line-height: 1;
-    vertical-align: middle;
-}
-
-.checkbox-container {
-    position: relative;
-}
-    
-.checkbox-container input[type="checkbox"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0
-}
-    
-.checkbox-container input[type="checkbox"] + label {
-    display: inline-block;
-    position: relative;
-    padding-left: 5px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-    
-.checkbox-container input[type="checkbox"] + label:before {
-    content: ' ';
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    line-height: 16px;
-    text-align: center;
-    vertical-align: middle;
-    background: #fafafa;
-    border: 1px solid #cacece;
-    border-radius: 3px;
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-}
-    
-.checkbox-container input[type="checkbox"] + label:active:before,
-.checkbox-container input[type="checkbox"]:checked + label:active:before {
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
-}
-    
-.checkbox-container input[type="checkbox"]:checked + label:before {
-    content: '\2713';
-    color: #314ca2;
-    text-shadow: 1px 1px white;
-    background: #f1f4ff;
-    border-color: #adb8c0;
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-}
+/***********************************
+    체크박스 CSS
+************************************/ 
+    .checkbox-container {
+        position: relative;
+    }
+        
+    .checkbox-container input[type="checkbox"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip:rect(0,0,0,0);
+        border: 0
+    }
+        
+    .checkbox-container input[type="checkbox"] + label {
+        display: inline-block;
+        position: relative;
+        padding-left: 5px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+        
+    .checkbox-container input[type="checkbox"] + label:before {
+        content: ' ';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        vertical-align: middle;
+        background: #fafafa;
+        border: 1px solid #cacece;
+        border-radius: 3px;
+        box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    }
+        
+    .checkbox-container input[type="checkbox"] + label:active:before,
+    .checkbox-container input[type="checkbox"]:checked + label:active:before {
+        box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+    }
+        
+    .checkbox-container input[type="checkbox"]:checked + label:before {
+        content: '\2713';
+        color: #314ca2;
+        text-shadow: 1px 1px white;
+        background: #f1f4ff;
+        border-color: #adb8c0;
+        box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    }
 
 .smallThumbnails{
     margin: 0;
@@ -246,24 +198,3 @@ a.path-link:hover
     text-align: center;
 }
 
-
-
-.share_animation
-{
-    color: #5c5c5c;
-    transition: all ease 0.6s;
-}
-.share_animation:hover
-{    
-    transform: rotate( 180deg );
-}
-
-.share_animation.disable
-{
-    color: transparent;
-}
-
-.share_animation.disable:hover
-{
-    color: #5c5c5c;
-}

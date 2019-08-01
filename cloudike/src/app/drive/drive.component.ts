@@ -19,12 +19,13 @@ import { RenameComponent } from './rename/rename.component';
 @Component({
   selector: 'app-drive',
   templateUrl: './drive.component.html',
-  styleUrls: ['./drive.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./drive.component.css']
 })
 
 export class DriveComponent implements OnInit {
 
+  @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
+  
   public static Root :FileItem = new FileItem(null);
   public static Now :FileItem = new FileItem(null);
   
@@ -128,21 +129,9 @@ export class DriveComponent implements OnInit {
       // 성공
     });
   }
-
-  
-
-  @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
-  @ViewChild('otherMenu', {static : true}) public otherMenu: ContextMenuComponent;
-
-  public menuSelect(item){
-    if(item.type == 'Word'){
-      return this.otherMenu;
-    }
-    else {
-      return this.basicMenu;
-    }
-
-  }
+  public isOneSelect = (item : FileItem) :  boolean  => {
+    return !this.selectItem.includes(item.path) ||  this.selectItem.length <= 1;
+ }
 
   public get selectItem()
   {
