@@ -67,10 +67,12 @@ export class RealtimeService {
     var folder = null;
     var parent_path = null;
     var name = null;
+    var path = null;
     if (data["path"] != null)
     {
       folder = FileItem.SplitPath(data["path"]);
       name = folder[folder.length - 1].name;
+      path = folder[folder.length - 1].path;
 
       if (folder.length > 1)
         parent_path = folder[folder.length - 2].path;
@@ -104,8 +106,7 @@ export class RealtimeService {
 
       case 'file_renamed':
       case 'folder_renamed':
-        var path = FileItem.SplitPath(data["path"]);
-        var parent_path = path[path.length - 2].path;
+        var parent_path = folder[folder.length - 2].path;
         var old_path = parent_path + '/' + data["oldname"];
         
         FileManagement.rename(old_path, data["path"]);
@@ -119,6 +120,26 @@ export class RealtimeService {
         break;
       case 'link_deleted':
         FileManagement.link_set(data["path"], null);
+        break;
+      case 'extradata_created':
+        if (!FileManagement.contains(parent_path)) return;
+        FileManagement.getItem(this.hs, path,
+          (item : FileItem) => {
+                if (data["processed_interfaces"] == null) return;
+                var thumbnails = data["processed_interfaces"]["thumbnails"];
+                if (thumbnails != null)
+                {
+                  Object.keys(thumbnails).forEach(key => {
+                    item.extraData[key] = thumbnails[key]["link"];
+                  });
+                }
+                var pdf = data["processed_interfaces"]["pdf"];
+                if (pdf != null)
+                {
+                  item.extraData["pdf"] = pdf;
+                }
+            }
+        );
         break;
       case 'storage_info':
         UserInfo.storageSize = data["home_storage_size"];

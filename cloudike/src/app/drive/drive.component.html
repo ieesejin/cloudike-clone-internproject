@@ -33,12 +33,14 @@
         <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>{{item.value.name}}</td>
         
         <td *ngIf="!item.value.isfolder" (click)="item.value.Download(hs)">
-          <img *ngIf="item.value.type == 'Word' && item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
-          <i *ngIf="item.value.type == 'Word' && item.value.extraData['small'] == null" class="icon word size40"></i>
-          <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
-          <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
-          <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
-          <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
+          <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
+          <span *ngIf="item.value.extraData['small'] == null">
+            <i *ngIf="item.value.type == 'Word'" class="icon word size40"></i>
+            <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
+            <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
+            <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
+            <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
+          </span>
 
           <span>{{item.value.name}}</span>
         </td>
