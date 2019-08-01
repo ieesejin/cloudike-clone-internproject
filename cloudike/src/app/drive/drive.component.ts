@@ -13,6 +13,7 @@ import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { MoveFileComponent } from './move-file/move-file.component';
 import { HTTPService } from '../httpservice.service';
 import { ShareComponent } from './share/share.component';
+import { RenameComponent } from './rename/rename.component';
 
 
 @Component({
@@ -159,6 +160,10 @@ export class DriveComponent implements OnInit {
   public move_file()
   {
     this.dialog.open(MoveFileComponent);
+  }
+  public rename_file()
+  {
+    this.dialog.open(RenameComponent);
   }
   public share_file(item)
   {

@@ -68,8 +68,8 @@
             다운로드 {{CheckingItem(item)}}
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
+        <ng-template contextMenuItem *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block" (click)="share_file()">
             <i class="icon link"></i>
             공유
           </button>
@@ -80,8 +80,8 @@
             이동/복사
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
+        <ng-template contextMenuItem *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block" (click)="rename_file()">
             <i class="icon pen"></i>
             이름 변경
           </button>
@@ -92,15 +92,15 @@
             삭제
           </button>
         </ng-template>
-        <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon info"></i>
             상세 정보
           </button>
         </ng-template>
-        <ng-template contextMenuItem divider="true"></ng-template>
-        <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
+        <ng-template contextMenuItem divider="true" *ngIf="selectItem.length <= 1"></ng-template>
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon transfer"></i>
             소유권 이전
           </button>
@@ -126,8 +126,8 @@
             브라우저에서 편집
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
-            <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
+        <ng-template contextMenuItem *ngIf="selectItem.length <= 1">
+            <button class="btnMenu btn-link btn-block" [disabled]="selectItem.length > 1" (click)="share_file()">
               <i class="icon link"></i>
               공유
             </button>
@@ -138,8 +138,8 @@
             이동/복사
           </button>
         </ng-template>
-        <ng-template contextMenuItem>
-          <button class="btnMenu btn-link btn-block" disabled="*ngIf='selectItem.length >= 2'">
+        <ng-template contextMenuItem *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block" [disabled]="selectItem.length > 1" (click)="rename_file()">
             <i class="icon pen"></i>
             이름 변경
           </button>
@@ -156,15 +156,15 @@
             삭제
           </button>
         </ng-template>
-        <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon info"></i>
             상세 정보
           </button>
         </ng-template>
-        <ng-template contextMenuItem divider="true"></ng-template>
-        <ng-template contextMenuItem let-item>
-          <button [disabled]="!item.isfolder" class="btnMenu btn-link btn-block">
+        <ng-template contextMenuItem divider="true" *ngIf="selectItem.length <= 1"></ng-template>
+        <ng-template contextMenuItem let-item *ngIf="selectItem.length <= 1">
+          <button class="btnMenu btn-link btn-block">
             <i class="icon transfer"></i>
             소유권 이전
           </button>

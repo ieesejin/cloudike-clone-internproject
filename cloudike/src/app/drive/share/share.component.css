@@ -1,0 +1,22 @@
+#input {
+    width: 70%;
+}
+
+.ok, .copy, .delete{
+    width: 10%;
+    height: 30px;
+    background-color: #ffd659;
+    border: 1px solid #fab545;
+    border-radius: 3px;
+    outline: none;
+}
+.ok:hover, .copy:hover, .delete:hover {
+    color: #555;
+    background-color: #ffc926;
+    border-color: #f89d09;
+}
+
+.group {
+    padding: 3px;
+}
+
