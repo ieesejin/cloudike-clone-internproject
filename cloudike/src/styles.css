@@ -2,7 +2,7 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/dist/css/bootstrap.css';
 
-
+@import "~ngx-drag-to-select/ngx-drag-to-select.css";
 html
 {
     height: 100%;

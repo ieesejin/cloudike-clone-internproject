@@ -29,7 +29,8 @@ export class DriveComponent implements OnInit {
   public static Root :FileItem = new FileItem(null);
   public static Now :FileItem = new FileItem(null);
   
-  
+  public dragSelectItems;
+
   get nowfile():FileItem {
     return DriveComponent.Now;
   }
@@ -50,6 +51,7 @@ export class DriveComponent implements OnInit {
   ngOnInit() {
     this.Update();
   }
+
   private Update()
   {
     if (this.router.url.indexOf("/drive") != 0) return;
@@ -66,6 +68,13 @@ export class DriveComponent implements OnInit {
     }
   }
 
+  public onDragSelect(event)
+  {
+    var element = document.getElementsByName("chk_info");
+    element.forEach((inputbox : HTMLInputElement) => {
+      inputbox.checked = this.dragSelectItems.includes(inputbox.value);
+    });
+  }
   //전체선택 및 전체해제
   private selectAll(value){
     var result = [];
