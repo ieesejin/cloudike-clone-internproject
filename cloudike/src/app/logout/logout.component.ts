@@ -13,7 +13,8 @@ export class LogoutComponent implements OnInit {
   constructor(private router: Router) { 
     UserInfo.Logout();
     FileManagement.clean();
-    this.router.navigate(['/']);
+    //this.router.navigate(['/']);
+    window.location.replace("/");
   }
 
   ngOnInit() {
