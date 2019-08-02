@@ -145,6 +145,10 @@ export class FileItem
         }
     }
 
+    public get length()
+    {
+        return Object.keys(this.content).length;
+    }
 
     public static SplitPath(path)
     {

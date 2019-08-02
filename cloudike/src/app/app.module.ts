@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { DragToSelectModule } from 'ngx-drag-to-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { OauthComponent } from './oauth/oauth.component';
@@ -72,7 +72,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
     }),
     MatDatepickerModule,
     MatFormFieldModule , MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    DragToSelectModule.forRoot()
   ],
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],

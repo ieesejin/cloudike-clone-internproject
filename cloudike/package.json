@@ -25,6 +25,7 @@
     "@wkoza/ngx-upload": "git://github.com/banksemi/ngx-upload.git#cloudike",
     "bootstrap": "^4.3.1",
     "ngx-contextmenu": "^5.2.0",
+    "ngx-drag-to-select": "^3.1.1",
     "rxjs": "^6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
