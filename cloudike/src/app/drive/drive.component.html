@@ -3,7 +3,7 @@
   <div class="path">
     <div *ngFor="let item of ParantFolder; first as isfirst">
         <span *ngIf="!isfirst" class="space">>></span>
-        <a class="path-link" routerLink="{{'/drive' + item.path}}">{{item.name}}</a>
+        <a class="path-link" routerLink="{{'/drive' + item.path}}" (mousedown)="$event.stopPropagation()">{{item.name}}</a>
     </div>
 </div>
 <div class="tableContainer">
@@ -12,7 +12,7 @@
       <th id="check">
         <div class="checkbox-container">
           <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event.target.checked)">
-          <label for="selectAllChkbox"></label>
+          <label for="selectAllChkbox" (mousedown)="$event.stopPropagation()"></label>
         </div>
       </th>
       <th id="path">파일명</th>
@@ -27,8 +27,8 @@
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
-            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ item.value.name}}" (change)="onCheckboxChange(item, $event)">
-            <label for="{{'chkbox'+ item.value.name}}"></label>
+            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ item.value.name}}" (change)="onCheckboxChange(item.value, $event)">
+            <label (mousedown)="$event.stopPropagation()" for="{{'chkbox'+ item.value.name}}"></label>
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
