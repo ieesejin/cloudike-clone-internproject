@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-oauth',
   templateUrl: './oauth.component.html',
-  styleUrls: ['./oauth.component.css'],
-
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./oauth.component.css']
 })
 export class OauthComponent implements OnInit {
 
