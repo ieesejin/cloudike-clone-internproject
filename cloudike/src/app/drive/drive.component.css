@@ -71,6 +71,10 @@
         transform: none !important;
         box-sizing: border-box;
     }
+    tbody tr:hover
+    {
+        background: rgba(255, 210, 60, 0.3);
+    }
     #check
     {
         width: 1px;
@@ -89,10 +93,7 @@
     {
         padding-left: 10px;
     }
-    tr:not(:first-child):hover
-    {
-        background: rgba(255, 210, 60, 0.3);
-    }
+    
 
 /***********************************
     공유 아이콘 에니메이션 CSS
