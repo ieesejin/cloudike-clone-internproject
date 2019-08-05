@@ -190,6 +190,7 @@
     }
 
 .smallThumbnails{
+    border: 1px solid #cacece;
     margin: 5px;
     width: 30px;
     height: 30px;
