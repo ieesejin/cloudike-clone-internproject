@@ -72,6 +72,17 @@ export class DriveComponent implements OnInit {
     }
   }
 
+  private AllCheckBoxUpdate()
+  {
+    // 목록에 하나라도 있으면
+    if (this.nowfile.length != 0)
+    {
+      // 전체 체크박스 체크
+      var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
+      console.log(this.dragSelectItems.length + " " + this.nowfile.length);
+      selectAllChkbox.checked = FileManagement.getSelectItemPath().length == this.nowfile.length;
+    }
+  }
   public onDragSelect(event)
   {
     // 체크박스 리스트 다시 작성
@@ -86,18 +97,12 @@ export class DriveComponent implements OnInit {
         tabInstance.selected = this.dragSelectItems.includes(tabInstance.dtsSelectItem);
     });
 
-    // 목록에 하나라도 있으면
-    if (this.nowfile.length != 0)
-    {
-      // 전체 체크박스 체크
-      var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
-      selectAllChkbox.checked = this.dragSelectItems.length == this.nowfile.length;
-    }
+    this.AllCheckBoxUpdate();
 
   }
-  //전체선택 및 전체해제
+
+  // 전체선택 및 전체해제
   private selectAll(value){
-    var result = [];
     var list= document.getElementsByName("chk_info");
     list.forEach((element : HTMLInputElement) => {
       element.checked = value;
@@ -107,20 +112,13 @@ export class DriveComponent implements OnInit {
     selectAllChkbox.checked = value;
 
     if (value == true)
-    {
       this.selectContainer.selectAll();
-    } else {
+    else
       this.selectContainer.clearSelection();
-    }
-    return result;
-    
   }
 
-  //각각의 체크박스를 다룰 때 
+  // 각각의 체크박스를 다룰 때 
   private onCheckboxChange(item: FileItem, event) {
-    // 전체 체크박스 체크
-    var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
-    selectAllChkbox.checked = FileManagement.getSelectItemPath().length == this.nowfile.length;
 
     // 체크한 목록을 드래그 상태에 포함
     this.SelectItemDirectives.forEach(dragitem =>
@@ -128,6 +126,8 @@ export class DriveComponent implements OnInit {
       if (dragitem.dtsSelectItem == item.path)
         dragitem.selected = event.target.checked;
     });
+
+    this.AllCheckBoxUpdate();
   }
 
   private getItemValue(list: CdkDropList, index: number)
@@ -167,7 +167,7 @@ export class DriveComponent implements OnInit {
   }
   public isOneSelect = (item : FileItem) :  boolean  => {
     return !this.selectItem.includes(item.path) ||  this.selectItem.length <= 1;
- }
+  }
 
   public get selectItem()
   {
@@ -200,6 +200,42 @@ export class DriveComponent implements OnInit {
     this.dialog.open(ShareComponent);
   }
 
+  public ItemClick(event, item)
+  {
+    
+    // 해당 아이템이 선택되있지 않으면
+    var element = <HTMLInputElement>document.getElementById("chkbox" + item.name);
+    
+    if (event.ctrlKey)
+    {    
+      element.checked = !element.checked;
+      // 이를 기준으로 드래그 리스트 목록 다시 작성
+      this.SelectItemDirectives.forEach(tabInstance =>
+        {
+          if (tabInstance.dtsSelectItem == item.path)
+            tabInstance.selected = element.checked;
+        });
+
+      this.AllCheckBoxUpdate();
+    }
+    else
+    {
+      // 모든 아이템의 선택을 해제
+      var allelement = document.getElementsByName("chk_info");
+      allelement.forEach((element2 : HTMLInputElement) => {
+        element2.checked = false;
+      });
+
+      // 해당 아이템만 선택
+      element.checked = true;
+
+      // 이를 기준으로 드래그 리스트 목록 다시 작성
+      this.SelectItemDirectives.forEach(tabInstance =>
+      {
+        tabInstance.selected = tabInstance.dtsSelectItem == item.path;
+      });
+    }
+  }
   public CheckingItem(item)
   {
     // 해당 아이템이 선택되있지 않으면
@@ -217,9 +253,11 @@ export class DriveComponent implements OnInit {
 
       // 이를 기준으로 드래그 리스트 목록 다시 작성
       this.SelectItemDirectives.forEach(tabInstance =>
-        {
-          tabInstance.selected = tabInstance.dtsSelectItem == item.path;
-        });
+      {
+        tabInstance.selected = tabInstance.dtsSelectItem == item.path;
+      });
+      
+      this.AllCheckBoxUpdate();
     }
   }
 }
