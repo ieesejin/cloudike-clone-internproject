@@ -99,6 +99,7 @@ export class FileItem
         if (this.type == "video") this.type = "비디오";
         if (this.type == "archive") this.type = "압축 파일";
         if (this.type == "document_text") this.type = "텍스트";
+        if (this.type == "image") this.type = "이미지";
         if (this.type == "unknown")
         {
             if (this.mime_type == "application/octet-stream") this.type = "문서"; // 해당 확장자 .md .yml .gitignore

@@ -47,6 +47,7 @@
             <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
             <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
+            <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
 
           <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
