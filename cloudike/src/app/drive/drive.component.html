@@ -32,12 +32,13 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" routerLink="{{'/drive' + item.value.path}}" ><i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
-         
-         <span cdkDragHandle>{{item.value.name}}</span>
+        <td *ngIf="item.value.isfolder" (dblclick)="router.navigate(['/drive' + item.value.path])">
+          <i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
+
+          <span cdkDragHandle (click)='CheckingItem(item.value)'>{{item.value.name}}</span>
         </td>
         
-        <td *ngIf="!item.value.isfolder" (click)="item.value.Download(hs)">
+        <td *ngIf="!item.value.isfolder" (dblclick)="item.value.Download(hs)">
           <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
           <span *ngIf="item.value.extraData['small'] == null">
             <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
@@ -48,7 +49,7 @@
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
           </span>
 
-          <span cdkDragHandle>{{item.value.name}}</span>
+          <span cdkDragHandle (click)='CheckingItem(item.value)'>{{item.value.name}}</span>
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
