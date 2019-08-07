@@ -4,7 +4,7 @@
     <p>업로드 <span style="font-size: 3px">▼</span></p> 
     <mat-menu #menu="matMenu">
         <button class="mat-menu-item" mat-menu-item><ng-template ngxInputFile>파일</ng-template></button>
-        <button class="mat-menu-item" mat-menu-item>폴더</button>
+        <button class="mat-menu-item" mat-menu-item><ng-template ngxInputFile [folder]=true>폴더</ng-template></button>
     </mat-menu>   
 </div>
 
