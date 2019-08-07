@@ -35,7 +35,7 @@
         <td *ngIf="item.value.isfolder" (dblclick)="router.navigate(['/drive' + item.value.path])">
           <i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
 
-          <span cdkDragHandle (click)='CheckingItem(item.value)'>{{item.value.name}}</span>
+          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
         </td>
         
         <td *ngIf="!item.value.isfolder" (dblclick)="item.value.Download(hs)">
@@ -49,7 +49,7 @@
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
           </span>
 
-          <span cdkDragHandle (click)='CheckingItem(item.value)'>{{item.value.name}}</span>
+          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
