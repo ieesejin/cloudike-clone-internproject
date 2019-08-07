@@ -26,11 +26,10 @@ import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-selec
 export class DriveComponent implements OnInit {
 
   @ViewChild('basicMenu', {static : true}) public basicMenu: ContextMenuComponent;
+  
   @ViewChild(SelectContainerComponent, {static : true}) selectContainer: SelectContainerComponent;
   @ViewChildren(SelectItemDirective) SelectItemDirectives: QueryList<SelectItemDirective>;
 
-  
-  public static Root :FileItem = new FileItem(null);
   public static Now :FileItem = new FileItem(null);
   
   public dragSelectItems : string[] = [];
@@ -40,7 +39,7 @@ export class DriveComponent implements OnInit {
   }
 
   public keepOriginalOrder = (a, b) => a.key;
-  public ParantFolder = [];
+  public ParentFolder = [];
 
   constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
     router.events.subscribe( (event) => {
@@ -63,7 +62,7 @@ export class DriveComponent implements OnInit {
 
     FileManagement.getItem(this.hs, url,(item)=>{
       DriveComponent.Now = item;
-      this.ParantFolder = FileItem.SplitPath(item.path);
+      this.ParentFolder = FileItem.SplitPath(item.path);
     });
     
     var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
@@ -79,8 +78,7 @@ export class DriveComponent implements OnInit {
     {
       // 전체 체크박스 체크
       var selectAllChkbox = <HTMLInputElement> document.getElementById("selectAllChkbox");
-      console.log(this.dragSelectItems.length + " " + this.nowfile.length);
-      selectAllChkbox.checked = FileManagement.getSelectItemPath().length == this.nowfile.length;
+      selectAllChkbox.checked = this.selectItem.length == this.nowfile.length;
     }
   }
   public onDragSelect(event)

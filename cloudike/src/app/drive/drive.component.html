@@ -1,7 +1,7 @@
 
 <dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)">
   <div class="path">
-    <div *ngFor="let item of ParantFolder; first as isfirst">
+    <div *ngFor="let item of ParentFolder; first as isfirst">
         <span *ngIf="!isfirst" class="space">>></span>
         <a class="path-link" routerLink="{{'/drive' + item.path}}" (mousedown)="$event.stopPropagation()">{{item.name}}</a>
     </div>
