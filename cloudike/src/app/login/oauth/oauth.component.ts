@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { HttpClient } from  "@angular/common/http";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserInfo } from '../UserInfo';
+import { UserInfo } from '../../UserInfo';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-oauth',
   templateUrl: './oauth.component.html',
-  styleUrls: ['./oauth.component.css']
+  styleUrls: ['../login.css']
 })
 export class OauthComponent implements OnInit {
 
