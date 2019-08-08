@@ -9,7 +9,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragToSelectModule } from 'ngx-drag-to-select';
 
 import { AppRoutingModule } from './app-routing.module';
-import { OauthComponent } from './oauth/oauth.component';
 import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 import {NgxUploadModule} from '@wkoza/ngx-upload/src';
@@ -33,7 +32,9 @@ import { MoveFileComponent } from './drive/move-file/move-file.component';
 import { RenameComponent } from './drive/rename/rename.component';
 import { MatNativeDateModule} from '@angular/material';
 import { ShareComponent } from './drive/share/share.component';
-import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SingUpComponent } from './login/sing-up/sing-up.component';
+import { OauthComponent } from './login/oauth/oauth.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
     MoveFileComponent,
     RenameComponent,
     ShareComponent,
+    SingUpComponent,
   ],
   imports: [
     BrowserModule,

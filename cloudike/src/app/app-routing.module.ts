@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OauthComponent } from './oauth/oauth.component';
+import { OauthComponent } from './login/oauth/oauth.component';
 import { DriveComponent } from './drive/drive.component';
 import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
 import { NavDriveComponent } from './drive/nav-drive/nav-drive.component';
@@ -10,13 +10,19 @@ import { LogoutComponent } from './logout/logout.component';
 import { NavSettingComponent } from './setting/nav-setting/nav-setting.component';
 import { ProfileComponent } from './setting/profile/profile.component';
 import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
+import { SingUpComponent } from './login/sing-up/sing-up.component';
 
 const routes: Routes = [
   { 
     path: 'oauth',  
     component: OauthComponent 
-  }, 
-  
+  },
+
+  {
+    path: 'sign-up',
+    component: SingUpComponent
+  },
+    
   { 
     path: 'logout',  
     component: LogoutComponent
