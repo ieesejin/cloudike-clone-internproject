@@ -13,6 +13,7 @@
     .path .space
     {
         margin: 0 10px;
+        font-size:10px;
     }
 
     a.path-link:link {

@@ -9,7 +9,7 @@
 <div class="tableContainer">
   <table>
     <tr>
-      <th id="check">
+      <th id="check" width="30px">
         <div class="checkbox-container">
           <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event.target.checked)">
           <label for="selectAllChkbox" (mousedown)="$event.stopPropagation()"></label>
@@ -20,7 +20,7 @@
       <th>형식</th>
       <th>크기</th>
       <th>수정일</th>
-      <th>공유</th>
+      <th width="60px">공유</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
       <tr cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value">
