@@ -1,5 +1,5 @@
 
-<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)">
+<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)" [contextMenu]="spaceMenu">
   <div class="path">
     <div *ngFor="let item of ParentFolder; first as isfirst">
         <span *ngIf="!isfirst" class="space">>></span>
@@ -99,4 +99,10 @@
         <i class="icon transfer size30"></i>
         소유권 이전
     </ng-template>
+</context-menu>
+<context-menu #spaceMenu [useBootstrap4]="true">
+  <ng-template contextMenuItem (execute)="new_folder()">
+    <i class="icon folder size30"></i>
+    새 폴더
+  </ng-template>
 </context-menu>
