@@ -8,6 +8,10 @@
     text-align: center;
     cursor:  pointer;
 }
+:host ::ng-deep header div.top-component * div:not(.disable)
+{
+    color: rgb(83, 83, 83);
+}
 :host ::ng-deep header div.top-component * div.disable
 {
     cursor: default;
@@ -16,4 +20,14 @@
 {
     margin: 0px;
     padding: 0px;
+}
+
+:host ::ng-deep header div.top-component div
+{
+    transition: all ease 0.225s;
+}
+:host ::ng-deep header div.top-component div:hover:not(.disable)
+{
+    color:rgb(65, 139, 212);
+    transform: scale( 1.04 );
 }

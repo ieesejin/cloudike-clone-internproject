@@ -1,7 +1,7 @@
 :host ::ng-deep nav .item
 {
     transition: all ease 0.225s;
-    background: white;
+    color: rgb(255,255,255);
     display: block;
     width: 100%;
     padding: 5px;
@@ -36,12 +36,16 @@
 
 :host ::ng-deep nav .item.on
 {
-    background: rgb(255, 213, 88);
+    color:rgb(132, 200, 255);
 }
 
 :host ::ng-deep nav .item:hover
 {
-    background: rgb(253, 234, 174);
+    color:rgb(200, 200, 200);
+}
+:host ::ng-deep nav .item.on:hover
+{
+    color:rgb(158, 211, 255);
 }
 :host ::ng-deep nav .item:focus
 {

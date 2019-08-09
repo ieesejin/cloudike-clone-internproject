@@ -64,6 +64,11 @@ export class UserInfo
     {
         return this.company_data["domain"];
     }
+    
+    public static get companyName()
+    {
+        return this.company_data["name"];
+    }
     public static get storageSize()
     {
         return this._storageSize;

@@ -1,6 +1,6 @@
 
 <header class="bar">
-    <a [routerLink]="['/']" class="logo"><img src="/assets/img/poweredby.png"></a>
+    <a [routerLink]="['/']" class="logo"><img src="/assets/img/blue_logo.png"></a>
     <div class="top-component">        
         <div #top></div>
     </div>
@@ -16,6 +16,9 @@
 </header>
 <div class="main">
     <nav>
+        <div class="min">
+            {{companyName}}
+        </div>
         <div class="tree">
             <div #left></div>
         </div>
@@ -32,9 +35,6 @@
             <div class="homepageInfo">
                 <a href="https://www.cloudike.co.kr/download" target="_blank">앱 다운로드</a>&nbsp;&nbsp;&nbsp;
                 <a href="https://www.cloudike.co.kr/" target="_blank">Cloudike 홈페이지</a>                    
-            </div>
-            <div>
-                <img src="/assets/img/poweredby.png" class="logo"/>
             </div>
         </div>
     </nav>
