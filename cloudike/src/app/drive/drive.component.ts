@@ -197,6 +197,30 @@ export class DriveComponent implements OnInit {
     }
     this.dialog.open(ShareComponent);
   }
+  public create(name : string)
+  {
+    var formdata = new FormData();
+    var url = decodeURI(this.router.url).substring("/drive".length);
+
+    if (url == "" || url[0] != '/') url = '/' + url;
+    if (url[url.length-1] != '/') url =  url + '/';
+
+    formdata.append("path", url + name);
+    //console.log(formdata.get("path"));
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
+      // 성공
+    });
+  }
+  public go_parent_folder()
+  {
+    if(this.ParentFolder.length == 1){
+      return
+    }
+    else {
+      var last_parent = this.ParentFolder[this.ParentFolder.length - 2];
+      this.router.navigate(['/drive' + last_parent.path]);
+    }
+  }
 
   public ItemClick(event, item)
   {

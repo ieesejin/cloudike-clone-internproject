@@ -101,8 +101,11 @@
     </ng-template>
 </context-menu>
 <context-menu #spaceMenu [useBootstrap4]="true">
-  <ng-template contextMenuItem (execute)="new_folder()">
+  <ng-template contextMenuItem (execute)="create('새 폴더')">
     <i class="icon folder size30"></i>
     새 폴더
+  </ng-template>
+  <ng-template contextMenuItem (execute)="go_parent_folder()">
+    상위 폴더
   </ng-template>
 </context-menu>
