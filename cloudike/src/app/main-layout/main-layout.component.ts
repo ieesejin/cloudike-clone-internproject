@@ -31,6 +31,10 @@ export class MainLayoutComponent implements OnInit {
   {
     return window.innerWidth;
   }
+  public get companyName()
+  {
+    return UserInfo.companyName;
+  }
   private createComponent(view:ViewContainerRef, component)
   {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);

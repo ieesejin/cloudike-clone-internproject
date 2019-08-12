@@ -1,5 +1,5 @@
 
-<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)">
+<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)" [contextMenu]="spaceMenu">
   <div class="path">
     <div *ngFor="let item of ParentFolder; first as isfirst">
         <span *ngIf="!isfirst" class="space">>></span>
@@ -9,7 +9,7 @@
 <div class="tableContainer">
   <table>
     <tr>
-      <th id="check">
+      <th id="check" width="30px">
         <div class="checkbox-container">
           <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event.target.checked)">
           <label for="selectAllChkbox" (mousedown)="$event.stopPropagation()"></label>
@@ -20,10 +20,10 @@
       <th>형식</th>
       <th>크기</th>
       <th>수정일</th>
-      <th>공유</th>
+      <th width="60px">공유</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value">
+      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
@@ -32,15 +32,10 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" (dblclick)="!$event.ctrlKey && router.navigate(['/drive' + item.value.path])">
-          <i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
-
-          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
-        </td>
-        
-        <td *ngIf="!item.value.isfolder" (dblclick)="!$event.ctrlKey && item.value.Download(hs)">
+        <td>
           <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
           <span *ngIf="item.value.extraData['small'] == null">
+            <i *ngIf="item.value.isfolder" class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
             <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
             <i *ngIf="item.value.type == 'Word'" class="icon word size40"></i>
             <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
@@ -49,8 +44,14 @@
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
+          <span class="favorite on" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') == 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', null)">★ </span>
+          <span class="favorite off" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') != 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', 'true')">★ </span>
 
-          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)"/>
+
+
+
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
@@ -99,4 +100,13 @@
         <i class="icon transfer size30"></i>
         소유권 이전
     </ng-template>
+</context-menu>
+<context-menu #spaceMenu [useBootstrap4]="true">
+  <ng-template contextMenuItem (execute)="create('새 폴더')">
+    <i class="icon folder size30"></i>
+    새 폴더
+  </ng-template>
+  <ng-template contextMenuItem (execute)="go_parent_folder()">
+    상위 폴더
+  </ng-template>
 </context-menu>

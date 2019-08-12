@@ -1,3 +1,32 @@
+#namebox
+{
+    width: calc(100% - 70px);
+    font-size: 14.5px;
+    padding: 3px 10px;
+}
+.favorite
+{
+    
+    transition: all ease 0.3s;
+    text-shadow: 0 0 2px #000000;
+    cursor: pointer;
+    font-size: 18px;
+}
+.favorite.on
+{
+    color: rgb(230, 203, 52);
+    text-shadow: 0 0 3px #ffd665;
+}
+
+.favorite.off
+{
+    color: rgba(36, 36, 36, 0.2);
+    text-shadow: none;
+}
+.favorite.off:hover
+{
+    color: rgba(36, 36, 36, 0.6);
+}
 /***********************************
     현재 Path 출력 CSS
 ************************************/ 
@@ -13,6 +42,7 @@
     .path .space
     {
         margin: 0 10px;
+        font-size:10px;
     }
 
     a.path-link:link {
@@ -73,7 +103,7 @@
     }
     tbody tr:hover
     {
-        background: rgba(255, 210, 60, 0.3);
+        background: rgba(106, 158, 255, 0.35);
     }
     #check
     {

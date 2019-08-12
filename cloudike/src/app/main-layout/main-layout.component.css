@@ -1,8 +1,12 @@
+.outline
+{
+    border: 2px solid black;
+}
 header
 {
     width: 100%;
-    height: 100px;
-    background: #ffffff;
+    height: 90px;
+    background:rgb(250,250,250);
     display: block;
      
 }
@@ -10,23 +14,24 @@ header a.logo
 {
     display: inline-block;
     width: 250px;
-    height: 100px;
+    height: 90px;
     float: left;
 }
 header a.logo img
 {
     display: inline-block;
-    width: 184px;
-    height: 64px;
-    padding: 20px 20px 18px 25px;
+    width: 250px;
+    height: 90px;
     box-sizing: content-box;
 }
 
 header div.top-component
 {
     display: inline-block;
-    height: 100px;
+    height: 90px;
+    margin-left: 15px;
     overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;  /* 우측 스크롤을 하기 위해 하위 컨텐츠 내용 조정 */
 }
 header div.option
@@ -50,14 +55,25 @@ nav
     display: inline-block;
     width: 250px;
     height: 100%;
+    background: rgb(64, 69, 73);
     flex-direction: column;
-    border-right: solid #cccccc 2px;
     box-sizing: border-box;
-    padding: 10px;
     float: left;
     position: relative;
 }
-
+nav .min
+{
+     background: rgb(102, 105, 109);
+     width: 100%;
+     font-weight: 500;
+     text-align: 10px;
+     height: 35px;
+     line-height: 35px;
+     color: rgb(230, 230, 230);
+     font-size:16px;
+     
+     text-align: center;
+}
 nav .tree
 {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
@@ -73,6 +89,7 @@ nav .info
     bottom: 10px;
     left: 10px;
     width: calc(100% - 20px);
+    color: rgb(211, 211, 211);
 }
 
 section.content
