@@ -13,7 +13,7 @@ import { BootComponent } from './boot/boot.component';
 import { HttpClientModule } from  '@angular/common/http';
 import {NgxUploadModule} from '@wkoza/ngx-upload/src';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
 import { NavDriveComponent } from './drive/nav-drive/nav-drive.component';
@@ -36,6 +36,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SingUpComponent } from './login/sing-up/sing-up.component';
 import { OauthComponent } from './login/oauth/oauth.component';
 
+import 'hammerjs'; 
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { OauthComponent } from './login/oauth/oauth.component';
     MatDatepickerModule,
     MatFormFieldModule , MatNativeDateModule,
     MatMenuModule,
-    DragToSelectModule.forRoot()
+    DragToSelectModule.forRoot(),
+    MatTooltipModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],

@@ -1,18 +1,20 @@
 <!-- 'now' 은 현재 선택된 폴더(파일) -->
-<div class="item" [ngClass]="{ 'on' : now}" (click)="(click_event != null && click_event(url)) || (click_event == null && router.navigate(['/drive' + url]))">
-    <div class="item_name" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}">
-        {{name}}
+
+<div *ngIf="url != valueStorage.dataFolderPath">
+    <div class="item" [ngClass]="{ 'on' : now}" (click)="(click_event != null && click_event(url)) || (click_event == null && router.navigate(['/drive' + url]))">
+        <div class="item_name" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}">
+            {{name}}
+        </div>
+        
+        <div *ngIf="content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▶</div>
+        <div *ngIf="!content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▼</div>
     </div>
-    
-    <div *ngIf="content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▶</div>
-    <div *ngIf="!content_hide" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}" (click)="itemclick($event)" class="hidebutton">▼</div>
-</div>
 
-
-<!-- 하위 폴더 -->
-<div *ngIf="!content_hide">
-    <div *ngFor="let keya of item.content | keyvalue">
-        <app-folder-item [url]="keya.value.path" [name]="keya.value.name" [depth]="depth+1" [click_event]="click_event" *ngIf="keya.value.isfolder">
-        </app-folder-item>
+    <!-- 하위 폴더 -->
+    <div *ngIf="!content_hide">
+        <div *ngFor="let keya of item.content | keyvalue">
+            <app-folder-item [url]="keya.value.path" [name]="keya.value.name" [depth]="depth+1" [click_event]="click_event" *ngIf="keya.value.isfolder">
+            </app-folder-item>
+        </div>
     </div>
 </div>

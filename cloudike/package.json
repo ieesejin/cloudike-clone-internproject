@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.1.0",
     "@wkoza/ngx-upload": "git://github.com/banksemi/ngx-upload.git#cloudike",
     "bootstrap": "^4.3.1",
+    "hammerjs": "^2.0.8",
     "ngx-contextmenu": "^5.2.0",
     "ngx-drag-to-select": "git://github.com/banksemi/ngx-drag-to-select.git",
     "rxjs": "^6.5.2",
