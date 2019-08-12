@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
@@ -14,7 +14,7 @@ import { MoveFileComponent } from './move-file/move-file.component';
 import { HTTPService } from '../httpservice.service';
 import { ShareComponent } from './share/share.component';
 import { RenameComponent } from './rename/rename.component';
-import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select';
+import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
 
 
 @Component({
@@ -33,6 +33,8 @@ export class DriveComponent implements OnInit {
   public static Now :FileItem = new FileItem(null);
   
   public dragSelectItems : string[] = [];
+
+  public changing_old_name : string = null;
 
   get nowfile():FileItem {
     return DriveComponent.Now;
@@ -222,26 +224,89 @@ export class DriveComponent implements OnInit {
     }
   }
 
-  public ItemClick(event, item)
+  public save_name(event, item : FileItem)
   {
-    
+    this.changing_old_name = null;
+    if (item.name != event.target.value)
+    {
+      var formdata = new FormData();
+      formdata.set("path", item.path);
+      formdata.set("newname", event.target.value);
+
+      this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
+      formdata, item.path + " 이름 변경").subscribe(data => { });
+    }
+  }
+  public timer = null;
+  public last_click = new Date();
+  public ItemDoubleClick(item : FileItem)
+  {
+    if (item.isfolder)
+        this.router.navigate(['/drive' + item.path]);
+    else
+        item.Download(this.hs);
+  }
+  public ItemClick(event, item : FileItem)
+  {
     // 해당 아이템이 선택되있지 않으면
     var element = <HTMLInputElement>document.getElementById("chkbox" + item.name);
-    
+
+    // 컨트롤 키는 별도로 생각
     if (event.ctrlKey)
     {    
-      element.checked = !element.checked;
-      // 이를 기준으로 드래그 리스트 목록 다시 작성
-      this.SelectItemDirectives.forEach(tabInstance =>
-        {
-          if (tabInstance.dtsSelectItem == item.path)
-            tabInstance.selected = element.checked;
-        });
+        element.checked = !element.checked;
+        // 이를 기준으로 드래그 리스트 목록 다시 작성
+        this.SelectItemDirectives.forEach(tabInstance =>
+          {
+            if (tabInstance.dtsSelectItem == item.path)
+              tabInstance.selected = element.checked;
+          });
 
-      this.AllCheckBoxUpdate();
+        this.AllCheckBoxUpdate();
+        return;
     }
-    else
-    {
+      var delay = new Date().getTime() - this.last_click.getTime();
+      this.last_click = new Date();
+
+      if (this.timer != null)
+      {
+          clearTimeout(this.timer);
+      }
+      if (element.checked)
+      {
+        if (delay < 500)
+        {
+          this.ItemDoubleClick(item);
+        }
+        else
+        {
+            this.timer = setTimeout(() => {
+              this.timer = null;
+              this.changing_old_name = item.name;
+              setTimeout(() => {
+                  var change_name_box : HTMLInputElement = <HTMLInputElement>document.getElementById("namebox");
+                  change_name_box.focus();
+                  if (item.isfolder)
+                  {
+                    change_name_box.setSelectionRange(0, item.name.length);
+                  }
+                  else
+                  {
+                    if (item.name.indexOf('.') < 0)
+                    {
+                      change_name_box.setSelectionRange(0, item.name.length);
+                    }
+                    else
+                    {
+                      change_name_box.setSelectionRange(0, item.name.lastIndexOf('.'));
+                    }
+                  }
+                }, 50);
+          }, 500);
+        }
+      }
+
+
       // 모든 아이템의 선택을 해제
       var allelement = document.getElementsByName("chk_info");
       allelement.forEach((element2 : HTMLInputElement) => {
@@ -256,6 +321,25 @@ export class DriveComponent implements OnInit {
       {
         tabInstance.selected = tabInstance.dtsSelectItem == item.path;
       });
+  }
+  public reset(event : MouseEvent)
+  {
+    if (!event.ctrlKey && !event.shiftKey)
+    {
+      // 모든 아이템의 선택을 해제
+      var allelement = document.getElementsByName("chk_info");
+      allelement.forEach((element2 : HTMLInputElement) => {
+        element2.checked = false;
+      });
+
+
+      // 이를 기준으로 드래그 리스트 목록 다시 작성
+      this.SelectItemDirectives.forEach(tabInstance =>
+      {
+        tabInstance.selected = false;
+      });
+
+      this.AllCheckBoxUpdate();
     }
   }
   public CheckingItem(item)
