@@ -29,7 +29,7 @@ export class DeleteFilesComponent implements OnInit {
     this.selectitems.forEach((path) => formdata.append("path", path));
 
     this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/",formdata,this.selectitems.length + "개의 파일 삭제").subscribe(data => {
-      this.toastr.error('삭제가 완료되었습니다.');
+      this.toastr.success('삭제가 완료되었습니다.');
     }, error => {
       this.toastr.error('에러가 발생했습니다.');
     });

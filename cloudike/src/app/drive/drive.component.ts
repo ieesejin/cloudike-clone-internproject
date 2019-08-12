@@ -212,6 +212,21 @@ export class DriveComponent implements OnInit {
     formdata.append("path", url + name);
     //console.log(formdata.get("path"));
     this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
+      
+      this.changing_old_name = name;
+      
+
+      
+      setTimeout(() => {
+        var change_name_box : HTMLInputElement = <HTMLInputElement>document.getElementById("namebox");
+        change_name_box.focus();
+
+          change_name_box.setSelectionRange(0, name.length);
+
+      }, 50);
+
+
+
       // 성공
     }, error => {
       if(error.error["code"] == "FolderAlreadyCreated"){
