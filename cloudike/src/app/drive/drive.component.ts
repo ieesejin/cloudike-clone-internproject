@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { FileItem } from './FileItem';
@@ -33,6 +33,8 @@ export class DriveComponent implements OnInit {
   public static Now :FileItem = new FileItem(null);
   
   public dragSelectItems : string[] = [];
+
+  public changing_old_name : string = null;
 
   get nowfile():FileItem {
     return DriveComponent.Now;
@@ -198,9 +200,24 @@ export class DriveComponent implements OnInit {
     this.dialog.open(ShareComponent);
   }
 
-  public ItemClick(event, item)
+  public save_name(event, item : FileItem)
   {
-    
+    this.changing_old_name = null;
+    this.list_name = null;
+    if (item.name != event.target.value)
+    {
+      var formdata = new FormData();
+      formdata.set("path", item.path);
+      formdata.set("newname", event.target.value);
+
+      this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
+      formdata, item.path + " 이름 변경").subscribe(data => { });
+    }
+  }
+  public list_name = null;
+  public prevent = false;
+  public ItemClick(event, item : FileItem)
+  {
     // 해당 아이템이 선택되있지 않으면
     var element = <HTMLInputElement>document.getElementById("chkbox" + item.name);
     
@@ -218,6 +235,46 @@ export class DriveComponent implements OnInit {
     }
     else
     {
+      setTimeout(() => {
+        if (this.prevent) {
+          this.prevent = false;
+        }
+      }, 400);
+  
+      if (this.prevent == false)
+      {
+        if (this.list_name == item.name)
+        {
+            this.changing_old_name = item.name;
+            setTimeout(() => {
+              
+              var change_name_box : HTMLInputElement = <HTMLInputElement>document.getElementById("namebox");
+              change_name_box.focus();
+              if (item.isfolder)
+              {
+                change_name_box.setSelectionRange(0, item.name.length);
+              }
+              else
+              {
+                if (item.name.indexOf('.') < 0)
+                {
+                  change_name_box.setSelectionRange(0, item.name.length);
+                }
+                else
+                {
+                  change_name_box.setSelectionRange(0, item.name.lastIndexOf('.'));
+                }
+              }
+          }, 50);
+        }
+        else
+        {
+          this.list_name = item.name;
+        }
+      
+      }
+      this.prevent = true;
+
       // 모든 아이템의 선택을 해제
       var allelement = document.getElementsByName("chk_info");
       allelement.forEach((element2 : HTMLInputElement) => {

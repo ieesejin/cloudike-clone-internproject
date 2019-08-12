@@ -32,13 +32,14 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" (dblclick)="!$event.ctrlKey && router.navigate(['/drive' + item.value.path])">
+        <td *ngIf="item.value.isfolder" (dblclick)="!$event.ctrlKey && router.navigate(['/drive' + item.value.path]); list_name = null">
           <i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
-
-          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          
+          <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" />
         </td>
         
-        <td *ngIf="!item.value.isfolder" (dblclick)="!$event.ctrlKey && item.value.Download(hs)">
+        <td *ngIf="!item.value.isfolder" (dblclick)="!$event.ctrlKey && item.value.Download(hs); list_name = null">
           <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
           <span *ngIf="item.value.extraData['small'] == null">
             <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
@@ -50,7 +51,8 @@
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
 
-          <span cdkDragHandle (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" />
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
