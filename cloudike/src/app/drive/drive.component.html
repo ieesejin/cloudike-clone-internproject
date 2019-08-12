@@ -23,7 +23,7 @@
       <th width="60px">공유</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value">
+      <tr cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
@@ -32,16 +32,10 @@
           </div>
           <i *ngIf="item.value.isfolder"></i>
         </td>
-        <td *ngIf="item.value.isfolder" (dblclick)="!$event.ctrlKey && router.navigate(['/drive' + item.value.path]); list_name = null">
-          <i class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
-          
-          <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
-          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" />
-        </td>
-        
-        <td *ngIf="!item.value.isfolder" (dblclick)="!$event.ctrlKey && item.value.Download(hs); list_name = null">
+        <td>
           <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
           <span *ngIf="item.value.extraData['small'] == null">
+            <i *ngIf="item.value.isfolder" class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
             <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
             <i *ngIf="item.value.type == 'Word'" class="icon word size40"></i>
             <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
@@ -50,7 +44,6 @@
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
-
           <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
           <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" />
         </td>
