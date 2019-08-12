@@ -14,6 +14,7 @@ import { FileManagement } from '../FileManagement';
 export class NavDriveComponent implements OnInit {
   constructor(private valueStorage: ValueStorageService, private router: Router, private hs:HTTPService) { }
 
+  public favorite_hide : boolean = false;
   private last_list = [];
   public get favoriteList() {
     // 렉 유발 가능성
