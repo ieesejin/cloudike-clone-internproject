@@ -45,7 +45,7 @@
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
           <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
-          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" />
+          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)"/>
         </td>
         <td>{{item.value.owner_path}}</td>
         <td>{{item.value.type}}</td>
