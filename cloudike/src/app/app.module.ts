@@ -7,6 +7,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragToSelectModule } from 'ngx-drag-to-select';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BootComponent } from './boot/boot.component';
@@ -75,7 +76,11 @@ import { OauthComponent } from './login/oauth/oauth.component';
     MatDatepickerModule,
     MatFormFieldModule , MatNativeDateModule,
     MatMenuModule,
-    DragToSelectModule.forRoot()
+    DragToSelectModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-center'
+    })
   ],
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],

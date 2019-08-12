@@ -15,6 +15,8 @@ import { HTTPService } from '../httpservice.service';
 import { ShareComponent } from './share/share.component';
 import { RenameComponent } from './rename/rename.component';
 import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -41,7 +43,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
+  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private toastr: ToastrService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -209,11 +211,16 @@ export class DriveComponent implements OnInit {
     //console.log(formdata.get("path"));
     this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
       // 성공
+    }, error => {
+      if(error.error["code"] == "FolderAlreadyCreated"){
+        this.toastr.error('같은 이름이 존재합니다.')
+      }
     });
   }
   public go_parent_folder()
   {
     if(this.ParentFolder.length == 1){
+      this.toastr.info('상위 폴더가 없습니다.');
       return
     }
     else {
