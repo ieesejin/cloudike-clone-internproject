@@ -15,7 +15,7 @@ export class FileManagement
         this.read_waiting_queue = {};
     }
 
-    public static getItem(hs: HTTPService, path : string, func, onlyinfo = false)
+    public static getItem(hs: HTTPService, path : string, func = null, onlyinfo = false)
     {
         this.hs = hs;
 
@@ -29,7 +29,7 @@ export class FileManagement
         if (item != undefined)
         {
             // 로드한 적이 있으면 바로 성공 이벤트 실행 후 종료 
-            func(item);
+            if (func != null) func(item);
             return;
         }
         // 상위 폴더가 존재하지 않는 경우 바로 종료
@@ -63,7 +63,7 @@ export class FileManagement
         else
         {
             // 해당 아이템이 파일 형식일 경우, 또는 info만 요청하는 경우는 바로 성공 이벤트 실행
-            func(this_item);
+            if (func != null) func(this_item);
         }
     }
 
@@ -202,7 +202,7 @@ export class FileManagement
 
                 // 해당 URL에 등록된 이벤트를 모두 실행
                 FileManagement.read_waiting_queue[url].forEach(event => {
-                    event(Now);
+                    if (event != null) event(Now);
                 });
 
                 // 해당 URL 오브젝트 초기화

@@ -4,3 +4,15 @@
 <div class="item">기업 폴더</div>
 <div class="item">소유권 이전 대기</div>
 <div class="item">휴지통</div>
+<div class="item" matTooltip="123">
+        <div class="item_name">
+                즐겨 찾기
+        </div>
+</div>
+    <div *ngFor="let item of favoriteList" matTooltip="{{item.path}}" matTooltipPosition="right" (click)="itemClick(item.path)">
+    <div class="item">
+        <div [ngStyle]="{'padding-left': 16 + 'px'}" class="item_name">
+                {{item.name}}
+        </div>
+    </div>
+</div>

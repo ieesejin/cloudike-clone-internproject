@@ -15,6 +15,7 @@ import { HTTPService } from '../httpservice.service';
 import { ShareComponent } from './share/share.component';
 import { RenameComponent } from './rename/rename.component';
 import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
+import { ValueStorageService } from '../value-storage.service';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService) { 
+  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private valueStorage : ValueStorageService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {

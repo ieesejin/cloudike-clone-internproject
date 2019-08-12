@@ -4,6 +4,7 @@ import { DriveComponent } from '../../drive.component';
 import { FileManagement } from '../../FileManagement';
 import { Router, NavigationEnd } from '@angular/router';
 import { HTTPService } from 'src/app/httpservice.service';
+import { ValueStorageService } from 'src/app/value-storage.service';
 
 @Component({
   selector: 'app-folder-item',
@@ -23,7 +24,7 @@ export class FolderItemComponent implements OnInit {
     return DriveComponent.Now.path == this.url;
   }
 
-  constructor(private hs: HTTPService, private router: Router) { 
+  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
