@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { DragToSelectModule } from 'ngx-drag-to-select';
+import { DragToSelectModule } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
