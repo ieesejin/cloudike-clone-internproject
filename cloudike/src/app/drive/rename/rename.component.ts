@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/UserInfo';
 import { FileManagement } from '../FileManagement';
 import { HTTPService } from 'src/app/httpservice.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-rename',
@@ -20,7 +21,7 @@ export class RenameComponent implements OnInit {
   //b_name은 사용자가 이름을 변경하기 전의 이름, 확장자를 제외한다.
 
   constructor(private dialogRef: MatDialogRef<RenameComponent>,private router: Router,
-    private hs: HTTPService)
+    private hs: HTTPService, private toastr: ToastrService)
     {
       var index = this.path.indexOf('.');
       var f_name : string[] = this.path.split("/");
@@ -57,7 +58,17 @@ export class RenameComponent implements OnInit {
         console.log(element);
         console.log(name);
         this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
-        formdata, element + " 이름 변경").subscribe(data => { });
+        formdata, element + " 이름 변경").subscribe(data => { 
+          this.toastr.success('이름이 변경되었습니다.')
+        }, error => {
+          console.log(error.error);
+          if(error.error["code"] = "FileCantBeRenamed"){
+            this.toastr.error('이름을 변경할 수 없습니다.');
+          }
+          else{
+            this.toastr.error('에러가 발생하였습니다.');
+          }
+        });
       }
   
       else { //파일의 이름 변경
@@ -71,7 +82,17 @@ export class RenameComponent implements OnInit {
         console.log(element);
         console.log(name);
         this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
-        formdata, element + " 이름 변경").subscribe(data => { });
+        formdata, element + " 이름 변경").subscribe(data => { 
+          this.toastr.success('이름이 변경되었습니다.');
+        }, error => {
+          console.log(error.error);
+          if(error.error["code"] = "FileCantBeRenamed"){
+            this.toastr.error('이름을 변경할 수 없습니다.');
+          }
+          else{
+            this.toastr.error('에러가 발생하였습니다.');
+          }
+        });
       }
       this.dialogRef.close();
   

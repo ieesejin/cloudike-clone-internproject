@@ -16,6 +16,8 @@ import { ShareComponent } from './share/share.component';
 import { RenameComponent } from './rename/rename.component';
 import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
 import { ValueStorageService } from '../value-storage.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -44,7 +46,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private valueStorage : ValueStorageService) { 
+  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private valueStorage : ValueStorageService, private toastr : ToastrService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -211,12 +213,32 @@ export class DriveComponent implements OnInit {
     formdata.append("path", url + name);
     //console.log(formdata.get("path"));
     this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
+      
+      this.changing_old_name = name;
+      
+
+      
+      setTimeout(() => {
+        var change_name_box : HTMLInputElement = <HTMLInputElement>document.getElementById("namebox");
+        change_name_box.focus();
+
+          change_name_box.setSelectionRange(0, name.length);
+
+      }, 50);
+
+
+
       // 성공
+    }, error => {
+      if(error.error["code"] == "FolderAlreadyCreated"){
+        this.toastr.error('같은 이름이 존재합니다.')
+      }
     });
   }
   public go_parent_folder()
   {
     if(this.ParentFolder.length == 1){
+      this.toastr.info('상위 폴더가 없습니다.');
       return
     }
     else {

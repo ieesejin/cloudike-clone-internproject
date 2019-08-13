@@ -7,6 +7,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragToSelectModule } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BootComponent } from './boot/boot.component';
@@ -76,8 +77,12 @@ import 'hammerjs';
     MatDatepickerModule,
     MatFormFieldModule , MatNativeDateModule,
     MatMenuModule,
+    MatTooltipModule,
     DragToSelectModule.forRoot(),
-    MatTooltipModule
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-center'
+    })
   ],
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],

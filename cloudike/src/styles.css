@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/dist/css/bootstrap.css';
+@import '~ngx-toastr/toastr';
 
 
 @font-face {
@@ -29,6 +30,9 @@
          url('assets/font/nanum-gothic-v13-korean-700.svg#NanumGothic') format('svg'); /* Legacy iOS */
   }
 
+.toast-top-center{
+    top: 8%;
+}
 
 dts-select-container
 {
