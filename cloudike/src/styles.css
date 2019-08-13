@@ -229,6 +229,14 @@ mat-dialog-actions .cancle
         height: 50px;
         line-height: 50px;
     }
+    
+    i.icon.size60
+    {
+        width: 60px;
+        font-size: 60px;
+        height: 60px;
+        line-height: 60px;
+    }
     /* 아이콘 컨텐츠 설정*/
         i.icon.upload:before
         {

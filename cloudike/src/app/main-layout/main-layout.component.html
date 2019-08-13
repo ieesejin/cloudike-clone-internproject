@@ -1,4 +1,76 @@
+<mat-sidenav-container class="example-container" autosize w>
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" [ngClass]="{'extra_open': extra_open}">
+        <a [routerLink]="['/']" class="logo"><img src="/assets/img/blue_logo.png"></a>
+        <div class="min" (click)="extra_toggle()">
+            <span class="hamburger">
+                <b></b>
 
+                <b></b>
+
+                <b></b>
+            </span>
+        </div>
+        <div [ngStyle]="{'display': !extra_open ? 'none' : 'block'}">
+            <div class="tree">
+                <div #left></div>
+            </div>
+            <div class="info">
+                <div class="capacityBar">
+                    사용자 저장 용량
+                    <progress value={{storagePercent}} max='100'></progress>
+                </div>
+                <br>
+                <div class="storageInfo">
+                    {{storageSize}} 사용중&nbsp; | &nbsp;{{remainStorageSize}} 여유
+                </div>
+                <br>
+                <div class="homepageInfo">
+                    <a href="https://www.cloudike.co.kr/download" target="_blank">앱 다운로드</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.cloudike.co.kr/" target="_blank">Cloudike 홈페이지</a>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!extra_open" class="icon_box">
+
+            <div class="icon_div" matTooltip="내 Cloudike로 이동" matTooltipPosition="right">
+                <i class="icon size60 folder"></i>
+
+            </div>
+            <div class="icon_div" matTooltip="전체 공유 목록 보기" matTooltipPosition="right">
+                <i class="icon size60 link"></i>
+
+            </div>
+            <div class="icon_div" matTooltip="즐겨 찾기 목록 보기" matTooltipPosition="right">
+                <i class="icon size60 folder"></i>
+
+            </div>
+
+            <div class="icon_div" matTooltip="휴지통" matTooltipPosition="right">
+                <i class="icon size60 delete"></i>
+
+            </div>
+
+            <div class="icon_div" matTooltip="클라우다이크 홈페이지로 이동" matTooltipPosition="right">
+                <i class="icon size60 folder"></i>
+
+            </div>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <header class="bar">
+            <div class="top-component">
+                <div #top></div>
+            </div>
+        </header>
+
+
+        <section class="content">
+            <div #main></div>
+        </section>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<!---
 <header class="bar">
     <a [routerLink]="['/']" class="logo"><img src="/assets/img/blue_logo.png"></a>
     <div class="top-component">        
@@ -46,3 +118,4 @@
     <progress class="capacityBar" value={{storagePercent}} max='100'></progress>
     <div>{{storageSize}} 사용중 | {{remainStorageSize}} 여유</div> 
 </footer>
+-->

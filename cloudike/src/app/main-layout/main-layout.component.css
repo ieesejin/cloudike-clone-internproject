@@ -1,3 +1,21 @@
+mat-sidenav-container
+{
+    height: 100%;
+}
+mat-sidenav { 
+    box-sizing: content-box;
+    width: 90px;
+    transition:width 0.25s;
+    
+}
+mat-sidenav.extra_open
+{
+    width:250px;
+}
+
+
+
+
 .outline
 {
     border: 2px solid black;
@@ -8,21 +26,14 @@ header
     height: 90px;
     background:rgb(250,250,250);
     display: block;
-     
+    position: fixed;
 }
-header a.logo
+mat-sidenav a.logo
 {
-    display: inline-block;
+    display: block;
     width: 250px;
     height: 90px;
-    float: left;
-}
-header a.logo img
-{
-    display: inline-block;
-    width: 250px;
-    height: 90px;
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 header div.top-component
@@ -50,18 +61,14 @@ header div.option
 {
     height: calc(100% - 100px);  
 }
-nav
+mat-sidenav
 {
-    display: inline-block;
-    width: 250px;
     height: 100%;
     background: rgb(64, 69, 73);
-    flex-direction: column;
-    box-sizing: border-box;
-    float: left;
-    position: relative;
+    border: none;
+
 }
-nav .min
+mat-sidenav .min
 {
      background: rgb(102, 105, 109);
      width: 100%;
@@ -74,7 +81,7 @@ nav .min
      
      text-align: center;
 }
-nav .tree
+mat-sidenav .tree
 {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
     max-height: calc(100% - 260px);
@@ -83,7 +90,7 @@ nav .tree
     overflow-x: hidden;
 }
 
-nav .info
+mat-sidenav .info
 {
     position: absolute;
     bottom: 10px;
@@ -93,23 +100,16 @@ nav .info
 }
 
 section.content
-{    
-    width: calc(100% - 250px);
-    height: 100%;
+{   
+    margin-top:90px;
+    width: 100%;
+    height: calc(100% - 90px);
     display: inline-block;
     box-sizing: border-box;
 }
 
-nav .logo
-{
-    display: inline-block;
-    width: 184px;
-    height: 64px;
-    padding: 10px 20px 20px 10px;
-    box-sizing: content-box;
-}
 
-nav .homepageInfo, .storageInfo, .capacityBar
+mat-sidenav .homepageInfo, .storageInfo, .capacityBar
 {
     text-align: center;
     vertical-align: middle;
@@ -125,57 +125,36 @@ footer
     display: none;
 }
 
-@media ( max-width: 1050px ) {
-    header a.logo
-    {
-        display: none;
-    }
-    header div.top-component
-    {
-        width: calc(100% - 150px);
-    }
-    nav
-    {
-        width: 0;
-        height: auto;
-        position: absolute;
-        padding: 0px;
-        border-right: 0px;
-    }
-    section.content
-    {    
-        width: 100%;
-        height: none;
-    }
-    .main
-    {
-        height: calc(100% - 130px);
-        overflow-y: auto;
-    }
-    nav .info
-    {
-        display: none;
-    }
-    footer
-    {
-        width: 100%;
-        position: absolute;
-        bottom: 0px;
-        background: #f9f9f9;
-        border-top: #ddd 1px solid;
-        padding: 5px 10px;
-        display: flex;
-    }
-
-    footer progress
-    {
-        margin-top:3px;
-        flex: 1;
-    }
-    footer div
-    {
-        padding-left: 10px;
-        box-sizing: border-box;
-    }
+.icon_box
+{
+    padding-top:10px;
+}
+.icon_div
+{
+    margin-bottom: 10px;
+    display: block;
+    color:rgb(198, 204, 212);
     
+    text-align: center;
+}
+.icon_div .folder
+{
+    left:0px;
+}
+
+.hamburger
+{
+    display: inline-block;
+    width: 25px;
+    height: 30px;
+    padding-top: 10px;
+}
+.hamburger b
+{
+    display: block;
+    background: white;
+    height: 2px;
+    width: 100%;
+    
+    margin-bottom: 5px;
 }

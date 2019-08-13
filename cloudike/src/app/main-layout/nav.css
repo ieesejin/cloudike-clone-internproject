@@ -1,4 +1,4 @@
-:host ::ng-deep nav .item
+:host ::ng-deep mat-sidenav .item
 {
     transition: all ease 0.225s;
     color: rgb(255,255,255);
@@ -12,7 +12,7 @@
     user-select: none;
 }
 
-:host ::ng-deep nav .item_name
+:host ::ng-deep mat-sidenav .item_name
 {
     width:100%;
     overflow: hidden; 
@@ -20,7 +20,7 @@
     white-space: nowrap; 
 }
 
-:host ::ng-deep nav .hidebutton
+:host ::ng-deep mat-sidenav .hidebutton
 {
     position: relative;
     top: -20px;
@@ -34,20 +34,20 @@
     cursor:  pointer;
 }
 
-:host ::ng-deep nav .item.on
+:host ::ng-deep mat-sidenav .item.on
 {
     color:rgb(132, 200, 255);
 }
 
-:host ::ng-deep nav .item:hover
+:host ::ng-deep mat-sidenav .item:hover
 {
     color:rgb(200, 200, 200);
 }
-:host ::ng-deep nav .item.on:hover
+:host ::ng-deep mat-sidenav .item.on:hover
 {
     color:rgb(158, 211, 255);
 }
-:host ::ng-deep nav .item:focus
+:host ::ng-deep mat-sidenav .item:focus
 {
     background: rgb(255, 229, 150);
     outline: none;

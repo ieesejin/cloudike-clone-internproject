@@ -17,6 +17,7 @@ import { RenameComponent } from './rename/rename.component';
 import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
 import { ValueStorageService } from '../value-storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { MainLayoutComponent } from '../main-layout/main-layout.component';
 
 
 
@@ -54,6 +55,10 @@ export class DriveComponent implements OnInit {
           this.Update();
       }
   });
+
+    MainLayoutComponent.UpdatePosition.subscribe(()=>{
+      this.selectContainer.update();
+    });
   }
 
   ngOnInit() {
