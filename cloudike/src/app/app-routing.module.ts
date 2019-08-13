@@ -41,6 +41,16 @@ const routes: Routes = [
       path:"**", component:MainLayoutComponent // 여기의 컴포넌트는 route되지 않으므로 의미 없음.
   }]}, 
 
+  {
+    path: 'trash',  
+    component: MainLayoutComponent, 
+    data:{
+      top:HeaderDriveComponent, // 상단에 표시될 아이콘 컴포넌트
+      left:NavDriveComponent, // 좌측에 표시될 메뉴 컴포넌트
+      main:DriveComponent // 메인 컨텐츠
+    }
+  },
+
   { 
     path: 'profile',  
     component: MainLayoutComponent, 

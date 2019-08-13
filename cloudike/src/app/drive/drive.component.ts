@@ -67,6 +67,15 @@ export class DriveComponent implements OnInit {
 
   private Update()
   {
+    if (this.router.url.indexOf("/trash") == 0)
+    {
+
+      this.hs.get("https://api.cloudike.kr/api/1/trash/?limit=500&offset=0&order_by=name", "휴지통 불러오기").subscribe(data => {
+                // 성공한경우 해당 파일을 만들고 캐시에 저장
+         DriveComponent.Now = new FileItem(data);
+         console.log( DriveComponent.Now);
+    })
+  }
     if (this.router.url.indexOf("/drive") != 0) return;
     let url = decodeURI(this.router.url.substring("/drive".length));
 
