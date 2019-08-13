@@ -33,6 +33,10 @@ export class FileItem
         
         this.icon = value["icon"];
         this.path = value["path"];
+        if (value["restore_path"] != undefined)
+        {
+            this.path = value['restore_path'];
+        }
         this.mime_type = value["mime_type"];
         this.type = this.icon;
         this.isShared = value["shared"];
@@ -78,7 +82,6 @@ export class FileItem
                 value["content"].forEach( (subvalue) => {
                    
                     let item = new FileItem(subvalue);
-                    console.log(item);
                     this.content[item.name] = item;
                 }); 
             }
