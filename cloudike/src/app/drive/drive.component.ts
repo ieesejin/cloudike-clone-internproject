@@ -40,6 +40,8 @@ export class DriveComponent implements OnInit {
 
   public changing_old_name : string = null;
 
+  public mode = "";
+
   get nowfile():FileItem {
     return DriveComponent.Now;
   }
@@ -67,7 +69,10 @@ export class DriveComponent implements OnInit {
 
   private Update()
   {
-    if (this.router.url.indexOf("/trash") == 0)
+    if (this.router.url.indexOf("/trash") == 0) this.mode = "trash";
+    if (this.router.url.indexOf("/drive") == 0) this.mode = "drive";
+
+    if (this.mode == "trash")
     {
 
       this.hs.get("https://api.cloudike.kr/api/1/trash/?limit=500&offset=0&order_by=name", "휴지통 불러오기").subscribe(data => {
@@ -76,7 +81,7 @@ export class DriveComponent implements OnInit {
          this.ParentFolder = [{name:"휴지통", path:"/trash"}];
     })
   }
-    if (this.router.url.indexOf("/drive") != 0) return;
+    if (this.mode != "drive") return;
     let url = decodeURI(this.router.url.substring("/drive".length));
 
     FileManagement.getItem(this.hs, url,(item)=>{

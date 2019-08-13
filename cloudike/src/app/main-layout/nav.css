@@ -49,6 +49,5 @@
 }
 :host ::ng-deep mat-sidenav .item:focus
 {
-    background: rgb(255, 229, 150);
     outline: none;
 }
