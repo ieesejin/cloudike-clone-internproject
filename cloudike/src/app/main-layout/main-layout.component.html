@@ -63,6 +63,15 @@
                 <div #top></div>
             </div>
         </header>
+                    <div class="option">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{user_name}} 님</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem [routerLink]="['/profile']">프로필 및 설정</button>
+                        <button ngbDropdownItem [routerLink]="['/logout']">로그아웃</button>
+                    </div>
+                </div>
+            </div>
 
 
         <section class="content">

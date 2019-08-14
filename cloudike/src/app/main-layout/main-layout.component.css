@@ -45,12 +45,13 @@ header div.top-component
     overflow-y: hidden;
     white-space: nowrap;  /* 우측 스크롤을 하기 위해 하위 컨텐츠 내용 조정 */
 }
-header div.option
+div.option
 {
-    position: absolute;
+    position: fixed;
+    top: 30px;
     right: 25px;
-    top: 20px;
     display: inline-block;
+    z-index: 1;
 }
 .btn
 {
@@ -106,6 +107,7 @@ section.content
     height: calc(100% - 90px);
     display: inline-block;
     box-sizing: border-box;
+    z-index: -1;
 }
 
 
