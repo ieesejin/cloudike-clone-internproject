@@ -6,6 +6,7 @@ import { UserInfo } from './UserInfo';
 import { FileManagement } from './drive/FileManagement';
 import { FileItem } from './drive/FileItem';
 import { HTTPService } from './httpservice.service';
+import { ValueStorageService } from './value-storage.service';
 
 
 
@@ -16,7 +17,7 @@ export class RealtimeService {
 
   private static _messages: Subject<JSON[]>;
   private static wsService: WebsocketService = null;
-  constructor(private hs: HTTPService) {
+  constructor(private hs: HTTPService, private valueStorage : ValueStorageService) {
     this.CreateSocket();
   }
 
@@ -87,6 +88,7 @@ export class RealtimeService {
           parent_path,
           (item) => {
               item["content"][name] = new FileItem(data);
+              this.valueStorage.reset_cache();
           }
         );
         break;
@@ -102,6 +104,7 @@ export class RealtimeService {
       case 'file_deleted':
       case 'folder_deleted':
           FileManagement.removeItem(data["path"]);
+          this.valueStorage.reset_cache();
           break;
 
       case 'file_renamed':
@@ -110,6 +113,7 @@ export class RealtimeService {
         var old_path = parent_path + '/' + data["oldname"];
         
         FileManagement.rename(old_path, data["path"]);
+        this.valueStorage.reset_cache();
         break;
       case 'folder_moved':
       case 'file_moved':

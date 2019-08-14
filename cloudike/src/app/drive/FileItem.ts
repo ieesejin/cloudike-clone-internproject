@@ -33,6 +33,10 @@ export class FileItem
         
         this.icon = value["icon"];
         this.path = value["path"];
+        if (value["restore_path"] != undefined)
+        {
+            this.path = value['restore_path'];
+        }
         this.mime_type = value["mime_type"];
         this.type = this.icon;
         this.isShared = value["shared"];
@@ -76,6 +80,7 @@ export class FileItem
             {
                 // => 을 functuin(subvalue) { 으로  대체할경우 this 오류 발생
                 value["content"].forEach( (subvalue) => {
+                   
                     let item = new FileItem(subvalue);
                     this.content[item.name] = item;
                 }); 
@@ -87,7 +92,11 @@ export class FileItem
         {
             this.name = "Cloudike";
         }
-        else
+        else if (value['name'] != undefined)
+        {
+            this.name = value['name'];
+        }
+        else if (this.path != undefined)
         {
             let temp = this.path.split("/");
             this.name = temp[temp.length - 1];
@@ -118,8 +127,8 @@ export class FileItem
         }
         else
         {
-            this.bytesString = ConvertFormat.byteToString(this.bytes);
-            
+            if (this.bytes != null)
+                this.bytesString = ConvertFormat.byteToString(this.bytes);
             this.isfolder = false;
         }
 

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatFormFieldModule } from '@angular/material';
+import { MatDialogModule, MatFormFieldModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatMenuModule } from '@angular/material/menu';
@@ -15,6 +15,8 @@ import { HttpClientModule } from  '@angular/common/http';
 import {NgxUploadModule} from '@wkoza/ngx-upload/src';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
 
 import { HeaderDriveComponent } from './drive/header-drive/header-drive.component';
 import { NavDriveComponent } from './drive/nav-drive/nav-drive.component';
@@ -82,7 +84,10 @@ import 'hammerjs';
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-center'
-    })
+    }),
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],

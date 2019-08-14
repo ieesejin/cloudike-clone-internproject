@@ -23,7 +23,7 @@
       <th width="60px">공유</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="basicMenu" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
+      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="mode=='trash' ? trashMenu : basicMenu" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
@@ -44,9 +44,10 @@
             <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
-          <span class="favorite on" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') == 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', null)">★ </span>
-          <span class="favorite off" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') != 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', 'true')">★ </span>
-
+          <span *ngIf="mode == 'drive'">
+            <span class="favorite on" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') == 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', null)">★ </span>
+            <span class="favorite off" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') != 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', 'true')">★ </span>
+          </span>
           <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
           <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)"/>
 
@@ -108,5 +109,14 @@
   </ng-template>
   <ng-template contextMenuItem (execute)="go_parent_folder()">
     상위 폴더
+  </ng-template>
+</context-menu>
+<context-menu #trashMenu [useBootstrap4]="true">
+  <ng-template contextMenuItem (execute)="create('새 폴더')">
+    <i class="icon folder size30"></i>
+    복구하기
+  </ng-template>
+  <ng-template contextMenuItem (execute)="go_parent_folder()">
+    완전 삭제
   </ng-template>
 </context-menu>
