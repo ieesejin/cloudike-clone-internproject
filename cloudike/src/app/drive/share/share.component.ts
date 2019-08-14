@@ -7,6 +7,8 @@ import { FileItem } from '../FileItem';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CloudikeApiService, CloudLinkOption } from 'src/app/service/CloudikeAPI/cloudike-api.service';
+import { CloudikeApiResult } from 'src/app/service/CloudikeAPI/cloudike-api.result';
 
 @Component({
   selector: 'app-share',
@@ -14,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./share.component.css']
 })
 export class ShareComponent implements OnInit {
-  public item;
+  public item: FileItem;
 
   public ischanged = false;
 
@@ -26,7 +28,7 @@ export class ShareComponent implements OnInit {
 
   public setting_boolean = {};
 
-  constructor(private dialogRef: MatDialogRef<ShareComponent>, private hs: HTTPService, private toastr: ToastrService) {
+  constructor(private dialogRef: MatDialogRef<ShareComponent>, private hs: HTTPService, private api: CloudikeApiService) {
 
   }
 
@@ -44,16 +46,12 @@ export class ShareComponent implements OnInit {
 
       if (item.public_hash == null)
         this.create();
-      else {
-        this.link = 'https://' + UserInfo.domain + '.cloudike.kr/public/' + item.public_hash;
+      else
+        this.api.GetSharedLinkOption(this.item).subscribe((data) => {
+          this.link = 'https://' + UserInfo.domain + '.cloudike.kr/public/' + item.public_hash;
+          this.getoption(data);
+        });
 
-        this.hs.get("https://api.cloudike.kr/api/1/links/info/" + item.public_hash + '/', "링크 옵션 불러오기").subscribe
-          (
-            data => {
-              this.getoption(data);
-            }
-          )
-      }
     }, true);
   }
 
@@ -66,6 +64,9 @@ export class ShareComponent implements OnInit {
 
     this.download_count = data["download_count"];
     this.download_max = data["download_max"];
+    if (this.download_max != 0) {
+      this.setting_boolean["download_max"] = true;
+    }
     if (data["password"] == true) {
       this.setting_boolean["password"] = true;
     }
@@ -79,40 +80,24 @@ export class ShareComponent implements OnInit {
     }
   }
 
-  public create() {
-    this.link = "새로운 링크를 만드는 중입니다.";
-    var formdata = new FormData();
-    formdata.set("path", this.item.path);
-
-    if (this.setting_boolean["only_upload"] != null)
-      formdata.set("upload_folder", this.setting_boolean["only_upload"]);
-
-    if (this.setting_boolean["password"] == true)
-      formdata.set("password", this.password);
-
-    if (this.setting_boolean["date"] == true) {
-      var ttl: number = this.date.value.getTime() - new Date().getTime();
-      formdata.set("ttl", (ttl / 1000 + 60).toFixed(0));
-    }
-
-    if (this.setting_boolean["download_max"] == true)
-      formdata.set("download_max", this.download_max.toString());
-
-    this.hs.post("https://api.cloudike.kr/api/1/links/create/", formdata, "공유링크 생성").subscribe(data => {
-      this.getoption(data);
-      this.toastr.success('공유 링크가 생성되었습니다.');
-    });
+  private setoption(): CloudLinkOption {
+    return {
+      only_upload: this.setting_boolean["only_upload"] == true ? true : null,
+      date: this.setting_boolean["date"] == true ? this.date.value : null,
+      password: this.setting_boolean["password"] == true ? this.password : null,
+      download_max: this.setting_boolean["download_max"] == true ? this.download_max : null
+    };
   }
 
+  public create() {
+    this.link = "새로운 링크를 만드는 중입니다.";
+    this.api.CreateSharedLink(this.item, this.setoption()).subscribe(data => this.getoption(data));
+  }
 
-  public delete(): Subject<any> {
-    var formdata = new FormData();
-    formdata.set("path", this.item.path);
-
-    var subject = this.hs.post("https://api.cloudike.kr/api/1/links/delete/", formdata, "공유링크 삭제");
-    this.link = '링크가 삭제되었습니다.';
-    this.toastr.success('공유 링크가 삭제되었습니다.');
-    return subject;
+  public delete() {
+    this.api.RemoveSharedLink(this.item).subscribe(
+      () => this.link = '링크가 삭제되었습니다.'
+    );
   }
 
   public copy(val: string) {
@@ -132,10 +117,9 @@ export class ShareComponent implements OnInit {
   }
 
   public apply() {
-    this.delete().subscribe(
-      data => {
-        this.create();
-      }
-    )
+    this.api.ChangeSharedLinkOption(this.item, this.setoption()).subscribe(
+      data => this.getoption(data),
+      error => this.link = '링크가 삭제되었습니다.'
+    );
   }
 }

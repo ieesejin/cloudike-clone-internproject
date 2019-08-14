@@ -4,9 +4,11 @@ import { FileItem } from '../../drive/FileItem';
 import { Subject, Subscription, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CloudikeApiReturn as CloudikeApiReturn } from './cloudike-api.result';
+import { CloudikeApiResult as CloudikeApiResult } from './cloudike-api.result';
 import { HttpClient } from '@angular/common/http';
 import { timeout, catchError } from 'rxjs/operators';
+
+export type CloudLinkOption = { date?: Date, only_upload?: boolean, password?: string, download_max?: number };
 
 @Injectable({
   providedIn: 'root'
@@ -60,17 +62,13 @@ export class CloudikeApiService {
       return null;
   }
 
-  public EmailLogin(email: string, password: string): CloudikeApiReturn {
+  public EmailLogin(email: string, password: string): CloudikeApiResult {
 
     var formdata = new FormData();
     formdata.append("oauth_callback", "https://cloudike.kr:443/oauth_verifier/");
     formdata.append("client_id", "dima_stable_frontend");
 
-    var subject = new Subject<any>(); // 임의적인 구독 이벤트
-    var result = new CloudikeApiReturn(subject);
-    var return_error = <any>new Object(); // 오류 발생시 code를 적을 오브젝트
-    return_error.error = [];
-    return_error.error['code'] = 'error';
+    var result = new CloudikeApiResult();
 
     // 인증 URL 요청
     this.http.post("https://api.cloudike.kr/api/1/accounts/oauth_url/", formdata).subscribe(data => {
@@ -83,8 +81,7 @@ export class CloudikeApiService {
           error => {
             // 타임 아웃으로 인한 에러일 경우
             if (error.url == null) {
-              return_error.error['code'] = 'TIMEOUT';
-              subject.error(return_error);
+              result.error('TIMEOUT');
               return;
             }
             try {
@@ -92,31 +89,28 @@ export class CloudikeApiService {
               let oauth_verifier = params.get("oauth_verifier");
               let oauth_token = params.get("oauth_token");
               if (oauth_verifier == null) {
-                subject.error(error);
+                result.error(error);
               }
               else {
                 var last_body = new FormData();
                 last_body.append('oauth_token', oauth_token);
                 last_body.append('oauth_verifier', oauth_verifier);
                 this.http.post("https://api.cloudike.kr/api/1/accounts/oauth_confirm/", last_body).subscribe(data3 => {
-                  subject.next(data3);
+                  result.next(data3);
                 }, () => {
-                  return_error.error['code'] = 'CanNotInfo';
-                  subject.error(return_error);
+                  result.error('CanNotInfo');
                 }
                 );
               }
             } catch (error) {
-              return_error.error['code'] = 'URLParsingError';
-              subject.error(return_error);
+              result.error('URLParsingError');
               return;
             }
 
           });
     }, (error) => // 인증 URL을 발급받지 못한경우
       {
-        return_error.error['code'] = error.name;
-        subject.error(return_error);
+        result.error(error.name);
       });
 
     result.AddMessage(this.toastr, "로그인 성공",
@@ -133,12 +127,12 @@ export class CloudikeApiService {
     return result;
   }
 
-  public CreateFolder(path: string, name?: string): CloudikeApiReturn {
+  public CreateFolder(path: string, name?: string): CloudikeApiResult {
     path = this.combine_path_folder(path, name);
 
     var formdata = new FormData();
     formdata.append("path", path);
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/", formdata, this.task_name("폴더 생성", path))
     );
     result.AddMessage(this.toastr, "폴더가 생성되었습니다.",
@@ -147,14 +141,14 @@ export class CloudikeApiService {
     return result;
   }
 
-  public Rename(item_or_path: string | FileItem, new_name: string): CloudikeApiReturn {
+  public Rename(item_or_path: string | FileItem, new_name: string): CloudikeApiResult {
     var path = this.get_path_from_value(item_or_path);
 
     path = this.CleanPath(path);
     var formdata = new FormData();
     formdata.append("path", path);
     formdata.set("newname", new_name);
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/", formdata, this.task_name("이름 변경", path))
     );
     result.AddMessage(this.toastr, "이름이 변경되었습니다.",
@@ -162,31 +156,31 @@ export class CloudikeApiService {
     );
     return result;
   }
-  public Delete(item_or_path: string | FileItem): CloudikeApiReturn {
+  public Delete(item_or_path: string | FileItem): CloudikeApiResult {
     var path = this.get_path_from_value(item_or_path);
     var formdata = new FormData();
     formdata.append("path", path);
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/", formdata, this.task_name("삭제", path))
     );
     result.AddMessage(this.toastr, "삭제가 완료되었습니다.");
     return result;
   }
 
-  public MultiDelete(paths: string[]): CloudikeApiReturn {
+  public MultiDelete(paths: string[]): CloudikeApiResult {
     var formdata = new FormData();
     paths.forEach(path => {
       formdata.append("path", this.CleanPath(path));
     });
 
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/", formdata, this.task_name("대량 삭제"))
     );
     result.AddMessage(this.toastr, paths.length + "건의 삭제가 완료되었습니다.");
     return result;
   }
 
-  public Move(from_item_or_path: string | FileItem, to_item_or_path: string | FileItem): CloudikeApiReturn {
+  public Move(from_item_or_path: string | FileItem, to_item_or_path: string | FileItem): CloudikeApiResult {
 
     var from = this.get_path_from_value(from_item_or_path);
     var to = this.get_path_from_value(to_item_or_path);
@@ -194,13 +188,14 @@ export class CloudikeApiService {
     var formdata = new FormData();
     formdata.set("from_path", from);
     formdata.set("to_path", to);
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, this.task_name("파일 이동", from))
     );
     result.AddMessage(this.toastr, "이동이 완료되었습니다.");
     return result;
   }
-  public Copy(from_item_or_path: string | FileItem, to_item_or_path: string | FileItem): CloudikeApiReturn {
+
+  public Copy(from_item_or_path: string | FileItem, to_item_or_path: string | FileItem): CloudikeApiResult {
 
     var from = this.get_path_from_value(from_item_or_path);
     var to = this.get_path_from_value(to_item_or_path);
@@ -208,10 +203,82 @@ export class CloudikeApiService {
     var formdata = new FormData();
     formdata.set("from_path", from);
     formdata.set("to_path", to);
-    var result = new CloudikeApiReturn(
+    var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/copy/", formdata, this.task_name("파일 복사", from))
     );
     result.AddMessage(this.toastr, "복사가 완료되었습니다.");
+    return result;
+  }
+
+  public GetSharedLinkOption(item: FileItem) {
+    var result = new CloudikeApiResult(
+      this.hs.get("https://api.cloudike.kr/api/1/links/info/" + item.public_hash + '/', this.task_name("링크 옵션 읽어오기", item.name))
+    );
+    result.AddMessage(this.toastr, "공유 링크 설정을 읽었습니다.");
+    return result;
+  }
+
+  public CreateSharedLink(item_or_path: string | FileItem, option?: CloudLinkOption) {
+    var path = this.get_path_from_value(item_or_path);
+    var formdata = new FormData();
+    formdata.set("path", path);
+
+    if (option.only_upload != null)
+      formdata.set("upload_folder", 'true');
+
+    if (option.password != null)
+      formdata.set("password", option.password);
+
+    if (option.date != null) {
+      var ttl: number = option.date.getTime() - new Date().getTime();
+      formdata.set("ttl", (ttl / 1000 + 60).toFixed(0));
+    }
+
+    if (option.download_max != null)
+      formdata.set("download_max", option.download_max.toString());
+
+    var result = new CloudikeApiResult(
+      this.hs.post("https://api.cloudike.kr/api/1/links/create/", formdata, this.task_name("공유링크 생성", path))
+    );
+    result.AddMessage(this.toastr, "공유 링크가 생성되었습니다");
+    return result;
+  }
+
+  public RemoveSharedLink(item_or_path: string | FileItem): CloudikeApiResult {
+    var path = this.get_path_from_value(item_or_path);
+
+    var formdata = new FormData();
+    formdata.set("path", path);
+
+    var result = new CloudikeApiResult(
+      this.hs.post("https://api.cloudike.kr/api/1/links/delete/", formdata, this.task_name("공유링크 삭제", path))
+    );
+    result.AddMessage(this.toastr, "공유 링크가 삭제되었습니다");
+    return result;
+  }
+  public ChangeSharedLinkOption(item_or_path: string | FileItem, option?: CloudLinkOption) {
+    var result = new CloudikeApiResult();
+
+    var path = this.get_path_from_value(item_or_path);
+
+    var delete_event = this.RemoveSharedLink(path);
+    delete_event.unsubscribe();
+    delete_event.subscribe((data) => {
+      var create_event = this.CreateSharedLink(path, option);
+      create_event.unsubscribe();
+      create_event.subscribe((data) => {
+        result.next(data);
+      }, (error) => {
+        result.error(error);
+      });
+
+    }, (error) => {
+      result.error("error");
+    });
+    result.AddMessage(this.toastr, "공유 링크 옵션이 변경되었습니다", {
+      "InvalidParameters": "파라미터가 올바르지 않습니다. (링크 삭제됨)"
+    }
+    );
     return result;
   }
 

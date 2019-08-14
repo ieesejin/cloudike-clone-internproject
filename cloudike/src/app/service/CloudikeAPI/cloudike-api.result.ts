@@ -4,14 +4,18 @@ import { FileItem } from '../../drive/FileItem';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
-export class CloudikeApiReturn {
+export class CloudikeApiResult {
   private subject: Subject<any>;
   private Subscriptions = [];
 
-  constructor(subject: Subject<any>) {
-    this.subject = subject;
+  constructor(subject?: Subject<any>) {
+    if (subject == null)
+      this.subject = new Subject<any>();
+    else
+      this.subject = subject;
   }
   private add(value: Subscription): Subscription {
     this.Subscriptions.push(value);
@@ -45,4 +49,21 @@ export class CloudikeApiReturn {
     );
   }
 
+  public next(data?)
+  {
+    this.subject.next(data);
+  }
+
+  public error(code)
+  {
+    if (code instanceof HttpErrorResponse)
+      this.subject.error(code);
+    else
+    {
+      var return_error = <any>new Object(); // 오류 발생시 code를 적을 오브젝트
+      return_error.error = [];
+      return_error.error['code'] = code;
+      this.subject.error(return_error);
+    }
+  }
 }
