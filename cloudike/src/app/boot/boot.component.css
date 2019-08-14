@@ -50,6 +50,7 @@ ngb-progressbar
     width: 100%;
     height: 2px;
     position: fixed;
+    z-index: 100;
 }
 
 :host ::ng-deep ngb-progressbar.s .bg-info
