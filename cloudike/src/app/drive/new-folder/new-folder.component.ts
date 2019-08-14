@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserInfo } from 'src/app/UserInfo';
 import { HTTPService } from 'src/app/httpservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { CloudikeApiService } from 'src/app/cloudike-api.service';
 
 @Component({
   selector: 'app-new-folder',
@@ -13,31 +14,13 @@ import { ToastrService } from 'ngx-toastr';
 export class NewFolderComponent implements OnInit {
 
   inputName: string = "";
-  constructor(private dialogRef: MatDialogRef<NewFolderComponent>, private router: Router, private hs: HTTPService, private toastr: ToastrService) { }
+  constructor(private dialogRef: MatDialogRef<NewFolderComponent>, private api : CloudikeApiService) { }
 
   ngOnInit() {
   }
 
   public create(name: string) {
-    var formdata = new FormData();
-    var url = decodeURI(this.router.url).substring("/drive".length);
-
-    if (url == "" || url[0] != '/') url = '/' + url;
-    if (url[url.length - 1] != '/') url = url + '/';
-
-    formdata.append("path", url + name);
-    //console.log(formdata.get("path"));
-    this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/", formdata, url + name + " 폴더 생성").subscribe(data => {
-      this.toastr.success('폴더가 생성되었습니다.')
-      // 성공
-    }, error => {
-      if (error.error["code"] == 'FolderAlreadyCreated') {
-        this.toastr.error('같은 이름이 존재합니다.')
-      }
-      else {
-        this.toastr.error('에러가 발생하였습니다.')
-      }
-    });
+    this.api.CreateFolder(this.api.GetURLPath(), name);
     this.dialogRef.close();
   }
 }

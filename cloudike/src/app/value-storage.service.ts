@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HTTPService } from './httpservice.service';
 import { FileManagement } from './drive/FileManagement';
 import { FileItem } from './drive/FileItem';
+import { CloudikeApiService } from './cloudike-api.service';
 
 type PredicateFn<T> = (item: T) => boolean;
 type PipeFn<T> = (item: T) => any;
@@ -17,14 +18,14 @@ export class ValueStorageService {
   }
   private dataFolder = ".values";
 
-  constructor(private hs : HTTPService) { 
+  constructor(private hs : HTTPService, private api : CloudikeApiService) { 
     
     FileManagement.getItem(this.hs, "/", (item: FileItem) => {
       this.reset_cache();
       if (item.content[this.dataFolder] == null) {
         var formdata = new FormData();
         formdata.append("path", this.dataFolderPath);
-        this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/", formdata, "옵션 세팅용 폴더 생성").subscribe(data => {
+        this.api.CreateFolder(this.dataFolderPath).subscribe(data => {
           // 성공
           FileManagement.getItem(this.hs, this.dataFolderPath);
         }
@@ -92,21 +93,12 @@ export class ValueStorageService {
     (item: FileItem) => {
 
       var data = this.GetToString(key);
-      var formdata = new FormData();
+      // 기존에 폴더가 있으면 이름 변경, 없으면 만들기
       if (data != null)
-      {
-        formdata.append("path", this.dataFolderPath + "/" + this.encoding(key,data));
-        formdata.set("newname",  this.encoding(key,value));
-        this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
-        formdata, " 이름 변경").subscribe(data => { });
-      }
+        this.api.Rename(this.dataFolderPath + "/" + this.encoding(key,data),this.encoding(key,value)).unsubscribe();
       else
-      {
-        formdata.append("path","/.values/" + this.encoding(key,value));
-        this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, "옵션 설정중").subscribe(data => {
-          // 성공
-        });
-      }
+        this.api.CreateFolder(this.dataFolderPath, this.encoding(key,value)).unsubscribe();
+
     });
   }
 }

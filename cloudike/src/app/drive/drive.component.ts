@@ -18,6 +18,7 @@ import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-selec
 import { ValueStorageService } from '../value-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
+import { CloudikeApiService } from '../cloudike-api.service';
 
 
 
@@ -49,7 +50,7 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private valueStorage : ValueStorageService, private toastr : ToastrService) { 
+  constructor(private router : Router, public dialog: MatDialog, private hs : HTTPService, private valueStorage : ValueStorageService, private toastr : ToastrService, private api : CloudikeApiService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -179,13 +180,8 @@ export class DriveComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     var old_path = this.getItemValue(event.container,event.previousIndex);
     var new_path = this.getItemValue(event.container,event.currentIndex);
-    var formdata = new FormData();
-    formdata.set("from_path",old_path);
-    formdata.set("to_path",new_path);
-    this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, "파일 이동").subscribe(data => {
-      console.log("성공");
-      // 성공
-    });
+    
+    this.api.Move(old_path, new_path);
   }
   public isOneSelect = (item : FileItem) :  boolean  => {
     return !this.selectItem.includes(item.path) ||  this.selectItem.length <= 1;
@@ -223,20 +219,10 @@ export class DriveComponent implements OnInit {
   }
   public create(name : string)
   {
-    var formdata = new FormData();
-    var url = decodeURI(this.router.url).substring("/drive".length);
+    this.api.CreateFolder(this.api.GetURLPath(), name).subscribe(data => {
 
-    if (url == "" || url[0] != '/') url = '/' + url;
-    if (url[url.length-1] != '/') url =  url + '/';
-
-    formdata.append("path", url + name);
-    //console.log(formdata.get("path"));
-    this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, url + name + " 폴더 생성").subscribe(data => {
-      
       this.changing_old_name = name;
-      
 
-      
       setTimeout(() => {
         var change_name_box : HTMLInputElement = <HTMLInputElement>document.getElementById("namebox");
         change_name_box.focus();
@@ -244,14 +230,6 @@ export class DriveComponent implements OnInit {
           change_name_box.setSelectionRange(0, name.length);
 
       }, 50);
-
-
-
-      // 성공
-    }, error => {
-      if(error.error["code"] == "FolderAlreadyCreated"){
-        this.toastr.error('같은 이름이 존재합니다.')
-      }
     });
   }
   public go_parent_folder()
@@ -271,12 +249,7 @@ export class DriveComponent implements OnInit {
     this.changing_old_name = null;
     if (item.name != event.target.value)
     {
-      var formdata = new FormData();
-      formdata.set("path", item.path);
-      formdata.set("newname", event.target.value);
-
-      this.hs.post("https://api.cloudike.kr/api/1/fileops/rename/",
-      formdata, item.path + " 이름 변경").subscribe(data => { });
+      this.api.Rename(item, event.target.value);
     }
   }
   public timer = null;
