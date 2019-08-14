@@ -4,6 +4,11 @@
     font-size: 14.5px;
     padding: 3px 10px;
 }
+.hidden
+{
+   height: 100px;
+   overflow: auto;
+}
 .favorite
 {
     
