@@ -73,9 +73,12 @@
 /***********************************
     스크롤을 위한 컨테이너 CSS
 ************************************/ 
-.tableContainer {
+.tableContainer_not_use {
     overflow-y: auto;
     max-height: calc(100% - 60px);
+    margin: 0px 10px 5px 10px;
+}
+.tableContainer {
     margin: 0px 10px 5px 10px;
 }
 

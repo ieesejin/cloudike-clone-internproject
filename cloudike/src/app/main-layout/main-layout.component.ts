@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation, HostListener } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RealtimeService } from '../realtime.service';
@@ -10,7 +10,10 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
-  styleUrls: ['./header.css', 'nav.css', './main-layout.component.css']
+  styleUrls: ['./header.css', 'nav.css', './main-layout.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class MainLayoutComponent implements OnInit {
   public static UpdatePosition : Subject<any>;
@@ -18,8 +21,14 @@ export class MainLayoutComponent implements OnInit {
   @ViewChild('left', { read: ViewContainerRef, static: true }) left: ViewContainerRef;
   @ViewChild('main', { read: ViewContainerRef, static: true }) main: ViewContainerRef;
 
-  public extra_open = true;
-  public opened = true;
+
+  public static extra_open = true;
+  public static opened = true;
+  public static first_open = true;
+  public get opened() {return MainLayoutComponent.opened;}
+  public get extra_open() {return MainLayoutComponent.extra_open;}
+  public set opened(value) { MainLayoutComponent.opened = value};
+  public set extra_open(value) { MainLayoutComponent.extra_open = value};
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -28,15 +37,24 @@ export class MainLayoutComponent implements OnInit {
     private realservice: RealtimeService) {
     UserInfo.Update(hs);
     MainLayoutComponent.UpdatePosition = new Subject<any>();
-  }
+    if (MainLayoutComponent.first_open == true)
+      this.onResize(null);
+    MainLayoutComponent.first_open = false;
 
+  }
+  onResize(event) {
+    //window.innerWidth event.target.innerWidth
+    this.extra_open = window.innerWidth > 1000;
+    
+    setTimeout(()=>{
+      MainLayoutComponent.UpdatePosition.next();
+    }, 500);
+  }
   public extra_toggle()
   {
     this.extra_open = ! this.extra_open;
     setTimeout(()=>{
-
       MainLayoutComponent.UpdatePosition.next();
-
     }, 500);
   }
   public get windows_width() {
@@ -59,6 +77,11 @@ export class MainLayoutComponent implements OnInit {
           this.createComponent(this.main, data.main);
         }
       });
+
+      
+    document.getElementById("scroll_box").addEventListener('scroll', e => {
+      MainLayoutComponent.UpdatePosition.next();
+  });
   }
   get user_name() {
     return UserInfo.user_name

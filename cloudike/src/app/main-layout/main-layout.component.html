@@ -1,4 +1,4 @@
-<mat-sidenav-container class="example-container" autosize w>
+<mat-sidenav-container class="example-container" autosize id="scroll_box">
     <mat-sidenav #sidenav mode="side" [(opened)]="opened" [ngClass]="{'extra_open': extra_open}">
         <a [routerLink]="['/']" class="logo"><img src="/assets/img/blue_logo.png"></a>
         <div class="min" (click)="extra_toggle()">
@@ -58,12 +58,12 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <header class="bar">
+        <header>
             <div class="top-component">
                 <div #top></div>
             </div>
         </header>
-                    <div class="option">
+            <div class="option">
                 <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{user_name}} 님</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
