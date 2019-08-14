@@ -7,7 +7,7 @@ import { FileManagement } from '../FileManagement';
 import { RenameComponent } from '../rename/rename.component';
 import { ShareComponent } from '../share/share.component';
 import { FileItem } from '../FileItem';
-import { HTTPService } from 'src/app/httpservice.service';
+import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 
 @Component({
   selector: 'app-header-drive',

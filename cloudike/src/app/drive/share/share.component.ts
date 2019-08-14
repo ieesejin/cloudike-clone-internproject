@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material'
 import { UserInfo } from 'src/app/UserInfo';
-import { HTTPService } from 'src/app/httpservice.service';
+import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 import { FileManagement } from '../FileManagement';
 import { FileItem } from '../FileItem';
 import { FormControl } from '@angular/forms';

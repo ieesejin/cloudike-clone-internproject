@@ -3,8 +3,8 @@ import { FileItem } from 'src/app/drive/FileItem';
 import { DriveComponent } from '../../drive.component';
 import { FileManagement } from '../../FileManagement';
 import { Router, NavigationEnd } from '@angular/router';
-import { HTTPService } from 'src/app/httpservice.service';
-import { ValueStorageService } from 'src/app/value-storage.service';
+import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
+import { ValueStorageService } from 'src/app/service/ValueStorage/value-storage.service';
 
 @Component({
   selector: 'app-folder-item',

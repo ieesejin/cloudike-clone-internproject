@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HTTPService } from './httpservice.service';
-import { FileItem } from './drive/FileItem';
+import { HTTPService } from '../HttpService/httpservice.service';
+import { FileItem } from '../../drive/FileItem';
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';

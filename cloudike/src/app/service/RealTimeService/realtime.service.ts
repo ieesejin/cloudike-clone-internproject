@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { WebsocketService } from "./websocket.service";
-import { UserInfo } from './UserInfo';
-import { FileManagement } from './drive/FileManagement';
-import { FileItem } from './drive/FileItem';
-import { HTTPService } from './httpservice.service';
-import { ValueStorageService } from './value-storage.service';
+import { WebsocketService } from "../websocket/websocket.service";
+import { UserInfo } from '../../UserInfo';
+import { FileManagement } from '../../drive/FileManagement';
+import { FileItem } from '../../drive/FileItem';
+import { HTTPService } from '../HttpService/httpservice.service';
+import { ValueStorageService } from '../ValueStorage/value-storage.service';
 
 
 

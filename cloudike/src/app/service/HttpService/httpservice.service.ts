@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, timer, interval } from 'rxjs';
-import { UserInfo } from './UserInfo';
+import { UserInfo } from '../../UserInfo';
 import { startWith, switchMap } from 'rxjs/operators';
 
 @Injectable({

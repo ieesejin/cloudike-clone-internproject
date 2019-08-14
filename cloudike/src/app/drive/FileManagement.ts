@@ -1,7 +1,7 @@
 import { FileItem } from './FileItem';
 
 import { UserInfo } from '../UserInfo';
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 export class FileManagement
 {
     private static read_waiting_queue = {};

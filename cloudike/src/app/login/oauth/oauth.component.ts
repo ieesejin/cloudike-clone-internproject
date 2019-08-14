@@ -3,7 +3,7 @@ import { HttpClient } from  "@angular/common/http";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserInfo } from '../../UserInfo';
 import { Router } from '@angular/router';
-import { CloudikeApiService } from 'src/app/cloudike-api.service';
+import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.service';
 
 @Component({
   selector: 'app-oauth',

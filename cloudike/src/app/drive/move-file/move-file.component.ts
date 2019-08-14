@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileManagement } from '../FileManagement';
 import { MatDialogRef } from '@angular/material';
-import { CloudikeApiService } from 'src/app/cloudike-api.service';
+import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.service';
 
 @Component({
   selector: 'app-move-file',

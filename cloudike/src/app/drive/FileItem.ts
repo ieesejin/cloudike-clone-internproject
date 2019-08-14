@@ -1,5 +1,5 @@
 import { ConvertFormat } from './ConvertFormat'
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 
 
 export class FileItem

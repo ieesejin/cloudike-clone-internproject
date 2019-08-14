@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HTTPService } from './httpservice.service';
-import { FileManagement } from './drive/FileManagement';
-import { FileItem } from './drive/FileItem';
-import { CloudikeApiService } from './cloudike-api.service';
+import { HTTPService } from '../HttpService/httpservice.service';
+import { FileManagement } from '../../drive/FileManagement';
+import { FileItem } from '../../drive/FileItem';
+import { CloudikeApiService } from '../CloudikeAPI/cloudike-api.service';
 
 type PredicateFn<T> = (item: T) => boolean;
 type PipeFn<T> = (item: T) => any;

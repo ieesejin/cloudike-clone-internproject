@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { HTTPService } from './httpservice.service';
+import { HTTPService } from './service/HttpService/httpservice.service';
 
 export class UserInfo 
 {

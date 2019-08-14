@@ -3,7 +3,7 @@ import { HttpClientUploadService, FileItem as FileItemUpload, FileItem} from '@w
 import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { Router } from '@angular/router';
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 
 const max_simultaneously_uploading = 2;
 

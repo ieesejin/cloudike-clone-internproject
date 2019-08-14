@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, ViewEncapsulation, HostListener } from '@angular/core';
 import { UserInfo } from '../UserInfo';
 import { Router, ActivatedRoute } from '@angular/router';
-import { RealtimeService } from '../realtime.service';
+import { RealtimeService } from '../service/RealTimeService/realtime.service';
 import { ConvertFormat } from '../drive/ConvertFormat';
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 import { Subject } from 'rxjs';
 
 

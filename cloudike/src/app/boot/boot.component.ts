@@ -3,7 +3,7 @@ import { UserInfo } from '../UserInfo';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 import { NgxDragAndDropDirective } from '@wkoza/ngx-upload/src/directives/dropzone.directive';
 import { FileItem } from '../drive/FileItem';
 @Component({

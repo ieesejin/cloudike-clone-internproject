@@ -11,14 +11,14 @@ import { MatDialog } from '@angular/material';
 import { NewFolderComponent } from './new-folder/new-folder.component';
 import { DeleteFilesComponent } from './delete-files/delete-files.component';
 import { MoveFileComponent } from './move-file/move-file.component';
-import { HTTPService } from '../httpservice.service';
+import { HTTPService } from '../service/HttpService/httpservice.service';
 import { ShareComponent } from './share/share.component';
 import { RenameComponent } from './rename/rename.component';
 import { SelectContainerComponent, SelectItemDirective } from 'ngx-drag-to-select/projects/ngx-drag-to-select/src/public_api';
-import { ValueStorageService } from '../value-storage.service';
+import { ValueStorageService } from '../service/ValueStorage/value-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
-import { CloudikeApiService } from '../cloudike-api.service';
+import { CloudikeApiService } from '../service/CloudikeAPI/cloudike-api.service';
 
 
 

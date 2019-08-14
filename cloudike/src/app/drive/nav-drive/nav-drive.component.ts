@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ValueStorageService } from 'src/app/value-storage.service';
+import { ValueStorageService } from 'src/app/service/ValueStorage/value-storage.service';
 import { FileItem } from '../FileItem';
 import { Router } from '@angular/router';
-import { HTTPService } from 'src/app/httpservice.service';
+import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 import { FileManagement } from '../FileManagement';
 
 
