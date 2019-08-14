@@ -3,6 +3,9 @@ import { HTTPService } from './httpservice.service';
 import { FileManagement } from './drive/FileManagement';
 import { FileItem } from './drive/FileItem';
 
+type PredicateFn<T> = (item: T) => boolean;
+type PipeFn<T> = (item: T) => any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,16 +19,16 @@ export class ValueStorageService {
 
   constructor(private hs : HTTPService) { 
     
-    FileManagement.getItem(this.hs,"/",
-    (item: FileItem) => {
-      if (item.content[this.dataFolder] == null)
-      {
+    FileManagement.getItem(this.hs, "/", (item: FileItem) => {
+      this.reset_cache();
+      if (item.content[this.dataFolder] == null) {
         var formdata = new FormData();
-        formdata.append("path",this.dataFolderPath);
-        this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/",formdata, "옵션 세팅용 폴더 생성").subscribe(data => {
+        formdata.append("path", this.dataFolderPath);
+        this.hs.post("https://api.cloudike.kr/api/1/fileops/folder_create/", formdata, "옵션 세팅용 폴더 생성").subscribe(data => {
           // 성공
-          FileManagement.getItem(this.hs,this.dataFolderPath);
-        });
+          FileManagement.getItem(this.hs, this.dataFolderPath);
+        }
+        );
       }
     });
   }
@@ -48,36 +51,43 @@ export class ValueStorageService {
   }
   public GetToString(key)
   {
-    var value = null;
-    FileManagement.getItem(this.hs,this.dataFolderPath, 
-    (item: FileItem) => {
-      Object.keys(item.content).forEach(element => {
-        if (element.indexOf(this.encoding(key)) == 0)
-        {
-           value = this.decoding(element).value;
-        }
-      });
-    }
-    );
-    return value;
+    var data = this.GetValues(key, item=> item.key == key);
+    return data.length > 0 ? data[0].value : null;
   }
-
-  public GetValues()
+  public reset_cache()
   {
+    this.cache = {};
+  }
+  private cache = {};
+  
+  // 읽어올 변수 조건, 리턴받고싶은 형태
+  public GetValues(unique_key, predicate: PredicateFn<{key,value}>, pipe : PipeFn<{key,value}> = null)
+  {
+    if (this.cache[unique_key])
+      return this.cache[unique_key];
+      
     var value = [];
     FileManagement.getItem(this.hs,this.dataFolderPath, 
     (item: FileItem) => {
       Object.keys(item.content).forEach(element => {
-          value.push(this.decoding(element));
+        
+        var data = this.decoding(element);
+        if (predicate(data))
+        {
+          if (pipe == null)
+            value.push(data);
+          else
+            value.push(pipe(data));
+        }
       });
     }
     );
-    return value;
+    this.cache[unique_key] = value;
+    return this.cache[unique_key];
   }
 
   public Set(key, value)
   {
-    console.log(this.encoding(key));
     FileManagement.getItem(this.hs,this.dataFolderPath, 
     (item: FileItem) => {
 
