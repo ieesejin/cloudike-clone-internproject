@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material';
-import { NewFolderComponent } from '../new-folder/new-folder.component';
-import { DeleteFilesComponent } from '../delete-files/delete-files.component';
-import { MoveFileComponent } from '../move-file/move-file.component';
+import { NewFolderComponent } from '../dialog/new-folder/new-folder.component';
+import { DeleteFilesComponent } from '../dialog/delete-files/delete-files.component';
+import { MoveFileComponent } from '../dialog/move-file/move-file.component';
 import { FileManagement } from '../FileManagement';
-import { RenameComponent } from '../rename/rename.component';
-import { ShareComponent } from '../share/share.component';
+import { RenameComponent } from '../dialog/rename/rename.component';
+import { ShareComponent } from '../dialog/share/share.component';
 import { FileItem } from '../FileItem';
 import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 

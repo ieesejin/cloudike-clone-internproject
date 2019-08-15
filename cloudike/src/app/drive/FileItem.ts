@@ -30,7 +30,6 @@ export class FileItem
             this.isfolder = true;
             return;
         }
-        
         this.icon = value["icon"];
         this.path = value["path"];
         if (value["restore_path"] != undefined)
