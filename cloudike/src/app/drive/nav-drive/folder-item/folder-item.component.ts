@@ -5,6 +5,7 @@ import { FileManagement } from '../../FileManagement';
 import { Router, NavigationEnd } from '@angular/router';
 import { HTTPService } from 'src/app/httpservice.service';
 import { ValueStorageService } from 'src/app/value-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-folder-item',
@@ -24,7 +25,7 @@ export class FolderItemComponent implements OnInit {
     return DriveComponent.Now.path == this.url;
   }
 
-  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService) { 
+  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService, private toastr : ToastrService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -67,4 +68,26 @@ export class FolderItemComponent implements OnInit {
         this.content_hide = !this.content_hide;
     });
   }
+  
+  public delete_file(url)
+  {
+    console.log(url);
+    var formdata = new FormData();
+    formdata.append("path", url)
+    this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/", formdata, 1 + "개의 파일 삭제").subscribe(data => {
+        this.toastr.success('삭제가 완료되었습니다.');
+      }, error => {
+        this.toastr.error('에러가 발생했습니다.');
+      });
+  }
+  public move_file()
+  {
+  }
+  public rename_file()
+  {
+  }
+  public share_file(item)
+  {
+  }
 }
+

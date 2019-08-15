@@ -1,6 +1,6 @@
 <!-- 'now' 은 현재 선택된 폴더(파일) -->
 
-<div *ngIf="url != valueStorage.dataFolderPath">
+<div *ngIf="url != valueStorage.dataFolderPath" [contextMenu]="treeMenu" [contextMenuSubject]="url">
     <div class="item" [ngClass]="{ 'on' : now}" (click)="(click_event != null && click_event(url)) || (click_event == null && router.navigate(['/drive' + url]))">
         <div class="item_name" [ngStyle]="{'padding-left': (depth * 16 - 16) + 'px'}">
             {{name}}
@@ -18,3 +18,14 @@
         </div>
     </div>
 </div>
+
+<context-menu #treeMenu [useBootstrap4]="true">
+    <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
+        <i class="icon download size30"></i>
+        폴더 다운로드
+    </ng-template>
+    <ng-template let-url contextMenuItem (execute)="delete_file(url)">
+        <i class="icon delete size30"></i>
+        삭제
+    </ng-template>
+</context-menu>

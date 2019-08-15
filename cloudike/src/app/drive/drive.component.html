@@ -72,10 +72,6 @@
         <i class="icon download size30"></i>
         다운로드
     </ng-template>
-    <ng-template contextMenuItem [visible]="isOneSelect">
-        <i class="icon ms365 size30"></i>
-        브라우저에서 편집
-    </ng-template>
     <ng-template contextMenuItem [visible]="isOneSelect" (execute)="share_file(null)">
         <i class="icon link size30"></i>
         공유
@@ -101,12 +97,14 @@
         소유권 이전
     </ng-template>
 </context-menu>
+
 <context-menu #spaceMenu [useBootstrap4]="true">
   <ng-template contextMenuItem (execute)="create('새 폴더')">
     <i class="icon folder size30"></i>
     새 폴더
   </ng-template>
   <ng-template contextMenuItem (execute)="go_parent_folder()">
+    <i class="icon parent size30"></i>
     상위 폴더
   </ng-template>
 </context-menu>

@@ -1,14 +1,14 @@
 <app-folder-item [url]="'/'" [name]="'내 Cloudike'" [depth]="1">
 </app-folder-item>
 <div class="item" matTooltip="이곳에 즐겨찾기된 항목들이 표시됩니다.">
-        <div class="item_name">
+        <div class="item_name" [contextMenu]="favoriteMenu">
                 즐겨찾기
         </div>
         <div *ngIf="favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = false" class="hidebutton">▶</div>
         <div *ngIf="!favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = true" class="hidebutton">▼</div>
 </div>
 <div *ngIf="!favorite_hide">
-<div *ngFor="let item of favoriteList" matTooltip="{{item.path}}" matTooltipPosition="right" (click)="itemClick(item.path)">
+<div *ngFor="let item of favoriteList" matTooltip="{{item.path}}" matTooltipPosition="right" (click)="itemClick(item.path)" [contextMenu]="favoriteTreeMenu" [contextMenuSubject]="item">
     <div class="item">
         <div [ngStyle]="{'padding-left': 16 + 'px'}" class="item_name">
                 {{item.name}}
@@ -19,4 +19,22 @@
 <div class="item">전체 공유 항목</div>
 <div class="item">기업 폴더</div>
 <div class="item">소유권 이전 대기</div>
-<div class="item">휴지통</div>
+<div class="item" [contextMenu]="trashMenu">휴지통</div>
+
+<context-menu #favoriteMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem>
+                전체 해제
+        </ng-template>
+</context-menu>
+
+<context-menu #favoriteTreeMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem>
+                해제
+        </ng-template>
+</context-menu>
+
+<context-menu #trashMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem>
+                휴지통 비우기
+        </ng-template>
+</context-menu>
