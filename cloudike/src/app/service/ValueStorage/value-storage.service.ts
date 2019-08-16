@@ -34,23 +34,30 @@ export class ValueStorageService {
     });
   }
 
-  private encoding(key, value = null)
+  private encoding(key, _value : {} = null)
   {
+    var value = JSON.stringify(_value);
      var data = key + "&" + value;
      if (value == null)
         data = key + "&";
-        data = data.split('/').join('(slash)');
-        data = data.split('?').join('(question)');
+    data = data.split('/').join('◐1');
+    data = data.split('?').join('◐2');
+    data = data.split('|').join('◐3');
+    data = data.split('"').join('◐4');
+    data = data.split(':').join('◐5');
      return data;
   }
   private decoding(data : String)
   {
-    data = data.split('(slash)').join('/');
-    data = data.split('(question)').join('?');
+    data = data.split('◐1').join('/');
+    data = data.split('◐2').join('?');
+    data = data.split('◐3').join('|');
+    data = data.split('◐4').join('"');
+    data = data.split('◐5').join(':');
     var result = data.split("&");
-    return {key: result[0], value: result[1]};
+    return {key: result[0], value: JSON.parse(result[1])};
   }
-  public GetToString(key)
+  public GetToJson(key) : {}
   {
     var data = this.GetValues(key, item=> item.key == key);
     return data.length > 0 ? data[0].value : null;
@@ -62,12 +69,13 @@ export class ValueStorageService {
   private cache = {};
   
   // 읽어올 변수 조건, 리턴받고싶은 형태
-  public GetValues(unique_key, predicate: PredicateFn<{key,value}>, pipe : PipeFn<{key,value}> = null)
+  public GetValues(unique_key, predicate: PredicateFn<{key,value:{}}>, pipe : PipeFn<{key,value:{}}> = null, dir = false)
   {
     if (this.cache[unique_key])
       return this.cache[unique_key];
       
-    var value = [];
+    var value : any = [];
+    if (dir) value = {};
     FileManagement.getItem(this.hs,this.dataFolderPath, 
     (item: FileItem) => {
       Object.keys(item.content).forEach(element => {
@@ -78,7 +86,13 @@ export class ValueStorageService {
           if (pipe == null)
             value.push(data);
           else
-            value.push(pipe(data));
+          {
+            var temp = pipe(data);
+            if (dir)
+              value[temp.key] = temp.value;
+            else
+              value.push(temp);
+          }
         }
       });
     }
@@ -87,12 +101,12 @@ export class ValueStorageService {
     return this.cache[unique_key];
   }
 
-  public Set(key, value)
+  public Set(key, value:{})
   {
     FileManagement.getItem(this.hs,this.dataFolderPath, 
     (item: FileItem) => {
 
-      var data = this.GetToString(key);
+      var data = this.GetToJson(key);
       // 기존에 폴더가 있으면 이름 변경, 없으면 만들기
       if (data != null)
         this.api.Rename(this.dataFolderPath + "/" + this.encoding(key,data),this.encoding(key,value)).unsubscribe();

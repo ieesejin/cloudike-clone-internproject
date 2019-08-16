@@ -1,6 +1,6 @@
 <app-folder-item [url]="'/'" [name]="'내 Cloudike'" [depth]="1">
 </app-folder-item>
-<div class="item" matTooltip="이곳에 즐겨찾기된 항목들이 표시됩니다.">
+<div [routerLink]="['/favorites']" [ngClass]="{ 'on' : router.url=='/favorites'}" class="item" matTooltip="이곳에 즐겨찾기된 항목들이 표시됩니다.">
         <div class="item_name">
                 즐겨찾기
         </div>

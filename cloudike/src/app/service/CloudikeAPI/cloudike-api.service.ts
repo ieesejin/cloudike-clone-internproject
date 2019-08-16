@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { CloudikeApiResult as CloudikeApiResult } from './cloudike-api.result';
 import { HttpClient } from '@angular/common/http';
 import { timeout, catchError } from 'rxjs/operators';
+import { ValueStorageService } from '../ValueStorage/value-storage.service';
+import { FileManagement } from 'src/app/drive/FileManagement';
+import { ConvertFormat } from 'src/app/drive/ConvertFormat';
 
 export type CloudLinkOption = { date?: Date, only_upload?: boolean, password?: string, download_max?: number };
 
@@ -282,6 +285,53 @@ export class CloudikeApiService {
     return result;
   }
 
+  public GetFavoritesList(valueStorage: ValueStorageService) : {}
+  {
+    return valueStorage.GetValues(
+      "favoriteList_Files",
+      item => {
+        return item.key.indexOf("?favorite") > 0 && item.value['value'] == true;
+      },
+      item => {
+        var folder = FileItem.SplitPath(item.key);
+        var file = new FileItem(null);
+        file.path = folder[folder.length-1].path;
+        file.name = folder[folder.length-1].name;
+        file.isfolder = item.value['isfolder'];
+        file.type = item.value['type'];
+        file.date = ConvertFormat.unixToDate(item.value["date"]);
+        return {key: file.name, value: file};
+      }
+    , true);
+  }
+
+  public GetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem) : Boolean
+  {
+    var path = this.get_path_from_value(item_or_path);
+    var data = valueStorage.GetToJson(path + '?favorite');
+    return data != null && data['value'];
+  }
+  
+  public SetFavoriteOfItem(valueStorage : ValueStorageService, item_or_path: string | FileItem, value : boolean)
+  {
+    var path = this.get_path_from_value(item_or_path);
+    if (value == true) 
+    {
+      FileManagement.getItem(this.hs,path,(item : FileItem) =>{
+        var json = {
+          value : value,
+          date : new Date().getTime(),
+          isfolder: item.isfolder,
+          type: item.type
+        }
+        valueStorage.Set(item_or_path + '?favorite', json);
+      },true);
+    } else
+    {
+      valueStorage.Set(item_or_path + '?favorite', {value: false});
+    }
+
+  }
   public GetFileList_Not_Implement(item_or_path: string | FileItem, limit = 500, offset = 0, order_by = 'name') {
 
   }

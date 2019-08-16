@@ -20,7 +20,7 @@ export class NavDriveComponent implements OnInit {
     return this.valueStorage.GetValues(
       "favoriteList",
       item => {
-        return item.key.indexOf("?favorite") > 0 && item.value == "true";
+        return item.key.indexOf("?favorite") > 0 && item.value['value'];
       },
       item => {
         var folder = FileItem.SplitPath(item.key);

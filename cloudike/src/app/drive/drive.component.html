@@ -16,14 +16,17 @@
         </div>
       </th>
       <th id="path">파일명</th>
-      <th>공용 폴더명</th>
-      <th>형식</th>
-      <th>크기</th>
-      <th>수정일</th>
-      <th width="60px">공유</th>
+      <th *ngIf="mode=='drive'">공용 폴더명</th>
+      <th *ngIf="mode=='drive'">형식</th>
+      <th *ngIf="mode=='drive'">크기</th>
+      <th *ngIf="mode=='drive'">수정일</th>
+      <th *ngIf="mode=='drive'" width="60px">공유</th>
+      
+      <th *ngIf="mode=='favorites'">형식</th>
+      <th *ngIf="mode=='favorites'">즐겨찾기 등록일</th>
     </tr>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile.content | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="mode=='trash' ? trashMenu : basicMenu" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
+      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="mode=='trash' ? trashMenu : (mode=='favorites' ? favoritesMenu : basicMenu)" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
         <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
         <td>
           <div class="checkbox-container">
@@ -45,8 +48,8 @@
             <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
           </span>
           <span *ngIf="mode == 'drive'">
-            <span class="favorite on" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') == 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', null)">★ </span>
-            <span class="favorite off" *ngIf="valueStorage.GetToString(item.value.path+'?favorite') != 'true'" (click)="valueStorage.Set(item.value.path+'?favorite', 'true')">★ </span>
+            <span class="favorite on" *ngIf="api.GetFavoriteOfItem(valueStorage, item.value.path)" (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, false)">★ </span>
+            <span class="favorite off" *ngIf="!api.GetFavoriteOfItem(valueStorage, item.value.path)" (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, true)">★ </span>
           </span>
           <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
           <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)"/>
@@ -54,16 +57,21 @@
 
 
         </td>
-        <td>{{item.value.owner_path}}</td>
-        <td>{{item.value.type}}</td>
-        <td>{{item.value.bytesString}}</td>
-        <td>{{item.value.date}}</td>
-        <td>
+        <td *ngIf="mode=='drive'">{{item.value.owner_path}}</td>
+        <td *ngIf="mode=='drive'">{{item.value.type}}</td>
+        <td *ngIf="mode=='drive'">{{item.value.bytesString}}</td>
+        <td *ngIf="mode=='drive'">{{item.value.date}}</td>
+        <td *ngIf="mode=='drive'">
             <i class="icon share share_animation" [ngClass]="{'disable': item.value.public_hash == null}" (click)="share_file(item.value)"></i>
         </td>
-      <td></td>
+
+        
+        <td *ngIf="mode=='favorites'">{{item.value.type}}</td>
+        <td *ngIf="mode=='favorites'">{{item.value.date}}</td>
+
     </tr>
     </tbody>
+
   </table>
 </div>
 </dts-select-container>
@@ -102,6 +110,7 @@
         소유권 이전
     </ng-template>
 </context-menu>
+
 <context-menu #spaceMenu [useBootstrap4]="true">
   <ng-template contextMenuItem (execute)="create('새 폴더')">
     <i class="icon folder size30"></i>
@@ -111,6 +120,7 @@
     상위 폴더
   </ng-template>
 </context-menu>
+
 <context-menu #trashMenu [useBootstrap4]="true">
   <ng-template contextMenuItem (execute)="create('새 폴더')">
     <i class="icon folder size30"></i>
@@ -118,5 +128,16 @@
   </ng-template>
   <ng-template contextMenuItem (execute)="go_parent_folder()">
     완전 삭제
+  </ng-template>
+</context-menu>
+
+<context-menu #favoritesMenu [useBootstrap4]="true" (open)="CheckingItem($event.item)">
+  <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
+      <i class="icon download size30"></i>
+      다운로드
+  </ng-template>
+  <ng-template contextMenuItem (execute)="delete_favorite()">
+    <i class="icon delete size30"></i>
+    즐겨찾기 삭제
   </ng-template>
 </context-menu>

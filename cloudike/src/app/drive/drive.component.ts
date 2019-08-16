@@ -30,8 +30,6 @@ import { CloudikeApiService } from '../service/CloudikeAPI/cloudike-api.service'
 
 export class DriveComponent implements OnInit {
 
-  @ViewChild('basicMenu', { static: true }) public basicMenu: ContextMenuComponent;
-
   @ViewChild(SelectContainerComponent, { static: true }) selectContainer: SelectContainerComponent;
   @ViewChildren(SelectItemDirective) SelectItemDirectives: QueryList<SelectItemDirective>;
 
@@ -43,21 +41,12 @@ export class DriveComponent implements OnInit {
 
   public mode = "";
 
-  get nowfile(): FileItem {
+  get nowfile() : {} {
     if (this.mode == "favorites")
     {
-      return this.valueStorage.GetValues(
-        "favoriteList",
-        item => {
-          return item.key.indexOf("?favorite") > 0 && item.value == "true";
-        },
-        item => {
-          var folder = FileItem.SplitPath(item.key);
-          return folder[folder.length - 1];
-        }
-      )
+      return this.api.GetFavoritesList(this.valueStorage);
     }
-    return DriveComponent.Now;
+    return DriveComponent.Now.content;
   }
 
   public keepOriginalOrder = (a, b) => a.key;
@@ -97,6 +86,7 @@ export class DriveComponent implements OnInit {
     }
     else if (this.mode == "favorites")
     {
+      this.ParentFolder = [{ name: "즐겨찾기", path: "/favorites" }];
      // DriveComponent.Now = new FileItem("favorites");
     }
     if (this.mode != "drive") return;
@@ -113,12 +103,16 @@ export class DriveComponent implements OnInit {
     }
   }
 
+  public get length()
+  {
+      return Object.keys(this.nowfile).length;
+  }
   private AllCheckBoxUpdate() {
     // 목록에 하나라도 있으면
-    if (this.nowfile.length != 0) {
+    if (length != 0) {
       // 전체 체크박스 체크
       var selectAllChkbox = <HTMLInputElement>document.getElementById("selectAllChkbox");
-      selectAllChkbox.checked = this.selectItem.length == this.nowfile.length;
+      selectAllChkbox.checked = this.selectItem.length == length;
     }
   }
   public onDragSelect(event) {
@@ -219,6 +213,12 @@ export class DriveComponent implements OnInit {
     }
     this.dialog.open(ShareComponent);
   }
+  public delete_favorite()
+  {
+    FileManagement.getSelectItemPath().forEach(element => {
+      this.api.SetFavoriteOfItem(this.valueStorage,element,false);
+    });
+  }
   public create(name: string) {
     this.api.CreateFolder(this.api.GetURLPath(), name).subscribe(data => {
 
@@ -284,7 +284,7 @@ export class DriveComponent implements OnInit {
       if (delay < 500) {
         this.ItemDoubleClick(item);
       }
-      else {
+      else if (this.mode == "drive") {
         this.timer = setTimeout(() => {
           this.timer = null;
           this.changing_old_name = item.name;

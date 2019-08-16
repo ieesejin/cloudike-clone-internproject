@@ -51,6 +51,16 @@ const routes: Routes = [
     }
   },
 
+  {
+    path: 'favorites',  
+    component: MainLayoutComponent, 
+    data:{
+      top:HeaderDriveComponent, // 상단에 표시될 아이콘 컴포넌트
+      left:NavDriveComponent, // 좌측에 표시될 메뉴 컴포넌트
+      main:DriveComponent // 메인 컨텐츠
+    }
+  },
+
   { 
     path: 'profile',  
     component: MainLayoutComponent, 
