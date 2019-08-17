@@ -336,6 +336,9 @@ mat-dialog-actions .cancle
             color: #CDCDCD;
             font-family: FontAwesome;
         }
+        i.icon.parent:before {
+            content: "\e605";
+        }
 
         i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40, i.icon.fa-edit.size40, i.icon.image.size40
         {

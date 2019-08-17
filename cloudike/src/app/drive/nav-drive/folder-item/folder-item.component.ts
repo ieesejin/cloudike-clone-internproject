@@ -5,6 +5,8 @@ import { FileManagement } from '../../FileManagement';
 import { Router, NavigationEnd } from '@angular/router';
 import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 import { ValueStorageService } from 'src/app/service/ValueStorage/value-storage.service';
+import { ToastrService } from 'ngx-toastr';
+import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.service';
 
 @Component({
   selector: 'app-folder-item',
@@ -24,7 +26,7 @@ export class FolderItemComponent implements OnInit {
     return DriveComponent.Now.path == this.url;
   }
 
-  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService) { 
+  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService, private api : CloudikeApiService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {
@@ -67,4 +69,19 @@ export class FolderItemComponent implements OnInit {
         this.content_hide = !this.content_hide;
     });
   }
+  
+  public delete_file(url)
+  {
+    this.api.Delete(url);
+  }
+  public move_file()
+  {
+  }
+  public rename_file()
+  {
+  }
+  public share_file(item)
+  {
+  }
 }
+

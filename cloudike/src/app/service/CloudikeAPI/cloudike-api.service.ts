@@ -324,11 +324,11 @@ export class CloudikeApiService {
           isfolder: item.isfolder,
           type: item.type
         }
-        valueStorage.Set(item_or_path + '?favorite', json);
+        valueStorage.Set(path + '?favorite', json);
       },true);
     } else
     {
-      valueStorage.Set(item_or_path + '?favorite', {value: false});
+      valueStorage.Set(path + '?favorite', {value: false});
     }
 
   }

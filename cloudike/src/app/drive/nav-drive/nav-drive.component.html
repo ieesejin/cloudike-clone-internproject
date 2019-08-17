@@ -1,22 +1,49 @@
 <app-folder-item [url]="'/'" [name]="'내 Cloudike'" [depth]="1">
 </app-folder-item>
-<div [routerLink]="['/favorites']" [ngClass]="{ 'on' : router.url=='/favorites'}" class="item" matTooltip="이곳에 즐겨찾기된 항목들이 표시됩니다.">
+<div [routerLink]="['/favorites']" [ngClass]="{ 'on' : router.url=='/favorites'}" class="item"
+        matTooltip="이곳에 즐겨찾기된 항목들이 표시됩니다." [contextMenu]="favoriteMenu">
         <div class="item_name">
                 즐겨찾기
         </div>
-        <div *ngIf="favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = false" class="hidebutton">▶</div>
-        <div *ngIf="!favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = true" class="hidebutton">▼</div>
+        <div *ngIf="favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = false"
+                class="hidebutton">▶</div>
+        <div *ngIf="!favorite_hide" [ngStyle]="{'padding-left': 0 + 'px'}" (click)="favorite_hide = true"
+                class="hidebutton">▼</div>
 </div>
 <div *ngIf="!favorite_hide">
-<div *ngFor="let item of favoriteList" matTooltip="{{item.path}}" matTooltipPosition="right" (click)="itemClick(item.path)">
-    <div class="item">
-        <div [ngStyle]="{'padding-left': 16 + 'px'}" class="item_name">
-                {{item.name}}
+        <div *ngFor="let item of favoriteList | keyvalue:keepOriginalOrder" matTooltip="{{item.value.path}}"
+                matTooltipPosition="right" (click)="itemClick(item.value)" [contextMenu]="favoriteTreeMenu"
+                [contextMenuSubject]="item.value">
+                <div class="item">
+                        <div [ngStyle]="{'padding-left': 16 + 'px'}" class="item_name">
+                                {{item.value.name}}
+                        </div>
+                </div>
         </div>
-    </div>
-</div>
 </div>
 <div class="item">전체 공유 항목</div>
 <div class="item">기업 폴더</div>
 <div class="item">소유권 이전 대기</div>
-<div class="item" [routerLink]="[ '/trash']">휴지통</div>
+<div class="item" [routerLink]="[ '/trash']" [contextMenu]="trashMenu">휴지통</div>
+
+<context-menu #favoriteMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem (execute)="resetFavoritesList()">
+                전체 해제
+        </ng-template>
+</context-menu>
+
+<context-menu #favoriteTreeMenu [useBootstrap4]="true">
+        <ng-template let-item contextMenuItem (execute)="item.Download(hs)">
+                <i class="icon download size30"></i>
+                다운로드
+        </ng-template>
+        <ng-template contextMenuItem let-item (execute)="deleteFavorite(item)">
+                해제
+        </ng-template>
+</context-menu>
+
+<context-menu #trashMenu [useBootstrap4]="true">
+        <ng-template contextMenuItem>
+                휴지통 비우기
+        </ng-template>
+</context-menu>
