@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HTTPService } from 'src/app/service/HttpService/httpservice.service';
 import { FileManagement } from '../FileManagement';
 import { ContextMenuComponent } from 'ngx-contextmenu';
+import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.service';
 
 @Component({
   selector: 'app-nav-drive',
@@ -12,33 +13,36 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
   styleUrls: ['./nav-drive.component.css']
 })
 export class NavDriveComponent implements OnInit {
-  constructor(private valueStorage: ValueStorageService, private router: Router, private hs: HTTPService) { }
+  constructor(private valueStorage: ValueStorageService, private router: Router, private hs: HTTPService, private api : CloudikeApiService) { }
 
   public favorite_hide : boolean = false;
-  private last_list = [];
+
+  public keepOriginalOrder = (a, b) => a.key;
+
   public get favoriteList() {
-    return this.valueStorage.GetValues(
-      "favoriteList",
-      item => {
-        return item.key.indexOf("?favorite") > 0 && item.value['value'];
-      },
-      item => {
-        var folder = FileItem.SplitPath(item.key);
-        return folder[folder.length - 1];
-      }
-    )
+    return this.api.GetFavoritesList(this.valueStorage);
   }
 
-  public itemClick(path) {
+  public itemClick(item : FileItem) {
+    if (item.isfolder) {
+      this.router.navigate(["/drive" + item.path]);
+    } else {
+      item.Download(this.hs);
+    }
+  }
 
-    FileManagement.getItem(this.hs, path, (item: FileItem) => {
-      if (item.isfolder) {
-        this.router.navigate(["/drive" + path]);
-      } else {
-        item.Download(this.hs);
-      }
-    }, true);
+  public deleteFavorite(item :FileItem)
+  {
+    console.log(item);
+    this.api.SetFavoriteOfItem(this.valueStorage,item,false);
+  }
 
+  public resetFavoritesList()
+  {
+    var list = this.api.GetFavoritesList(this.valueStorage);
+    Object.values(list).forEach((item : FileItem) => {
+      this.deleteFavorite(item);
+    });
   }
   ngOnInit() {
   }
