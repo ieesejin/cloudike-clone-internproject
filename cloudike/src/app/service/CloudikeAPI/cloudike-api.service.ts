@@ -18,6 +18,11 @@ export type CloudLinkOption = { date?: Date, only_upload?: boolean, password?: s
 })
 export class CloudikeApiService {
 
+  private lastAction: () => CloudikeApiResult = null;
+  private _revertMessage = null;
+  private get RevertMessage() {
+    return this._revertMessage;
+  }
   constructor(private hs: HTTPService, private router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
@@ -28,12 +33,19 @@ export class CloudikeApiService {
       return "클라우드 API" + type;
   }
 
-  private CleanPath(path: string) {
+  private CleanPath(path: string): string {
     var folder = FileItem.SplitPath(path);
     path = folder[folder.length - 1].path;
     return path;
   }
 
+  private CleanPaths(paths: string[]): string[] {
+    var npaths = [];
+    paths.forEach(element => {
+      npaths.push(this.CleanPath(element));
+    });
+    return npaths;
+  }
   private combine_path_folder(path: string, name: string) {
     if (path == null)
       return null;
@@ -46,6 +58,24 @@ export class CloudikeApiService {
     return path;
   }
 
+  private get_parent_folder(path: string) {
+    if (path == null)
+      return null;
+
+    var folder = FileItem.SplitPath(path);
+    path = folder[folder.length - 2].path;
+    return path;
+  }
+
+  private get_file_name(path: string) {
+
+    if (path == null)
+      return null;
+
+    var folder = FileItem.SplitPath(path);
+    return folder[folder.length - 1].name;
+  }
+
   private get_path_from_value(item_or_path: string | FileItem) {
     var path;
     if (item_or_path instanceof FileItem)
@@ -53,6 +83,14 @@ export class CloudikeApiService {
     else
       path = item_or_path;
     return this.CleanPath(path);
+  }
+
+  private AddRevert(result: CloudikeApiResult, fn: () => CloudikeApiResult) {
+    result.subscribe(data => {
+
+      this._revertMessage = result.successMessage;
+      this.lastAction = fn;
+    });
   }
 
   public GetURLPath() {
@@ -141,6 +179,9 @@ export class CloudikeApiService {
     result.AddMessage(this.toastr, "폴더가 생성되었습니다.",
       { "FolderAlreadyCreated": "같은 이름이 존재합니다." }
     );
+    this.AddRevert(result, () => {
+      return this.Delete(path);
+    });
     return result;
   }
 
@@ -157,6 +198,10 @@ export class CloudikeApiService {
     result.AddMessage(this.toastr, "이름이 변경되었습니다.",
       { "FileCantBeRenamed": "이름을 변경할 수 없습니다." }
     );
+    this.AddRevert(result, () => {
+      var new_path = this.combine_path_folder(this.get_parent_folder(path), new_name);
+      return this.Rename(new_path, this.get_file_name(path));
+    });
     return result;
   }
   public Delete(item_or_path: string | FileItem): CloudikeApiResult {
@@ -167,19 +212,26 @@ export class CloudikeApiService {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/", formdata, this.task_name("삭제", path))
     );
     result.AddMessage(this.toastr, "삭제가 완료되었습니다.");
+    this.AddRevert(result, () => {
+      return this.Restore(path);
+    });
     return result;
   }
 
   public MultiDelete(paths: string[]): CloudikeApiResult {
+    paths = this.CleanPaths(paths);
     var formdata = new FormData();
     paths.forEach(path => {
-      formdata.append("path", this.CleanPath(path));
+      formdata.append("path", path);
     });
 
     var result = new CloudikeApiResult(
       this.hs.post("https://api.cloudike.kr/api/1/fileops/multi/delete/", formdata, this.task_name("대량 삭제"))
     );
     result.AddMessage(this.toastr, paths.length + "건의 삭제가 완료되었습니다.");
+    this.AddRevert(result, () => {
+      return this.Restore(paths);
+    });
     return result;
   }
 
@@ -195,6 +247,12 @@ export class CloudikeApiService {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, this.task_name("파일 이동", from))
     );
     result.AddMessage(this.toastr, "이동이 완료되었습니다.");
+    this.AddRevert(result, () => {
+      // 현재 폴더 위치
+      var new_path = this.combine_path_folder(to, this.get_file_name(from));
+      var old_path = this.get_parent_folder(from);
+      return this.Move(new_path, old_path);
+    });
     return result;
   }
 
@@ -210,6 +268,11 @@ export class CloudikeApiService {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/copy/", formdata, this.task_name("파일 복사", from))
     );
     result.AddMessage(this.toastr, "복사가 완료되었습니다.");
+    this.AddRevert(result, () => {
+      // 현재 폴더 위치
+      var new_path = this.combine_path_folder(to, this.get_file_name(from));
+      return this.Delete(new_path);
+    });
     return result;
   }
 
@@ -285,8 +348,7 @@ export class CloudikeApiService {
     return result;
   }
 
-  public GetFavoritesList(valueStorage: ValueStorageService) : {}
-  {
+  public GetFavoritesList(valueStorage: ValueStorageService): {} {
     return valueStorage.GetValues(
       "favoriteList_Files",
       item => {
@@ -295,42 +357,109 @@ export class CloudikeApiService {
       item => {
         var folder = FileItem.SplitPath(item.key);
         var file = new FileItem(null);
-        file.path = folder[folder.length-1].path;
-        file.name = folder[folder.length-1].name;
+        file.path = folder[folder.length - 1].path;
+        file.name = folder[folder.length - 1].name;
         file.isfolder = item.value['isfolder'];
         file.type = item.value['type'];
         file.date = ConvertFormat.unixToDate(item.value["date"]);
-        return {key: file.name, value: file};
+        return { key: file.name, value: file };
       }
-    , true);
+      , true);
   }
 
-  public GetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem) : Boolean
-  {
+  public GetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem): Boolean {
     var path = this.get_path_from_value(item_or_path);
     var data = valueStorage.GetToJson(path + '?favorite');
     return data != null && data['value'];
   }
-  
-  public SetFavoriteOfItem(valueStorage : ValueStorageService, item_or_path: string | FileItem, value : boolean)
-  {
+
+  public SetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem, value: boolean) {
     var path = this.get_path_from_value(item_or_path);
-    if (value == true) 
-    {
-      FileManagement.getItem(this.hs,path,(item : FileItem) =>{
+    if (value == true) {
+      FileManagement.getItem(this.hs, path, (item: FileItem) => {
         var json = {
-          value : value,
-          date : new Date().getTime(),
+          value: value,
+          date: new Date().getTime(),
           isfolder: item.isfolder,
           type: item.type
         }
         valueStorage.Set(path + '?favorite', json);
-      },true);
-    } else
-    {
-      valueStorage.Set(path + '?favorite', {value: false});
+      }, true);
+    } else {
+      valueStorage.Set(path + '?favorite', { value: false });
     }
 
+  }
+
+  public Revert() {
+    if (this.lastAction == null) {
+      this.toastr.error("최근에 수행된 작업이 없습니다.");
+    }
+    else {
+      var result = this.lastAction();
+      this.lastAction = null;
+      this._revertMessage = null;
+      result.unsubscribe();
+      result.AddMessage(this.toastr, "최근 작업을 되돌렸습니다.");
+    }
+  }
+
+  public GetTarshList(): CloudikeApiResult {
+    var result = new CloudikeApiResult();
+
+    this.hs.get("https://api.cloudike.kr/api/1/trash/?limit=500&offset=0&order_by=name", "휴지통 불러오기").subscribe(
+      data => {
+        result.next(new FileItem(data));
+      },
+      error => {
+        result.error(error);
+      }
+    )
+    return result;
+  }
+
+  // 휴지통 복구 paths에 해당하는 아이템중 가장 마지막 버전을 복구한다.
+  public Restore(paths: string | string[]): CloudikeApiResult {
+    if (typeof paths == "string") {
+      paths = [<string>paths];
+    }
+    paths = this.CleanPaths(paths);
+    var result = new CloudikeApiResult();
+    this.GetTarshList().subscribe(
+      (data: FileItem) => {
+        var selectItem = {};
+        Object.values(data.content).forEach((element: FileItem) => {
+          if (paths.includes(element.path)) {
+            if (selectItem[element.path] == null || selectItem[element.path].modified < element.modified)
+              selectItem[element.path] = element;
+          }
+        });
+        if (Object.keys(selectItem).length == 0) {
+          result.error("NotFound");
+        }
+        else {
+          var body = new FormData();
+          Object.values(selectItem).forEach((element: FileItem) => {
+            body.append("paths", element.name);
+          });
+          this.hs.post("https://api.cloudike.kr/api/1/trash/restore/", body, this.task_name("복구")).subscribe(
+            data => {
+              result.next(data);
+            },
+            error => {
+              result.error(error);
+            }
+          )
+        }
+      }, error => {
+        result.error(error);
+      }
+    )
+    result.AddMessage(this.toastr, "해당 아이템을 휴지통에서 복구하였습니다.",
+      {
+        "NotFound": "휴지통에서 해당 아이템을 찾을 수 없습니다."
+      })
+    return result;
   }
   public GetFileList_Not_Implement(item_or_path: string | FileItem, limit = 500, offset = 0, order_by = 'name') {
 

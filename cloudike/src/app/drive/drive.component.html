@@ -1,110 +1,128 @@
-
-<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems" (select)="onDragSelect($event)" [contextMenu]="spaceMenu">
+<dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems"
+  (select)="onDragSelect($event)" [contextMenu]="spaceMenu">
   <div class="path">
     <div *ngFor="let item of ParentFolder; first as isfirst">
-        <span *ngIf="!isfirst" class="space">>></span>
-        <a class="path-link" routerLink="{{'/drive' + item.path}}" (mousedown)="$event.stopPropagation()">{{item.name}}</a>
+      <span *ngIf="!isfirst" class="space">>></span>
+      <a class="path-link" routerLink="{{'/drive' + item.path}}"
+        (mousedown)="$event.stopPropagation()">{{item.name}}</a>
     </div>
-</div>
-<div class="tableContainer">
-  <table>
-    <tr>
-      <th id="check" width="30px">
-        <div class="checkbox-container">
-          <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox" (change)="selectAll($event.target.checked)">
-          <label for="selectAllChkbox" (mousedown)="$event.stopPropagation()"></label>
-        </div>
-      </th>
-      <th id="path">파일명</th>
-      <th *ngIf="mode=='drive'">공용 폴더명</th>
-      <th *ngIf="mode=='drive'">형식</th>
-      <th *ngIf="mode=='drive'">크기</th>
-      <th *ngIf="mode=='drive'">수정일</th>
-      <th *ngIf="mode=='drive'" width="60px">공유</th>
-      
-      <th *ngIf="mode=='favorites'">형식</th>
-      <th *ngIf="mode=='favorites'">즐겨찾기 등록일</th>
-    </tr>
-    <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
-      <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}" [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile | keyvalue:keepOriginalOrder; let i = index" [contextMenu]="mode=='trash' ? trashMenu : (mode=='favorites' ? favoritesMenu : basicMenu)" [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
-        <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
-        <td>
+    
+    <div class="revert" *ngIf="api.RevertMessage != null">
+      {{api.RevertMessage}} <a (click)='api.Revert()'>실행 취소</a>
+    </div>
+  </div>
+  <div class="tableContainer">
+    <table>
+      <tr>
+        <th id="check" width="30px">
           <div class="checkbox-container">
-            <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ item.value.name}}" (change)="onCheckboxChange(item.value, $event)">
-            <label (mousedown)="$event.stopPropagation()" for="{{'chkbox'+ item.value.name}}"></label>
+            <input type="checkbox" name="chk_info2" value="HTML" id="selectAllChkbox"
+              (change)="selectAll($event.target.checked)">
+            <label for="selectAllChkbox" (mousedown)="$event.stopPropagation()"></label>
           </div>
-          <i *ngIf="item.value.isfolder"></i>
-        </td>
-        <td>
-          <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails" src="{{item.value.extraData['small']}}"/>
-          <span *ngIf="item.value.extraData['small'] == null">
-            <i *ngIf="item.value.isfolder" class="icon" [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
-            <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
-            <i *ngIf="item.value.type == 'Word'" class="icon word size40"></i>
-            <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
-            <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
-            <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
-            <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
-            <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
-          </span>
-          <span *ngIf="mode == 'drive'">
-            <span class="favorite on" *ngIf="api.GetFavoriteOfItem(valueStorage, item.value.path)" (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, false)">★ </span>
-            <span class="favorite off" *ngIf="!api.GetFavoriteOfItem(valueStorage, item.value.path)" (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, true)">★ </span>
-          </span>
-          <span cdkDragHandle *ngIf="changing_old_name != item.value.name" (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
-          <input type="text" id="namebox" (mousedown)="$event.stopPropagation()" *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}" (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)"/>
+        </th>
+        <th id="path">파일명</th>
+        <th *ngIf="mode=='drive'">공용 폴더명</th>
+        <th *ngIf="mode=='drive'">형식</th>
+        <th *ngIf="mode=='drive'">크기</th>
+        <th *ngIf="mode=='drive'">수정일</th>
+        <th *ngIf="mode=='drive'" width="60px">공유</th>
+
+        <th *ngIf="mode=='favorites'">형식</th>
+        <th *ngIf="mode=='favorites'">즐겨찾기 등록일</th>
+      </tr>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="drag($event)">
+        <tr [hidden]="item.value.path == valueStorage.dataFolderPath" cdkDrag cdkDragData="{{item.value.path}}"
+          [dtsSelectItem]="item.value.path" *ngFor="let item of nowfile | keyvalue:keepOriginalOrder; let i = index"
+          [contextMenu]="mode=='trash' ? trashMenu : (mode=='favorites' ? favoritesMenu : basicMenu)"
+          [contextMenuSubject]="item.value" (dblclick)='ItemDoubleClick(item.value)'>
+          <div *cdkDragPreview class="dragitem">이동 <b>{{item.value.name}}</b></div>
+          <td>
+            <div class="checkbox-container">
+              <input type="checkbox" name="chk_info" value="{{item.value.path}}" id="{{'chkbox'+ item.value.name}}"
+                (change)="onCheckboxChange(item.value, $event)">
+              <label (mousedown)="$event.stopPropagation()" for="{{'chkbox'+ item.value.name}}"></label>
+            </div>
+            <i *ngIf="item.value.isfolder"></i>
+          </td>
+          <td>
+            <img *ngIf="item.value.extraData['small'] != null" class="smallThumbnails"
+              src="{{item.value.extraData['small']}}" />
+            <span *ngIf="item.value.extraData['small'] == null">
+              <i *ngIf="item.value.isfolder" class="icon"
+                [ngClass]="{'folder-filled':item.value.isShared != true, 'folder-shared':item.value.isShared == true}"></i>
+              <i *ngIf="item.value.type == 'PDF'" class="icon pdf size40"></i>
+              <i *ngIf="item.value.type == 'Word'" class="icon word size40"></i>
+              <i *ngIf="item.value.type == '문서'" class="icon icon-file size40"></i>
+              <i *ngIf="item.value.type == '비디오'" class="icon fa-film size40"></i>
+              <i *ngIf="item.value.type == '압축 파일'" class="icon zip size40"></i>
+              <i *ngIf="item.value.type == '텍스트'" class="icon fa-edit size40"></i>
+              <i *ngIf="item.value.type == '이미지'" class="icon image size40"></i>
+            </span>
+            <span *ngIf="mode == 'drive'">
+              <span class="favorite on" *ngIf="api.GetFavoriteOfItem(valueStorage, item.value.path)"
+                (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, false)">★ </span>
+              <span class="favorite off" *ngIf="!api.GetFavoriteOfItem(valueStorage, item.value.path)"
+                (click)="api.SetFavoriteOfItem(valueStorage, item.value.path, true)">★ </span>
+            </span>
+            <span cdkDragHandle *ngIf="changing_old_name != item.value.name"
+              (click)='ItemClick($event, item.value)'>{{item.value.name}}</span>
+            <input type="text" id="namebox" (mousedown)="$event.stopPropagation()"
+              *ngIf="changing_old_name == item.value.name" value="{{item.value.name}}"
+              (focusout)="save_name($event, item.value)" (keyup.enter)="save_name($event, item.value)" />
 
 
 
-        </td>
-        <td *ngIf="mode=='drive'">{{item.value.owner_path}}</td>
-        <td *ngIf="mode=='drive'">{{item.value.type}}</td>
-        <td *ngIf="mode=='drive'">{{item.value.bytesString}}</td>
-        <td *ngIf="mode=='drive'">{{item.value.date}}</td>
-        <td *ngIf="mode=='drive'">
-            <i class="icon share share_animation" [ngClass]="{'disable': item.value.public_hash == null}" (click)="share_file(item.value)"></i>
-        </td>
+          </td>
+          <td *ngIf="mode=='drive'">{{item.value.owner_path}}</td>
+          <td *ngIf="mode=='drive'">{{item.value.type}}</td>
+          <td *ngIf="mode=='drive'">{{item.value.bytesString}}</td>
+          <td *ngIf="mode=='drive'">{{item.value.date}}</td>
+          <td *ngIf="mode=='drive'">
+            <i class="icon share share_animation" [ngClass]="{'disable': item.value.public_hash == null}"
+              (click)="share_file(item.value)"></i>
+          </td>
 
-        
-        <td *ngIf="mode=='favorites'">{{item.value.type}}</td>
-        <td *ngIf="mode=='favorites'">{{item.value.date}}</td>
 
-    </tr>
-    </tbody>
+          <td *ngIf="mode=='favorites'">{{item.value.type}}</td>
+          <td *ngIf="mode=='favorites'">{{item.value.date}}</td>
 
-  </table>
-</div>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
 </dts-select-container>
 
 <context-menu #basicMenu [useBootstrap4]="true" (open)="CheckingItem($event.item)">
-    <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
-        <i class="icon download size30"></i>
-        다운로드
-    </ng-template>
-    <ng-template contextMenuItem [visible]="isOneSelect" (execute)="share_file(null)">
-        <i class="icon link size30"></i>
-        공유
-    </ng-template>
-    <ng-template contextMenuItem (execute)="move_file()">
-        <i class="icon folder-move size30"></i>
-        이동 / 복사
-    </ng-template>
-    <ng-template contextMenuItem [visible]="isOneSelect" (execute)="rename_file()">
-        <i class="icon pen size30"></i>
-        이름 바꾸기
-    </ng-template>
-    <ng-template contextMenuItem (execute)="delete_file()">
-        <i class="icon delete size30"></i>
-        삭제
-    </ng-template>
-    <ng-template contextMenuItem [visible]="isOneSelect">
-        <i class="icon info size30"></i>
-        상세 정보
-    </ng-template>
-    <ng-template contextMenuItem [visible]="isOneSelect">
-        <i class="icon transfer size30"></i>
-        소유권 이전
-    </ng-template>
+  <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
+    <i class="icon download size30"></i>
+    다운로드
+  </ng-template>
+  <ng-template contextMenuItem [visible]="isOneSelect" (execute)="share_file(null)">
+    <i class="icon link size30"></i>
+    공유
+  </ng-template>
+  <ng-template contextMenuItem (execute)="move_file()">
+    <i class="icon folder-move size30"></i>
+    이동 / 복사
+  </ng-template>
+  <ng-template contextMenuItem [visible]="isOneSelect" (execute)="rename_file()">
+    <i class="icon pen size30"></i>
+    이름 바꾸기
+  </ng-template>
+  <ng-template contextMenuItem (execute)="delete_file()">
+    <i class="icon delete size30"></i>
+    삭제
+  </ng-template>
+  <ng-template contextMenuItem [visible]="isOneSelect">
+    <i class="icon info size30"></i>
+    상세 정보
+  </ng-template>
+  <ng-template contextMenuItem [visible]="isOneSelect">
+    <i class="icon transfer size30"></i>
+    소유권 이전
+  </ng-template>
 </context-menu>
 
 <context-menu #spaceMenu [useBootstrap4]="true">
@@ -130,8 +148,8 @@
 
 <context-menu #favoritesMenu [useBootstrap4]="true" (open)="CheckingItem($event.item)">
   <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
-      <i class="icon download size30"></i>
-      다운로드
+    <i class="icon download size30"></i>
+    다운로드
   </ng-template>
   <ng-template contextMenuItem (execute)="delete_favorite()">
     <i class="icon delete size30"></i>

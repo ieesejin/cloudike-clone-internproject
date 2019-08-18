@@ -39,12 +39,12 @@ export class FileItem
         this.mime_type = value["mime_type"];
         this.type = this.icon;
         this.isShared = value["shared"];
-        if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied")
+        if (value['type'] == "file_created" || value['type'] == "file_new_content" || value['type'] == "file_copied" || value['type'] == "file_moved" || value['type'] == "file_undeleted")
         {
             this.bytes = value["content"]["size"];
             this.modified = value["content"]["modified"];
         }
-        else if (value['type'] == "folder_created" || value['type'] == "folder_copied")
+        else if (value['type'] == "folder_created" || value['type'] == "folder_copied" || value['type'] == "folder_moved" || value['type'] == "folder_undeleted")
         {
             this.role = "owner";
             this.modified = value["content"]["modified"];
@@ -91,7 +91,7 @@ export class FileItem
         {
             this.name = "Cloudike";
         }
-        else if (value['name'] != undefined)
+        else if (value['name'] != undefined && value['type'] != "file_undeleted" && value['type'] != "folder_undeleted")
         {
             this.name = value['name'];
         }

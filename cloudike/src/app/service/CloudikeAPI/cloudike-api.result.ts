@@ -10,7 +10,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class CloudikeApiResult {
   private subject: Subject<any>;
   private Subscriptions = [];
-
+  private _successMessage = null;
+  public get successMessage() { return this._successMessage };
   constructor(subject?: Subject<any>) {
     if (subject == null)
       this.subject = new Subject<any>();
@@ -36,6 +37,7 @@ export class CloudikeApiResult {
   }
 
   public AddMessage(toastr: ToastrService, success, error: {} = {}) {
+    this._successMessage = success;
     this.add(
       this.subject.subscribe(data => {
         toastr.success(success);

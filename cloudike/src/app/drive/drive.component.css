@@ -76,6 +76,30 @@ dts-select-container
     }
 
 /***********************************
+    복구 관련 CSS
+************************************/ 
+    .revert
+    {
+        position: absolute;
+        right: 20px;
+        top: 9px;
+        padding: 5px 10px;
+        background: rgb(0,0,0,0.05);
+        border: rgb(0,0,0,0.15) solid 1px;
+    }
+    .revert a
+    {
+        color: rgb(46, 85, 255);
+        font-size: 12px;
+        margin-left: 10px;
+    }
+    
+    .revert a:hover
+    {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+/***********************************
     스크롤을 위한 컨테이너 CSS
 ************************************/ 
 .tableContainer_not_use {

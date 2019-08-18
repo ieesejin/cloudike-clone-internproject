@@ -83,6 +83,8 @@ export class RealtimeService {
       case 'file_created':
       case 'folder_copied':
       case 'file_copied':
+      case 'file_undeleted':
+      case 'folder_undeleted':
         if (!FileManagement.contains(parent_path)) return;
         FileManagement.getItem(this.hs,
           parent_path,
@@ -117,7 +119,7 @@ export class RealtimeService {
         break;
       case 'folder_moved':
       case 'file_moved':
-        FileManagement.rename(data["oldpath"],data["path"]);
+        FileManagement.rename(data["oldpath"],data["path"], data);
         break;
       case 'link_created':
         FileManagement.link_set(data["path"], data["public_hash"]);

@@ -115,7 +115,7 @@ export class FileManagement
         delete FileManagement.cache[parent_path]["content"][name];
     }
 
-    public static rename(old_path: string, path: string)
+    public static rename(old_path: string, path: string, data?)
     {
         var old_folder = FileItem.SplitPath(old_path);
         var folder = FileItem.SplitPath(path);
@@ -125,13 +125,27 @@ export class FileManagement
         var old_name = old_folder[old_folder.length - 1].name;
         var old_parent_path = old_folder[old_folder.length - 2].path;
 
-        if (!FileManagement.contains(old_parent_path)) return;
-
-        var item : FileItem = FileManagement.cache[old_parent_path]["content"][old_name];
-
         path = folder[folder.length - 1].path;
         var name = folder[folder.length - 1].name;
         var parent_path = folder[folder.length - 2].path;
+
+        if (!FileManagement.contains(old_parent_path))
+        { 
+            if (data != null)
+            {
+                if (data["type"] == "file_moved" || data["type"] == "folder_moved")
+                {
+                    if (FileManagement.contains(parent_path))
+                    {
+                        FileManagement.cache[parent_path]["content"][name] = new FileItem(data);
+                    }
+                }
+            }
+            return;
+        }
+
+        var item : FileItem = FileManagement.cache[old_parent_path]["content"][old_name];
+
         
         item.path = path;
         item.name = name;
