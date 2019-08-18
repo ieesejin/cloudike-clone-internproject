@@ -83,6 +83,8 @@ export class RealtimeService {
       case 'file_created':
       case 'folder_copied':
       case 'file_copied':
+      case 'file_undeleted':
+      case 'folder_undeleted':
         if (!FileManagement.contains(parent_path)) return;
         FileManagement.getItem(this.hs,
           parent_path,
