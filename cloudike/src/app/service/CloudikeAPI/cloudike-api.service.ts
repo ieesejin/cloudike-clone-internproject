@@ -18,6 +18,11 @@ export type CloudLinkOption = { date?: Date, only_upload?: boolean, password?: s
 })
 export class CloudikeApiService {
 
+  private lastAction: () => CloudikeApiResult = null;
+  private _revertMessage = null;
+  private get RevertMessage() {
+    return this._revertMessage;
+  }
   constructor(private hs: HTTPService, private router: Router, private http: HttpClient, private toastr: ToastrService) {
   }
 
@@ -53,6 +58,14 @@ export class CloudikeApiService {
     else
       path = item_or_path;
     return this.CleanPath(path);
+  }
+
+  private AddRevert(result: CloudikeApiResult, fn: () => CloudikeApiResult) {
+    result.subscribe(data => {
+
+      this._revertMessage = result.successMessage;
+      this.lastAction = fn;
+    });
   }
 
   public GetURLPath() {
@@ -141,6 +154,9 @@ export class CloudikeApiService {
     result.AddMessage(this.toastr, "폴더가 생성되었습니다.",
       { "FolderAlreadyCreated": "같은 이름이 존재합니다." }
     );
+    this.AddRevert(result, () => {
+      return this.Delete(path);
+    });
     return result;
   }
 
@@ -285,8 +301,7 @@ export class CloudikeApiService {
     return result;
   }
 
-  public GetFavoritesList(valueStorage: ValueStorageService) : {}
-  {
+  public GetFavoritesList(valueStorage: ValueStorageService): {} {
     return valueStorage.GetValues(
       "favoriteList_Files",
       item => {
@@ -295,42 +310,51 @@ export class CloudikeApiService {
       item => {
         var folder = FileItem.SplitPath(item.key);
         var file = new FileItem(null);
-        file.path = folder[folder.length-1].path;
-        file.name = folder[folder.length-1].name;
+        file.path = folder[folder.length - 1].path;
+        file.name = folder[folder.length - 1].name;
         file.isfolder = item.value['isfolder'];
         file.type = item.value['type'];
         file.date = ConvertFormat.unixToDate(item.value["date"]);
-        return {key: file.name, value: file};
+        return { key: file.name, value: file };
       }
-    , true);
+      , true);
   }
 
-  public GetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem) : Boolean
-  {
+  public GetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem): Boolean {
     var path = this.get_path_from_value(item_or_path);
     var data = valueStorage.GetToJson(path + '?favorite');
     return data != null && data['value'];
   }
-  
-  public SetFavoriteOfItem(valueStorage : ValueStorageService, item_or_path: string | FileItem, value : boolean)
-  {
+
+  public SetFavoriteOfItem(valueStorage: ValueStorageService, item_or_path: string | FileItem, value: boolean) {
     var path = this.get_path_from_value(item_or_path);
-    if (value == true) 
-    {
-      FileManagement.getItem(this.hs,path,(item : FileItem) =>{
+    if (value == true) {
+      FileManagement.getItem(this.hs, path, (item: FileItem) => {
         var json = {
-          value : value,
-          date : new Date().getTime(),
+          value: value,
+          date: new Date().getTime(),
           isfolder: item.isfolder,
           type: item.type
         }
         valueStorage.Set(path + '?favorite', json);
-      },true);
-    } else
-    {
-      valueStorage.Set(path + '?favorite', {value: false});
+      }, true);
+    } else {
+      valueStorage.Set(path + '?favorite', { value: false });
     }
 
+  }
+
+  public Revert() {
+    if (this.lastAction == null) {
+      this.toastr.error("최근에 수행된 작업이 없습니다.");
+    }
+    else {
+      var result = this.lastAction();
+      this.lastAction = null;
+      this._revertMessage = null;
+      result.unsubscribe();
+      result.AddMessage(this.toastr, "최근 작업을 되돌렸습니다.");
+    }
   }
   public GetFileList_Not_Implement(item_or_path: string | FileItem, limit = 500, offset = 0, order_by = 'name') {
 

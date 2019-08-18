@@ -75,6 +75,25 @@ dts-select-container
         color: #4a9ce4;
     }
 
+
+    .revert
+    {
+        position: absolute;
+        right: 20px;
+        top: 9px;
+        padding: 5px 10px;
+        background: rgb(0,0,0,0.1);
+        border: rgb(0,0,0,0.15) solid 1px;
+    }
+    .revert a
+    {
+        text-decoration: underline;
+    }
+    
+    .revert a:hover
+    {
+        text-decoration: underline;
+    }
 /***********************************
     스크롤을 위한 컨테이너 CSS
 ************************************/ 
