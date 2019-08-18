@@ -117,7 +117,7 @@ export class RealtimeService {
         break;
       case 'folder_moved':
       case 'file_moved':
-        FileManagement.rename(data["oldpath"],data["path"]);
+        FileManagement.rename(data["oldpath"],data["path"], data);
         break;
       case 'link_created':
         FileManagement.link_set(data["path"], data["public_hash"]);
