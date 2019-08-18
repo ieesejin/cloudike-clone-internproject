@@ -51,6 +51,26 @@ export class CloudikeApiService {
     return path;
   }
 
+  private get_parent_folder(path: string)
+  {
+    if (path == null)
+      return null;
+
+    var folder = FileItem.SplitPath(path);
+    path = folder[folder.length - 2].path;
+    return path;
+  }
+
+  private get_file_name(path: string)
+  {
+    
+    if (path == null)
+      return null;
+
+    var folder = FileItem.SplitPath(path);
+    return folder[folder.length - 1].name;
+  }
+
   private get_path_from_value(item_or_path: string | FileItem) {
     var path;
     if (item_or_path instanceof FileItem)
@@ -173,6 +193,10 @@ export class CloudikeApiService {
     result.AddMessage(this.toastr, "이름이 변경되었습니다.",
       { "FileCantBeRenamed": "이름을 변경할 수 없습니다." }
     );
+    this.AddRevert(result, () => {
+      var new_path = this.combine_path_folder(this.get_parent_folder(path), new_name);
+      return this.Rename(new_path,this.get_file_name(path));
+    });
     return result;
   }
   public Delete(item_or_path: string | FileItem): CloudikeApiResult {
@@ -211,6 +235,12 @@ export class CloudikeApiService {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/move/", formdata, this.task_name("파일 이동", from))
     );
     result.AddMessage(this.toastr, "이동이 완료되었습니다.");
+    this.AddRevert(result, () => {
+      // 현재 폴더 위치
+      var new_path = this.combine_path_folder(to, this.get_file_name(from));
+      var old_path = this.get_parent_folder(from);
+      return this.Move(new_path,old_path);
+    });
     return result;
   }
 
@@ -226,6 +256,11 @@ export class CloudikeApiService {
       this.hs.post("https://api.cloudike.kr/api/1/fileops/copy/", formdata, this.task_name("파일 복사", from))
     );
     result.AddMessage(this.toastr, "복사가 완료되었습니다.");
+    this.AddRevert(result, () => {
+      // 현재 폴더 위치
+      var new_path = this.combine_path_folder(to, this.get_file_name(from));
+      return this.Delete(new_path);
+    });
     return result;
   }
 
