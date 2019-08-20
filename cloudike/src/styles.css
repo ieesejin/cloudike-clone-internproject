@@ -79,8 +79,8 @@ button
 mat-dialog-actions button
 {    
     padding: 6px 30px;
-    background-color: #ffd659;
-    border: 1px solid #fab545;
+    background-color: #ffd659 !important;
+    border: 1px solid #fab545 !important;
     border-radius: 3px;
 }
 mat-dialog-actions button:hover {

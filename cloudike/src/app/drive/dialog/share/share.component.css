@@ -9,6 +9,9 @@
     border: 1px solid #fab545;
     border-radius: 3px;
     outline: none;
+    padding: 1px;
+    min-width: 0px; 
+    line-height: 10px;
 }
 .ok:hover, .copy:hover, .delete:hover {
     color: #555;
