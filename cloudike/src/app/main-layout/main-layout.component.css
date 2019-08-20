@@ -128,7 +128,7 @@ mat-sidenav .min
 mat-sidenav .tree
 {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
-    max-height: calc(100% - 260px);
+    max-height: calc(100vh - 320px);
     
     overflow-y: auto;
     overflow-x: hidden;
