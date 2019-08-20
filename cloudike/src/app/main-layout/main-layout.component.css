@@ -1,26 +1,56 @@
 mat-sidenav-container
 {
     height: 100%;
-    overflow: auto;
 }
 mat-sidenav-content
 {
     height: auto;
-    overflow: hidden;
 }
 mat-sidenav { 
     box-sizing: content-box;
     width: 90px;
     transition:width 0.25s;
     position: fixed;
-    
 }
+mat-sidenav::-webkit-scrollbar { display:none; } 
+
 mat-sidenav.extra_open
 {
     width:250px;
 }
 
-
+div {
+    outline: none;
+    cursor: pointer;
+}
+.star {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#home {
+    position: absolute;
+    bottom: 0px;
+    padding: 25px;
+}
+a {
+    color: rgb(198, 204, 212);
+}
+a:hover {
+    color: rgb(198, 204, 212);
+}
+progress {
+    background-color: rgb(198, 204, 212);
+    border: 0;
+    height: 15px;
+    border-radius: 25px;
+}
+progress {
+    margin-top: 5px;
+    -webkit-appearance: none;
+}
+::-webkit-progress-value {
+    background-color: orange;
+}
 
 
 .outline
@@ -41,6 +71,7 @@ header
 header::-webkit-scrollbar {
     display:none;
 }
+
 mat-sidenav a.logo
 {
     display: block;
@@ -80,7 +111,6 @@ mat-sidenav
     height: 100%;
     background: rgb(64, 69, 73);
     border: none;
-
 }
 mat-sidenav .min
 {

@@ -19,7 +19,6 @@
                     사용자 저장 용량
                     <progress value={{storagePercent}} max='100'></progress>
                 </div>
-                <br>
                 <div class="storageInfo">
                     {{storageSize}} 사용중&nbsp; | &nbsp;{{remainStorageSize}} 여유
                 </div>
@@ -32,7 +31,7 @@
         </div>
         <div *ngIf="!extra_open" class="icon_box">
 
-            <div class="icon_div" matTooltip="내 Cloudike로 이동" matTooltipPosition="right">
+            <div [routerLink]="['/drive']" class="icon_div" matTooltip="내 Cloudike로 이동" matTooltipPosition="right">
                 <i class="icon size60 folder"></i>
 
             </div>
@@ -41,7 +40,7 @@
 
             </div>
             <div [routerLink]="['/favorites']" class="icon_div" matTooltip="즐겨 찾기 목록 보기" matTooltipPosition="right">
-                <i class="icon size60 folder"></i>
+                <i class="icon size40 star"></i>
 
             </div>
 
@@ -50,8 +49,8 @@
 
             </div>
 
-            <div class="icon_div" matTooltip="클라우다이크 홈페이지로 이동" matTooltipPosition="right">
-                <i class="icon size60 folder"></i>
+            <div id="home" class="icon_div" matTooltip="클라우다이크 홈페이지로 이동" matTooltipPosition="right">
+                <a href="https://www.cloudike.co.kr" target="_blank"><i class="icon size40 home"></i></a>
 
             </div>
         </div>

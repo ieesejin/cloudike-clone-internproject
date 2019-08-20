@@ -339,6 +339,14 @@ mat-dialog-actions .cancle
         i.icon.parent:before {
             content: "\e605";
         }
+        i.icon.star:before {
+            content: "\f005";
+            font-family: FontAwesome;
+        }
+        i.icon.home:before {
+            content: "\f015";
+            font-family: FontAwesome;
+        }
 
         i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40, i.icon.fa-edit.size40, i.icon.image.size40
         {
