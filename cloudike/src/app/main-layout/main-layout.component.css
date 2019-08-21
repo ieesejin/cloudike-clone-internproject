@@ -13,6 +13,7 @@ mat-sidenav {
     width: 90px;
     transition:width 0.25s;
     position: fixed;
+    user-select:none;
 }
 mat-sidenav::-webkit-scrollbar { display:none; } 
 
@@ -72,6 +73,7 @@ header
     overflow-x: auto;
     overflow-y: hidden;
     z-index: 1;
+    user-select:none;
 }
 header::-webkit-scrollbar {
     display:none;
@@ -90,7 +92,7 @@ header div.top-component
     display: inline-block;
     height: 90px;
     margin-left: 15px;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
     white-space: nowrap;  /* 우측 스크롤을 하기 위해 하위 컨텐츠 내용 조정 */
 }

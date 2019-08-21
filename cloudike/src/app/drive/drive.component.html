@@ -1,5 +1,5 @@
 <dts-select-container #container2="dts-select-container" [(selectedItems)]="dragSelectItems"
-  (select)="onDragSelect($event)" [contextMenu]="spaceMenu">
+  (select)="onDragSelect($event)" [contextMenu]="spaceMenu" (document:keydown)="keydown($event)">
   <div class="path">
     <div *ngFor="let item of ParentFolder; first as isfirst">
       <span *ngIf="!isfirst" class="space">>></span>

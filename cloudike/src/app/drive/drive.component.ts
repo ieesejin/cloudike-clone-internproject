@@ -19,6 +19,7 @@ import { ValueStorageService } from '../service/ValueStorage/value-storage.servi
 import { ToastrService } from 'ngx-toastr';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { CloudikeApiService } from '../service/CloudikeAPI/cloudike-api.service';
+import { DeleteFavoritesComponent } from './dialog/delete-favorites/delete-favorites.component';
 
 
 
@@ -41,9 +42,8 @@ export class DriveComponent implements OnInit {
 
   public mode = "";
 
-  get nowfile() : {} {
-    if (this.mode == "favorites")
-    {
+  get nowfile(): {} {
+    if (this.mode == "favorites") {
       return this.api.GetFavoritesList(this.valueStorage);
     }
     return DriveComponent.Now.content;
@@ -69,7 +69,20 @@ export class DriveComponent implements OnInit {
   ngOnInit() {
     this.Update();
   }
-
+  keydown(event) {
+    if (document.getElementsByClassName("mat-dialog-container").length != 0) return;
+    if (event.target.nodeName == "INPUT") return;
+    if (this.selectItem.length >= 1) {
+      if (event.keyCode == 46 || event.key == "Delete") // Delete
+      {
+        if (this.mode == "drive")
+          this.delete_file();
+        else if (this.mode == "favorites")
+          this.delete_favorite();
+      }
+    }
+    console.log(event);
+  }
   private Update() {
     if (this.router.url.indexOf("/trash") == 0) this.mode = "trash";
     if (this.router.url.indexOf("/drive") == 0) this.mode = "drive";
@@ -84,10 +97,9 @@ export class DriveComponent implements OnInit {
       }
       )
     }
-    else if (this.mode == "favorites")
-    {
+    else if (this.mode == "favorites") {
       this.ParentFolder = [{ name: "즐겨찾기", path: "/favorites" }];
-     // DriveComponent.Now = new FileItem("favorites");
+      // DriveComponent.Now = new FileItem("favorites");
     }
     if (this.mode != "drive") return;
     let url = decodeURI(this.router.url.substring("/drive".length));
@@ -103,9 +115,8 @@ export class DriveComponent implements OnInit {
     }
   }
 
-  public get length()
-  {
-      return Object.keys(this.nowfile).length;
+  public get length() {
+    return Object.keys(this.nowfile).length;
   }
   private AllCheckBoxUpdate() {
     // 목록에 하나라도 있으면
@@ -213,11 +224,9 @@ export class DriveComponent implements OnInit {
     }
     this.dialog.open(ShareComponent);
   }
-  public delete_favorite()
-  {
-    FileManagement.getSelectItemPath().forEach(element => {
-      this.api.SetFavoriteOfItem(this.valueStorage,element,false);
-    });
+  public delete_favorite() {
+
+    this.dialog.open(DeleteFavoritesComponent);
   }
   public create(name: string) {
     this.api.CreateFolder(this.api.GetURLPath(), name).subscribe(data => {

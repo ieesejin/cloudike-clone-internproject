@@ -420,6 +420,7 @@ export class CloudikeApiService {
 
   // 휴지통 복구 paths에 해당하는 아이템중 가장 마지막 버전을 복구한다.
   public Restore(paths: string | string[]): CloudikeApiResult {
+    this.toastr.info("파일 및 폴더를 복구합니다. 이 작업은 시간이 소요됩니다.");
     if (typeof paths == "string") {
       paths = [<string>paths];
     }
@@ -444,7 +445,20 @@ export class CloudikeApiService {
           });
           this.hs.post("https://api.cloudike.kr/api/1/trash/restore/", body, this.task_name("복구")).subscribe(
             data => {
-              result.next(data);
+              var taskid = data['taskid'];
+              var timer = setInterval(()=>{
+
+                this.hs.get("https://api.cloudike.kr/api/1/task/" + taskid + '/',null,1).subscribe(
+                
+                  success=>{
+                    clearInterval(timer);
+                    result.next(data);
+                  },
+                  error=>{
+
+                  }
+                );
+              }, 1000);
             },
             error => {
               result.error(error);
