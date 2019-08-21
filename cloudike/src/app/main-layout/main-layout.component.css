@@ -12,7 +12,7 @@ mat-sidenav {
     transition:width 0.25s;
     position: fixed;
 }
-mat-sidenav::-webkit-scrollbar { display:none; } 
+::-webkit-scrollbar { display:none; } 
 
 mat-sidenav.extra_open
 {
@@ -43,13 +43,16 @@ progress {
     border: 0;
     height: 15px;
     border-radius: 25px;
-}
-progress {
     margin-top: 5px;
     -webkit-appearance: none;
 }
+progress::-webkit-progress-bar {
+    border-radius: 25px;
+}
 ::-webkit-progress-value {
     background-color: orange;
+    border-radius: 25px;
+    transition: all ease 0.9s;
 }
 
 
