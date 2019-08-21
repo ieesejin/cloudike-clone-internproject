@@ -37,6 +37,7 @@ export class UploadBoxComponent implements OnInit {
       this.uploader.removeFromQueue(item);
     });
     this.upload_queue_count = 0;
+    this.uploading_item = [];
   }
 
   public NextUpload()
@@ -55,14 +56,10 @@ export class UploadBoxComponent implements OnInit {
       {
         this.uploading_item.push(item);
 
-        var path = decodeURI(this.router.url.substring("/drive".length));
-        if (path[path.length - 1] != '/')
-          path = path + '/';
-        path += item.filePath;
 
         var formdata = new FormData();
         formdata.set("size", item.file.size.toString());
-        formdata.set("path", path);
+        formdata.set("path", item.alias);
         formdata.set("overwrite", "1");
         formdata.set("multipart", "false");
 
@@ -120,6 +117,11 @@ export class UploadBoxComponent implements OnInit {
     this.uploader.onAddToQueue$.subscribe(
       (data:FileItemUpload)=>
       {
+        var path = decodeURI(this.router.url.substring("/drive".length));
+        if (path[path.length - 1] != '/')
+          path = path + '/';
+        path += data.filePath;
+        data.alias = path;
         this.NextUpload();
       }
     )
