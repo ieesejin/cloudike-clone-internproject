@@ -11,6 +11,7 @@ import { NavSettingComponent } from './setting/nav-setting/nav-setting.component
 import { ProfileComponent } from './setting/profile/profile.component';
 import { HeaderSettingComponent } from './setting/header-setting/header-setting.component';
 import { SingUpComponent } from './login/sing-up/sing-up.component';
+import { HeaderFavoritesComponent } from './drive/header-favorites/header-favorites.component';
 
 const routes: Routes = [
   { 
@@ -55,7 +56,7 @@ const routes: Routes = [
     path: 'favorites',  
     component: MainLayoutComponent, 
     data:{
-      top:HeaderDriveComponent, // 상단에 표시될 아이콘 컴포넌트
+      top:HeaderFavoritesComponent, // 상단에 표시될 아이콘 컴포넌트
       left:NavDriveComponent, // 좌측에 표시될 메뉴 컴포넌트
       main:DriveComponent // 메인 컨텐츠
     }

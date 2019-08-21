@@ -1,0 +1,9 @@
+<div (click)="selectItem.length > 0 && Download()" [ngClass]="{'disable': selectItem.length == 0}">
+    <i class="icon size50 download"></i>
+    <p>다운로드</p>
+</div>
+
+<div (click)="selectItem.length > 0 && delete_file()" [ngClass]="{'disable': selectItem.length == 0}">
+    <i class="icon size50 delete"></i>
+    <p>즐겨찾기 해제</p>
+</div>

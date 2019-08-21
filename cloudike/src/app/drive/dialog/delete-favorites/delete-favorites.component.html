@@ -1,0 +1,10 @@
+<div style="width: 600px">
+    <h2 mat-dialog-title>즐겨찾기 해제 ({{selectitems.length}}개의 아이템 선택됨)</h2>
+    <mat-dialog-content>
+        <p>정말로 해제하시겠습니까?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex"> 
+        <button mat-button type="button" class="ok" (click)="delete()">네</button>
+        <button mat-button type="button" class="cancle" (click)="dialogRef.close()">아니오</button>
+    </mat-dialog-actions>
+</div>

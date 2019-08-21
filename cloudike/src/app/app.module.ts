@@ -39,7 +39,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SingUpComponent } from './login/sing-up/sing-up.component';
 import { OauthComponent } from './login/oauth/oauth.component';
 
-import 'hammerjs'; 
+import 'hammerjs';
+import { HeaderFavoritesComponent } from './drive/header-favorites/header-favorites.component';
+import { DeleteFavoritesComponent } from './drive/dialog/delete-favorites/delete-favorites.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import 'hammerjs';
     RenameComponent,
     ShareComponent,
     SingUpComponent,
+    HeaderFavoritesComponent,
+    DeleteFavoritesComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +96,6 @@ import 'hammerjs';
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],
   entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent
-    , RenameComponent, ShareComponent ]
+    , RenameComponent, ShareComponent, DeleteFavoritesComponent ]
 })
 export class AppModule { }
