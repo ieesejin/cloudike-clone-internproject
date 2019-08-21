@@ -28,16 +28,18 @@
 
 <context-menu #favoriteMenu [useBootstrap4]="true">
         <ng-template contextMenuItem (execute)="resetFavoritesList()">
+                <i class="icon delete size30"></i>
                 전체 해제
         </ng-template>
 </context-menu>
 
 <context-menu #favoriteTreeMenu [useBootstrap4]="true">
-        <ng-template let-item contextMenuItem (execute)="item.Download(hs)">
+        <ng-template contextMenuItem (execute)="$event.item.Download(hs)">
                 <i class="icon download size30"></i>
                 다운로드
         </ng-template>
-        <ng-template contextMenuItem let-item (execute)="deleteFavorite(item)">
+        <ng-template contextMenuItem (execute)="deleteFavorite($event.item)">
+                <i class="icon delete size30"></i>
                 해제
         </ng-template>
 </context-menu>

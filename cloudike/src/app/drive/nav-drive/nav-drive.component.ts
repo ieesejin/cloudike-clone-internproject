@@ -31,9 +31,8 @@ export class NavDriveComponent implements OnInit {
     }
   }
 
-  public deleteFavorite(item :FileItem)
+  public deleteFavorite(item : FileItem)
   {
-    console.log(item);
     this.api.SetFavoriteOfItem(this.valueStorage,item,false);
   }
 
