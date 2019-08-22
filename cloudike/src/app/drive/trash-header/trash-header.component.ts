@@ -27,6 +27,7 @@ export class TrashHeaderComponent implements OnInit {
   public select_delete(){
     var list = document.getElementsByName("chk_info");
     var names = [];
+    console.log(names);
     list.forEach((element:HTMLInputElement)=>{
       if (element.checked)
         names.push(element.id.substring("chkbox".length));

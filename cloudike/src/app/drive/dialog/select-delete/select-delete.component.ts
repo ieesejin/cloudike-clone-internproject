@@ -26,8 +26,8 @@ export class SelectDeleteComponent implements OnInit {
     var formdata = new FormData();
     var url = "https://api.cloudike.kr/api/1/trash/clear/";
     this.data.forEach(element => {
-      formdata.append("paths", element);
-    })
+      formdata.append("path", element);
+    });
 
     this.hs.post(url, formdata).subscribe(data => {
       var taskid = data['taskid'];

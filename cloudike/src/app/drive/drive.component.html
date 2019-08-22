@@ -136,7 +136,7 @@
   </ng-template>
 </context-menu>
 
-<context-menu #trashMenu [useBootstrap4]="true">
+<context-menu #trashMenu [useBootstrap4]="true" (open)="CheckingItem($event.item)">
   <ng-template contextMenuItem (execute)="restore()">
     <i class="icon restart size30"></i>
     복구하기
