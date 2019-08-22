@@ -42,6 +42,10 @@ import { OauthComponent } from './login/oauth/oauth.component';
 import 'hammerjs';
 import { HeaderFavoritesComponent } from './drive/header-favorites/header-favorites.component';
 import { DeleteFavoritesComponent } from './drive/dialog/delete-favorites/delete-favorites.component';
+import { TrashHeaderComponent } from './drive/trash-header/trash-header.component';
+import { CompleteDeleteComponent } from './drive/dialog/complete-delete/complete-delete.component';
+import { SelectDeleteComponent } from './drive/dialog/select-delete/select-delete.component';
+import { RestoreComponent } from './drive/dialog/restore/restore.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { DeleteFavoritesComponent } from './drive/dialog/delete-favorites/delete
     SingUpComponent,
     HeaderFavoritesComponent,
     DeleteFavoritesComponent,
+    TrashHeaderComponent,
+    CompleteDeleteComponent,
+    SelectDeleteComponent,
+    RestoreComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +104,7 @@ import { DeleteFavoritesComponent } from './drive/dialog/delete-favorites/delete
   providers: [MatDatepickerModule],
   bootstrap: [BootComponent],
   entryComponents: [ NewFolderComponent, DeleteFilesComponent, MoveFileComponent
-    , RenameComponent, ShareComponent, DeleteFavoritesComponent ]
+    , RenameComponent, ShareComponent, DeleteFavoritesComponent
+  ,CompleteDeleteComponent, SelectDeleteComponent, RestoreComponent ]
 })
 export class AppModule { }

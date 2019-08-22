@@ -1,0 +1,10 @@
+<div style="width: 600px">
+    <h2 mat-dialog-title>영구 삭제 확인</h2>
+    <mat-dialog-content>
+        <p>완전히 삭제하시겠습니까?</p>
+    </mat-dialog-content>
+    <mat-dialog-actions> 
+        <button mat-button type="button" class="ok" (click)="select_delete()">네</button>
+        <button mat-button type="button" class="cancle" (click)="dialogRef.close()">아니오</button>
+    </mat-dialog-actions>
+</div>

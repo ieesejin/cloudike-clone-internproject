@@ -20,6 +20,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 import { CloudikeApiService } from '../service/CloudikeAPI/cloudike-api.service';
 import { DeleteFavoritesComponent } from './dialog/delete-favorites/delete-favorites.component';
+import { SelectDeleteComponent } from './dialog/select-delete/select-delete.component';
+import { RestoreComponent } from './dialog/restore/restore.component';
 
 
 
@@ -52,7 +54,8 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router: Router, public dialog: MatDialog, private hs: HTTPService, private valueStorage: ValueStorageService, private toastr: ToastrService, private api: CloudikeApiService) {
+  constructor(private router: Router, public dialog: MatDialog, private hs: HTTPService,
+    private valueStorage: ValueStorageService, private toastr: ToastrService, private api: CloudikeApiService) {
     router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -368,5 +371,25 @@ export class DriveComponent implements OnInit {
 
       this.AllCheckBoxUpdate();
     }
+  }
+
+  public select_delete(){
+    var list = document.getElementsByName("chk_info");
+    var names = [];
+    list.forEach((element:HTMLInputElement)=>{
+      if (element.checked)
+        names.push(element.id.substring("chkbox".length));
+    });
+    this.dialog.open(SelectDeleteComponent, {data:names});
+  }
+
+  public restore(){
+    var list = document.getElementsByName("chk_info");
+    var names = [];
+    list.forEach((element:HTMLInputElement)=>{
+      if (element.checked)
+        names.push(element.id.substring("chkbox".length));
+    });
+    this.dialog.open(RestoreComponent, {data:names});
   }
 }

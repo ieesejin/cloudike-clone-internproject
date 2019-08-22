@@ -347,6 +347,17 @@ mat-dialog-actions .cancle
             content: "\f015";
             font-family: FontAwesome;
         }
+        .icon.bin-x:before {
+            content: "\e616";
+        }
+
+        .icon.bin-sel:before {
+            content: "\e630";
+        }
+
+        .icon.restart:before {
+            content: "\e609";
+        }
 
         i.icon.zip.size40,  i.icon.word.size40,  i.icon.fa-film.size40, i.icon.fa-edit.size40, i.icon.image.size40
         {

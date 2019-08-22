@@ -1,0 +1,19 @@
+<div [routerLink]="[ '/drive']">
+    <i class="icon size50 back"></i>
+    <p>파일 목록으로 돌아가기</p>
+</div>
+
+<div (click)="selectItem.length > 0 && restore()" [ngClass]="{'disable': selectItem.length == 0}">
+    <i class="icon size50 restart"></i>
+    <p>복구</p>
+</div>
+
+<div (click)="selectItem.length > 0 && select_delete()" [ngClass]="{'disable': selectItem.length == 0}">
+    <i class="icon size50 bin-sel"></i>
+    <p>선택된 항목 삭제</p>
+</div>
+
+<div (click)="completeDelete()" >
+    <i class="icon size50 bin-x"></i>
+    <p>휴지통 비우기</p>
+</div>

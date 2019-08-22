@@ -137,11 +137,12 @@
 </context-menu>
 
 <context-menu #trashMenu [useBootstrap4]="true">
-  <ng-template contextMenuItem (execute)="create('새 폴더')">
-    <i class="icon folder size30"></i>
+  <ng-template contextMenuItem (execute)="restore()">
+    <i class="icon restart size30"></i>
     복구하기
   </ng-template>
-  <ng-template contextMenuItem (execute)="go_parent_folder()">
+  <ng-template contextMenuItem (execute)="select_delete()">
+      <i class="icon bin-sel size30"></i>
     완전 삭제
   </ng-template>
 </context-menu>
