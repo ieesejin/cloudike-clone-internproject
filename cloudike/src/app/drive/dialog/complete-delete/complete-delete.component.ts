@@ -24,17 +24,33 @@ export class CompleteDeleteComponent implements OnInit {
   {
 
     var formdata = new FormData();
+    var url = "https://api.cloudike.kr/api/1/trash/clear/";
     this.selectitems.forEach((path) => formdata.append("path", path));
 
-    this.hs.post("https://api.cloudike.kr/api/1/trash/clear/",formdata,this.selectitems.length + "개의 파일 삭제").subscribe(data => {
+    this.hs.post(url,formdata,this.selectitems.length + "개의 파일 삭제").subscribe(data => {
       // 성공
-      this.toastr.success('삭제가 완료되었습니다.');
-    }, error => {
+      this.hs.post(url, formdata).subscribe(data => {
+        var taskid = data['taskid'];
+        var timer = setInterval(() => {
+  
+          this.hs.get("https://api.cloudike.kr/api/1/task/" + taskid + '/', null, 1).subscribe(
+  
+            success => {
+              clearInterval(timer);
+              this.toastr.success('영구삭제가 완료되었습니다.');
+            },
+            error => {
+  
+            }
+          );
+        }, 1000);
+  
+  
+      }, error => {
         this.toastr.error('에러가 발생했습니다.');
       });
-
-    
-    this.dialogRef.close();
+      this.dialogRef.close();
+    });
   }
-
+  
 }

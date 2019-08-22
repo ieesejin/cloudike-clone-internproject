@@ -25,10 +25,22 @@ export class TrashHeaderComponent implements OnInit {
   }
 
   public select_delete(){
-    this.dialog.open(SelectDeleteComponent);
+    var list = document.getElementsByName("chk_info");
+    var names = [];
+    list.forEach((element:HTMLInputElement)=>{
+      if (element.checked)
+        names.push(element.id.substring("chkbox".length));
+    });
+    this.dialog.open(SelectDeleteComponent, {data:names});
   }
 
   public restore(){
-    this.dialog.open(RestoreComponent);
+    var list = document.getElementsByName("chk_info");
+    var names = [];
+    list.forEach((element:HTMLInputElement)=>{
+      if (element.checked)
+        names.push(element.id.substring("chkbox".length));
+    });
+    this.dialog.open(RestoreComponent, {data:names});
   }
 }
