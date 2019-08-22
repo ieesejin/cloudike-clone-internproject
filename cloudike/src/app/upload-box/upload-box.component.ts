@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfo } from '../UserInfo';
 import { Router } from '@angular/router';
 import { HTTPService } from '../service/HttpService/httpservice.service';
+import { takeUntil } from 'rxjs/operators';
 
 const max_simultaneously_uploading = 2;
 
@@ -42,7 +43,7 @@ export class UploadBoxComponent implements OnInit {
 
   public NextUpload()
   {
-    var new_array = []
+    var new_array = [];
     this.uploading_item.forEach(element => {
       if (element.isSuccess != true)
       {
@@ -67,8 +68,7 @@ export class UploadBoxComponent implements OnInit {
           var confirm_url = create_data["confirm_url"];
           var url = create_data["url"];
           var method = create_data["method"];
-
-          item.onSuccess$.subscribe(()=>{
+          item.onSuccess$.pipe(takeUntil(item.onError$)).subscribe(()=>{
             this.hs.post(confirm_url, {},null, 10).subscribe(create_data => {
               console.log("최종 완료" + item.file.name);
               if (this.upload_queue_count < this.uploader.queue.length)
@@ -92,6 +92,19 @@ export class UploadBoxComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.uploader.onError$.subscribe(data=>{
+      
+    var new_array = [];
+      this.uploading_item.forEach(element => {
+        if (element != data.item)
+        {
+          new_array.push(element);
+        }
+      });
+     this.uploading_item = new_array;
+     data.item.ɵonBeforeUploadItem();
+     this.NextUpload();
+    });
     
     this.uploader.onCancel$.subscribe(
       (data: FileItemUpload) => {
