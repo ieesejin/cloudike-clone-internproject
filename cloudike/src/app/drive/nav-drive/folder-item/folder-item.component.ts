@@ -26,7 +26,7 @@ export class FolderItemComponent implements OnInit {
     return DriveComponent.Now.path == this.url;
   }
 
-  constructor(private hs: HTTPService, private router: Router, private valueStorage : ValueStorageService, private api : CloudikeApiService) { 
+  constructor(public hs: HTTPService, private router: Router, public valueStorage : ValueStorageService, private api : CloudikeApiService) { 
     router.events.subscribe( (event) => {
 
       if (event instanceof NavigationEnd) {

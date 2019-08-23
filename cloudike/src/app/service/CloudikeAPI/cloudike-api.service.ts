@@ -20,7 +20,7 @@ export class CloudikeApiService {
 
   private lastAction: () => CloudikeApiResult = null;
   private _revertMessage = null;
-  private get RevertMessage() {
+  public get RevertMessage() {
     return this._revertMessage;
   }
   constructor(private hs: HTTPService, private router: Router, private http: HttpClient, private toastr: ToastrService) {

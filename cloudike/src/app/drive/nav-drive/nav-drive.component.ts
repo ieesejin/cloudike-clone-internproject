@@ -13,7 +13,7 @@ import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.ser
   styleUrls: ['./nav-drive.component.css']
 })
 export class NavDriveComponent implements OnInit {
-  constructor(private valueStorage: ValueStorageService, private router: Router, private hs: HTTPService, private api : CloudikeApiService) { }
+  constructor(private valueStorage: ValueStorageService, public router: Router, public hs: HTTPService, private api : CloudikeApiService) { }
 
   public favorite_hide : boolean = false;
 

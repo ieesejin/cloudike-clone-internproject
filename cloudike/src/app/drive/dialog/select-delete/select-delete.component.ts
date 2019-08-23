@@ -16,7 +16,7 @@ export class SelectDeleteComponent implements OnInit {
   path : string = this.selectitems.toString();
   public f_name : string[] = this.path.split("/");
 
-  constructor(private dialogRef: MatDialogRef<SelectDeleteComponent>, private hs: HTTPService
+  constructor(public dialogRef: MatDialogRef<SelectDeleteComponent>, private hs: HTTPService
     ,private toastr : ToastrService, @Inject(MAT_DIALOG_DATA) private data) { }
 
   ngOnInit() {

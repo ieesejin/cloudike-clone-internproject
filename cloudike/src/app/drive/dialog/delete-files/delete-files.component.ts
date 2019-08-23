@@ -12,7 +12,7 @@ export class DeleteFilesComponent implements OnInit {
 
   public selectitems = FileManagement.getSelectItemPath();
 
-  constructor(private dialogRef: MatDialogRef<DeleteFilesComponent>, private api :CloudikeApiService) { }
+  constructor(public dialogRef: MatDialogRef<DeleteFilesComponent>, private api :CloudikeApiService) { }
 
   ngOnInit() {
 

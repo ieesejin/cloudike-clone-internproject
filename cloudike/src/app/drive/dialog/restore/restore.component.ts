@@ -16,7 +16,7 @@ export class RestoreComponent implements OnInit {
   path: string = this.selectitems.toString();
   public f_name: string[] = this.path.split("/");
 
-  constructor(private dialogRef: MatDialogRef<RestoreComponent>, private hs: HTTPService, private api: CloudikeApiService
+  constructor(public dialogRef: MatDialogRef<RestoreComponent>, private hs: HTTPService, private api: CloudikeApiService
     , private toastr: ToastrService, @Inject(MAT_DIALOG_DATA) private data) { }
 
   ngOnInit() {

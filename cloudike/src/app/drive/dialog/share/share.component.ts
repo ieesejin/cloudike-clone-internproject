@@ -28,7 +28,7 @@ export class ShareComponent implements OnInit {
 
   public setting_boolean = {};
 
-  constructor(private dialogRef: MatDialogRef<ShareComponent>, private hs: HTTPService, private api: CloudikeApiService) {
+  constructor(public dialogRef: MatDialogRef<ShareComponent>, private hs: HTTPService, private api: CloudikeApiService) {
 
   }
 

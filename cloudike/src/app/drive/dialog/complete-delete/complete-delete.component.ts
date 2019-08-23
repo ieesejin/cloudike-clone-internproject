@@ -14,7 +14,7 @@ export class CompleteDeleteComponent implements OnInit {
 
   public selectitems = FileManagement.getSelectItemPath();
 
-  constructor(private dialogRef: MatDialogRef<CompleteDeleteComponent>, private hs: HTTPService
+  constructor(public dialogRef: MatDialogRef<CompleteDeleteComponent>, private hs: HTTPService
     ,private toastr : ToastrService ) { }
 
   ngOnInit() {

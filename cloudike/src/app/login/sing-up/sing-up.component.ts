@@ -15,8 +15,8 @@ export class SingUpComponent implements OnInit {
   private request_token: string;
 
   // error, error_type은 html에서 보여줄 오류 메세지를 담고 있음.
-  private error: string;
-  private error_type: string;
+  public error: string;
+  public error_type: string;
   form: FormGroup;
 
   constructor(private http:HttpClient, private router : Router) {

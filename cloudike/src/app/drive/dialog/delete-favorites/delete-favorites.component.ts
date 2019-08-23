@@ -13,7 +13,7 @@ export class DeleteFavoritesComponent implements OnInit {
 
   public selectitems = FileManagement.getSelectItemPath();
 
-  constructor(private dialogRef: MatDialogRef<DeleteFavoritesComponent>, private api: CloudikeApiService, private valueStorate: ValueStorageService) { }
+  constructor(public dialogRef: MatDialogRef<DeleteFavoritesComponent>, private api: CloudikeApiService, private valueStorate: ValueStorageService) { }
 
   ngOnInit() {
 

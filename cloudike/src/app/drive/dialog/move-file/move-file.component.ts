@@ -12,7 +12,7 @@ export class MoveFileComponent implements OnInit {
 
   public path : string = null;
   public selectitems = FileManagement.getSelectItemPath();
-  constructor(private dialogRef: MatDialogRef<MoveFileComponent>,  private api : CloudikeApiService) {
+  constructor(public dialogRef: MatDialogRef<MoveFileComponent>,  private api : CloudikeApiService) {
   }
 
   ngOnInit() {

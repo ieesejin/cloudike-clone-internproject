@@ -17,7 +17,7 @@ export class RenameComponent implements OnInit {
   //b_name is before name (unchanged name, except filename extension)
   //b_name은 사용자가 이름을 변경하기 전의 이름, 확장자를 제외한다.
 
-  constructor(private dialogRef: MatDialogRef<RenameComponent>, private api: CloudikeApiService) {
+  constructor(public dialogRef: MatDialogRef<RenameComponent>, private api: CloudikeApiService) {
     var index = this.path.indexOf('.');
     var f_name: string[] = this.path.split("/");
     var m_name: string = f_name[f_name.length - 1];

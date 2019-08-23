@@ -15,7 +15,7 @@ export class BootComponent implements OnInit {
   @ViewChild('upload',{static: true}) public upload : ElementRef;
   @ViewChild(NgxDragAndDropDirective,{static: true}) public ngx_upload;
   public upload_class_list;
-  constructor(private router: Router, private location: Location, private hs: HTTPService) { 
+  constructor(private router: Router, private location: Location, public hs: HTTPService) { 
     // this.router.url is not working (because of no loading, BootComponent is working in bootstrap)
     // So use location class.
     let path = this.location.path();

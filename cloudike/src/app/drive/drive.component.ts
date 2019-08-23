@@ -54,8 +54,8 @@ export class DriveComponent implements OnInit {
   public keepOriginalOrder = (a, b) => a.key;
   public ParentFolder = [];
 
-  constructor(private router: Router, public dialog: MatDialog, private hs: HTTPService,
-    private valueStorage: ValueStorageService, private toastr: ToastrService, private api: CloudikeApiService) {
+  constructor(private router: Router, public dialog: MatDialog, public hs: HTTPService,
+    private valueStorage: ValueStorageService, private toastr: ToastrService, public api: CloudikeApiService) {
     router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -123,10 +123,10 @@ export class DriveComponent implements OnInit {
   }
   private AllCheckBoxUpdate() {
     // 목록에 하나라도 있으면
-    if (length != 0) {
+    if (this.length != 0) {
       // 전체 체크박스 체크
       var selectAllChkbox = <HTMLInputElement>document.getElementById("selectAllChkbox");
-      selectAllChkbox.checked = this.selectItem.length == length;
+      selectAllChkbox.checked = this.selectItem.length == this.length;
     }
   }
   public onDragSelect(event) {
@@ -146,7 +146,7 @@ export class DriveComponent implements OnInit {
   }
 
   // 전체선택 및 전체해제
-  private selectAll(value) {
+  public selectAll(value) {
     var list = document.getElementsByName("chk_info");
     list.forEach((element: HTMLInputElement) => {
       element.checked = value;

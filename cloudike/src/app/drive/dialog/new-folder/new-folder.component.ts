@@ -14,7 +14,7 @@ import { CloudikeApiService } from 'src/app/service/CloudikeAPI/cloudike-api.ser
 export class NewFolderComponent implements OnInit {
 
   inputName: string = "";
-  constructor(private dialogRef: MatDialogRef<NewFolderComponent>, private api : CloudikeApiService) { }
+  constructor(public dialogRef: MatDialogRef<NewFolderComponent>, private api : CloudikeApiService) { }
 
   ngOnInit() {
   }
